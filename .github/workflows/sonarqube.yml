@@ -37,54 +37,30 @@ jobs:
           sonarqube_measures=$(cat sonarqube_measures.json)
           echo "sonarqube_measures=${sonarqube_measures}" >> $GITHUB_ENV
 
-      - name: Comment PR with SonarQube Measures
-        uses: actions/github-script@v6
+    - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const data = ${{fromJson(env.sonarqube_measures)}};
-            if (!data || !data.components) {
-              console.log('No SonarQube measures found.');
-              return;
-            }
-
-            let comment = 'SonarQube Analysis Metrics:\n\n';
-
-            data.components.forEach(component => {
-              comment += `- File: ${component.name}\n`;
-              component.measures.forEach(measure => {
-                let icon = '';
-                switch (measure.metric) {
-                  case 'new_duplicated_lines_density':
-                    icon = '📊';
-                    break;
-                  case 'code_smells':
-                    icon = '💡';
-                    break;
-                  case 'new_bugs':
-                    icon = '🐞';
-                    break;
-                  case 'new_vulnerabilities':
-                    icon = '🛡️';
-                    break;
-                  // Add more cases for other metrics if needed
-                  default:
-                    icon = '';
-                }
-                comment += `  ${icon} ${measure.metric}: ${measure.period.value}\n`;
-              });
-              comment += '\n';
-            });
-
-            console.log(comment);
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment,
-            });
-
-      - name: Block PR on SonarQube Analysis Failure
+          message: |
+            Estado del Análisis SonarQube: ${{ fromJson(env.status).projectStatus.status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+            Métricas de condición:
+              - :dart: Nuevo Índice de Fiabilidad
+                Estado: ${{ fromJson(env.status).projectStatus.conditions[0].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[0].errorThreshold }} (Cuanto menor es mejor)
+                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[0].actualValue }}
+              - :shield: Nuevo Índice de Seguridad
+                Estado: ${{ fromJson(env.status).projectStatus.conditions[1].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[1].errorThreshold }} (Cuanto menor es mejor)
+                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[1].actualValue }}
+              - :hammer_and_wrench: Nuevo Índice de Mantenibilidad
+                Estado: ${{ fromJson(env.status).projectStatus.conditions[2].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[2].errorThreshold }} (Cuanto menor es mejor)
+                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[2].actualValue }}
+              - :page_facing_up: Nueva Densidad de Líneas Duplicadas
+                Estado: ${{ fromJson(env.status).projectStatus.conditions[3].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[3].errorThreshold }} (Cuanto menor es mejor)
+                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[3].actualValue }}
+         
+      - name: Bloquear PR on SonarQube Analysis Failure
         if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
