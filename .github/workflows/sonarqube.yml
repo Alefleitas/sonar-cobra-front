@@ -25,8 +25,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           curl -X GET -u "${SONAR_TOKEN}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=Cobra.Front'
-          cat quality-gate.json
-        #  echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
+          echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       - uses: sonarsource/sonarqube-quality-gate-action@master
