@@ -2,7 +2,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
-      - master
+      - main
 
 name: Analisis de Sonarqube
 
@@ -25,7 +25,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          curl -X GET -u '${{ secrets.SONAR_TOKEN }}': -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=Cobra.Front'
+          curl -X GET -u "${{ secrets.SONAR_TOKEN }}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=Cobra.Front'
           echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
 
       - name: Get SonarQube Measures ( Detalle de archivos afectados )
@@ -33,7 +33,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          curl -X GET -u "${SONAR_TOKEN}": -o sonarqube_measures.json '${{ secrets.SONAR_HOST_URL }}/api/measures/search?metricKeys=new_duplicated_lines_density,new_line_coverage,new_code_smells,new_bugs,new_vulnerabilities,new_security_hotspots_reviewed&projectKeys=${{secrets.SONAR_PROJECT_KEY}}'
+          curl -X GET -u "${{ secrets.SONAR_TOKEN }}": -o sonarqube_measures.json '${{ secrets.SONAR_HOST_URL }}/api/measures/search?metricKeys=new_duplicated_lines_density,new_line_coverage,new_code_smells,new_bugs,new_vulnerabilities,new_security_hotspots_reviewed&projectKeys=${{secrets.SONAR_PROJECT_KEY}}'
           cat sonarqube_measures.json
 
       - name: Comment PR
