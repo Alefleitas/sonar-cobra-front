@@ -8,7 +8,7 @@
       <div class="form-container">
         <form [formGroup]="myForm" (ngSubmit)="onSearch()">
           <mat-form-field class="form-field">
-            <mat-label>Selecciona una o varios tipos de cambio</mat-label>
+            <mat-label>Seleccione los tipos de cambio a pedir</mat-label>
             <mat-select [ngClass]="{ 'disabled': isLoading }" formControlName="sourceTypesList" multiple>
               <mat-option [ngClass]="{ 'disabled': isLoading }" *ngFor="let source of sourceTypesList"
                 [value]="source">{{ source }}</mat-option>
@@ -25,6 +25,10 @@
           <button mat-flat-button [disabled]="!myForm.valid || !isFormValid || isLoading" type="submit"
             class="btnLoad btn-margin">
             Buscar
+          </button>
+          <button mat-flat-button [disabled]="!myForm.valid || !isFormValid || isLoading" type="submit"
+            class="btnLoad btn-margin">
+            Buscar por partes
           </button>
         </form>
       </div>
