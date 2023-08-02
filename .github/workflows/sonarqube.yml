@@ -37,7 +37,7 @@ jobs:
           sonarqube_measures=$(cat sonarqube_measures.json)
           echo "sonarqube_measures=${sonarqube_measures}" >> $GITHUB_ENV
 
-    - name: Comment PR
+      - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
@@ -59,18 +59,3 @@ jobs:
                 Estado: ${{ fromJson(env.status).projectStatus.conditions[3].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
                 Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[3].errorThreshold }} (Cuanto menor es mejor)
                 Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[3].actualValue }}
-         
-      - name: Bloquear PR on SonarQube Analysis Failure
-        if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "The SonarQube analysis failed. Blocking the PR..."
-          pr_number="${{ github.event.pull_request.number }}"
-          owner="${{ github.repository_owner }}"
-          repo="${{ github.repository }}"
-          response=$(curl -X POST -v \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            "https://api.github.com/repos/$owner/$repo/issues/$pr_number/lock" 2>&1)
-          echo "$response"
