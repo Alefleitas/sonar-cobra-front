@@ -62,7 +62,7 @@ jobs:
       - name: Bloquear PR on SonarQube Analysis Failure
         if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
         run: |
           echo "The SonarQube analysis failed. Blocking the PR..."
           pr_number="${{ github.event.pull_request.number }}"
