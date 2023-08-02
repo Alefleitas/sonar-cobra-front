@@ -1,0 +1,28 @@
+@import "../../../themes/cobra-theme.scss";
+
+.tourTitle, .cardActionsContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardTourContainer{
+    background-color: $color-button;
+    color: white;
+}
+
+.siguienteBtn{
+    background-color: $color-drawer;
+    padding-right: 4px;
+}
+
+.cardActionsContainer{
+    color: white;
+}
+
+.atrasBtn{
+    padding-left: 4px;
+}
+
+.finBtn{
+    background-color: $color-drawer;
+}

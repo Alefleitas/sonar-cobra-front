@@ -1,0 +1,46 @@
+<mat-tab-group class="component" (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="Datos personales">
+    <div class="datosCont">
+      <p class="pDate">{{currentUser.lastname}}, {{currentUser.firstName}}</p>
+      <p class="pDate">{{userAddress}}</p>
+      <p class="pDate"> DNI {{userDni | currency:'':'':'2.0'}}</p>
+      <p class="pDate">{{currentUser.userEmail}}</p>
+    </div>
+  </mat-tab>
+  <mat-tab label="Cambio de Contraseña">
+    <div>
+      <div>
+        <ng-container>
+          <form class="contenedor" [formGroup]="changePasswordForm" (ngSubmit)="editPassword(changePasswordForm)">
+            <div class="subContenedor">
+              <label for="idCurrentPassword" class="lbl">Clave actual</label>
+              <input class="fielsInput" type="password" id="idCurrentPassword" matInput
+                formControlName="currentPassword" required>
+              <control-messages class="messaControl" [control]="changePasswordForm.get('currentPassword')"></control-messages>
+            </div>
+            <div class="subContenedor">
+              <label for="idNowPassword" class="lbl">Nueva clave</label>
+
+              <input type="password" class="fielsInput" id="idNowPassword" matInput formControlName="nowPassword"
+                required>
+              <control-messages class="messaControl" [control]="changePasswordForm.get('nowPassword')"></control-messages>
+            </div>
+            <div class="subContenedor">
+              <label for="idConfirmPassword" class="lbl">Confirmación nueva clave</label>
+              <input type="password" class="fielsInput" id="idConfirmPassword" matInput
+                formControlName="confirmPassword" required [errorStateMatcher]="matcher">
+              <mat-error class="errorMat" *ngIf="changePasswordForm.hasError('notSame')">
+                Las claves no coinciden.
+              </mat-error>
+            </div>
+            <div>
+              <button type="submit" [ngClass]="(changePasswordForm.invalid) ? 'bttnDisabled': 'bttnEnabled'" mat-flat-button
+                [disabled]="changePasswordForm.invalid">Confirmar</button>
+            </div>
+          </form>
+
+        </ng-container>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

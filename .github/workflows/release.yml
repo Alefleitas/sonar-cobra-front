@@ -1,0 +1,64 @@
+name: Release
+
+on: 
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        cd cobra-frontend
+        npm ci
+        npm run build:uat --if-present
+        npm run build:prod --if-present
+    - name: Make zip file
+      run: |  
+        zip -r COBRA_FRONT_Build_UAT.zip ./tmp/dist-uat/
+        zip -r COBRA_FRONT_Build_PROD.zip ./tmp/dist-prod/
+    - name: Create Release
+      id: release_drafter
+      uses: release-drafter/release-drafter@v5.11.0
+      with:
+        config-name: release-drafter.yml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload Release UAT Asset
+      id: upload-release-uat-asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release_drafter.outputs.upload_url }}
+        asset_path: ./COBRA_FRONT_Build_UAT.zip
+        asset_name: COBRA_FRONT_Build_UAT.zip
+        asset_content_type: application/zip
+    - name: Upload Release PROD Asset
+      id: upload-release-prod-asset
+      uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release_drafter.outputs.upload_url }}
+        asset_path: ./COBRA_FRONT_Build_PROD.zip
+        asset_name: COBRA_FRONT_Build_PROD.zip
+        asset_content_type: application/zip

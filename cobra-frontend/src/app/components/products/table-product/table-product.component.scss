@@ -1,0 +1,109 @@
+@import "../../../../themes/cobra-theme.scss";
+
+.celda-resumen{
+  width: 100%;
+  text-align: center;
+}
+
+.sgvIcon{
+  height: 20px;
+}
+
+::ng-deep .ngx-table[id="table"] th {
+    color: #939393 !important;
+    font-size: 13px !important;
+    font-family: "Graphik-Light" !important;
+    background-color: #f4f4f4 !important;
+    text-align: center;
+    border-width: 0px;
+    border-bottom: 3px solid #ffffff !important;
+}
+
+::ng-deep .ngx-table th:first-child {
+    border-radius: 5px 0px 0px 0px;
+}
+::ng-deep .ngx-table th:last-child {
+    border-radius: 0px 5px 0px 0px;
+}
+
+  ::ng-deep .ngx-table[id=table] tr {
+    color: #002f55 !important;
+    background-color: #f4f4f4 !important;
+    font-family: 'Graphik-Light' !important;
+    border-bottom: 3px solid #ffffff !important;
+  }
+  
+  ::ng-deep .ngx-table[id=table] td {
+    text-align: center;
+    border-right: 0px;
+  }
+
+  // NO RESULTS TEMPLATE
+  .no-results{
+    width: 90%;
+    position: absolute;
+    top: 3px;
+    text-align: center !important;
+    margin-top: 1.4em;
+    color: $color-button;
+    font-family: 'Graphik-Light';
+  }
+
+
+  // ESTILOS MOBILE
+  @media screen and (max-width: 599px){
+    :host ::ng-deep thead {
+      display: none;
+    }
+
+    :host ::ng-deep tbody {
+      display: table;
+      width: -webkit-fill-available;
+    }
+    
+    :host ::ng-deep .ngx-table tr {
+      display: flex;
+      flex-direction: column;
+    }
+    :host ::ng-deep td:before  {
+      display: table-cell;
+      padding: 5px 5px;
+    }
+    span{
+      display: table-cell;
+    }
+    .celda-resumen{
+      width: inherit !important;
+    }
+    .mat-icon-button{
+      height: 20px;
+      width: 20px;
+      line-height: 0px;
+      margin-right: 1em !important;
+    }
+
+    :host ::ng-deep  td:before {
+      content: attr(class);
+      color: $color-gray-dark;
+      font-size: 14px !important;
+      font-weight: bold;
+      font-family: 'Graphik-Light';
+    }  
+
+    :host ::ng-deep  tr > td:last-child{
+      display: none;
+    }
+
+    :host ::ng-deep .ngx-table[id=table] td {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-left: 1em;
+      padding-right: 1em;
+      border-bottom: 2px solid white !important;
+    }
+    :host ::ng-deep .ngx-table[id=table] td:last-child{
+      border-bottom-width: 0px;
+    }
+
+  }

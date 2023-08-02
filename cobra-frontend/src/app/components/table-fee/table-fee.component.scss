@@ -1,0 +1,287 @@
+@import "../../../themes/cobra-theme.scss";
+
+:host ::ng-deep .btnRefresh {
+  .mat-button-focus-overlay{
+    width: 40px;
+  }
+  .mat-button-ripple{
+  width: 40px;
+  }
+}
+
+:host ::ng-deep .btnModificate {
+  .mat-button-focus-overlay{
+    width: 40px;
+  }
+  .mat-button-ripple{
+  width: 40px;
+  }
+}
+
+.btnModificate {
+  text-decoration: underline $color-button;
+  color: $color-button;
+  line-height: 14px;
+  text-align: center;
+  margin-left: 0px;
+  margin-top: -5px;
+  padding: 0px;
+  padding-left: 20px;
+  min-width: 40px !important;
+}
+
+.btnRefresh {
+  text-decoration: underline $color-button;
+  color: $color-button;
+  text-align: left;
+  padding-left: 7px;
+  min-width: 40px !important;
+  position: absolute;
+  line-height: 14px;
+}
+
+input:disabled {
+  color: #202020;
+}
+.modifInput {
+  margin-top: -14px;
+  margin-bottom: -26px;
+}
+.impor {
+  margin-left: 88px;
+}
+.no-padding {
+  padding: 15px;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+label {
+  color: $color-gray-custom;
+}
+:host ::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: $color-button;
+}
+:host ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $color-drawer !important;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-checkmark {
+  display: none;
+}
+
+.fielsInput {
+  margin-right: 10px;
+  padding: 5px 15px;
+  z-index: 3;
+  height: 20px;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 5px 5px;
+  width: 75px; 
+}
+
+::ng-deep.ngx-container {
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+::ng-deep.ngx-table {
+  text-align: center !important;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: $color-button !important;
+}
+
+::ng-deep.ngx-table[id="fee-table"] th {
+  color: #454545 !important;
+  background-color: #f3f3f3 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  height: 10px !important;
+  font-family: "Graphik-Light" !important;
+  font-size: 15px !important;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 2px solid #f3f3f3 !important;
+  border-bottom-width: 2px !important;
+  border-bottom-style: solid !important;
+  border-bottom-color: rgb(255, 255, 255) !important;
+}
+
+::ng-deep.ngx-table[id="fee-table"] tr {
+  color: #002f55 !important;
+  background-color: #f3f3f3 !important;
+}
+
+::ng-deep.ngx-table[id="fee-table"] td {
+  border-bottom: 0px !important;
+}
+
+::ng-deep.ngx-table[id="fee-table"] th .ngx-table__header-title {
+  font-family: "Graphik-Light" !important;
+  font-size: 12px !important;
+}
+
+.col-12 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+
+.formInput{
+  padding-left: 45px;
+}
+
+.iconEdit{
+  color: #307FE2;
+  width: 20px;
+  height: 20px;
+}
+
+.confirmMsg{
+  color: $color-third;
+}
+.acceptedMsg{
+  color: $color-success;
+}
+.rejectedMsg{
+  color: $color-error;
+}
+
+.containerAction{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.adjustEditCell{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manipulateCellMargin{
+  margin-left: 50px;
+}
+
+@media screen and (max-width: 460px){
+  .manipulateCellMargin{
+    margin-left: 40px;
+  }  
+}
+
+@media screen and (max-width: 436px){
+  .manipulateCellMargin{
+    margin-left: 35px;
+  }  
+}
+
+@media screen and (max-width: 430px){
+  .adjustFecha, .adjustCell{
+    display: flex;
+    justify-content: initial !important;
+  }  
+
+  .containerAction{
+    text-align: left;
+  }
+
+  .containerMsg{
+    height: 100%;
+    width: 100%;
+  }
+
+  .manipulateCellMargin{
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+
+  .adjustEdit{
+    margin-top: 2px;
+  }
+  .adjustCellMobile{
+    margin-top: 8px;
+  }
+  .adjustFecha{
+    display: flex;
+    justify-content: center;
+  }
+
+  :host ::ng-deep table {
+    display: block;
+  }
+  :host ::ng-deep  thead {
+    display: none;
+  }
+  :host ::ng-deep  tbody {
+    display: table;
+    width: -webkit-fill-available;
+  }
+  :host ::ng-deep  tr {
+    display: table-row-group;
+    border-bottom: 20px solid #ffffff !important;
+  }
+  :host ::ng-deep  tr:nth-child(odd) {
+    background-color: #f9f9f9; 
+  }
+
+  :host ::ng-deep .ngx-table[id="fee-table"] td {
+    display: table-row;
+    text-align: left;
+    border-bottom: 2px solid #ffffff !important;
+    width: 50%;
+  }
+
+  :host ::ng-deep  td:before,
+  td > span {
+    display: table-cell;
+    padding: 7px 13px; /* optional */
+  }
+  :host ::ng-deep  td:before {
+    content: attr(class);
+    width: 50%;
+    font-weight: 600; 
+    text-align: left;
+    padding-left: 25px;
+    color: #939393;
+    font-family: "Graphik-Light", "Graphik-Medium";
+    font-size: 12px !important;
+    vertical-align: middle;
+  }
+
+  .formInput{
+    padding-left: 0px;
+  }
+
+
+  .fielsInput {
+    margin-left: 0px;
+    z-index: 3;
+    background: #ffffff;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 5px 5px 5px 5px;
+    width: 75px; 
+    margin-right: 5px; 
+    margin-top: 0px; 
+    height: 20px;
+    margin-bottom: 3px;
+  }
+
+  :host ::ng-deep .btnRefresh {
+    text-decoration: underline $color-button;
+    color: $color-button;
+    text-align: left;
+    padding: 0px !important;
+    min-width: 30px !important;
+  }
+
+}

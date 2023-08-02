@@ -1,0 +1,243 @@
+@import "../../../../themes/cobra-colors.scss";
+
+.showMobile{
+  display: none;
+}
+
+.showTabletDesktop{
+  display: block;
+}
+
+.containerDialog{
+  padding: 1.5em;
+  height: 400px;
+}
+
+.titleDialog{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2{
+  margin: 0px;
+}
+
+.closeBtn{
+  cursor: pointer;
+}
+
+:host ::ng-deep.ngx-table th {
+    color:white !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+    border-top-color: currentColor !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+    //closes otuline gap
+    border-top-color: currentColor !important;
+  }
+
+:host ::ng-deep.mat-form-field-label{
+  font-size: 15px;
+}
+
+:host ::ng-deep.mat-select-value{
+  font-size: 15px;
+}
+
+:host ::ng-deep .mat-dialog-actions {
+  position: relative;
+  top: -15px;
+  padding-left: 1em;
+}
+
+:host ::ng-deep ::-webkit-scrollbar {
+  width: 7px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 20px $color-gray;
+  border-radius: 7px;
+}
+
+:host::ng-deep ::-webkit-scrollbar-thumb {
+  background: $color-button;
+  border-radius: 5px;
+}
+
+:host ::ng-deep .ngx-container table{
+  overflow-x: hidden;
+  max-height: 250px;
+  text-align: center;
+}
+
+:host ::ng-deep .ngx-container thead{
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+}
+
+:host ::ng-deep .ngx-pagination-wrapper{
+  margin-top: 1em;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+  width: 120px;
+}
+
+.closeDialogBnt{
+  border: 1px solid darkgrey;
+  padding: 5px;
+  border-radius: 100%;
+}
+  
+.centerSpinner{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scrollableData{
+  display: flex;
+  justify-content: center;
+}
+.fixedHeader{
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+}
+
+.adjustTable{
+  overflow-y: auto;
+}
+
+.separator{
+  margin-right: 10px;
+  padding-right: 10px;
+  border-right: 1px solid;
+}
+
+.adjustForm {
+  display: flex;
+  justify-content: space-between;
+
+  .exportExcelContainer {
+    display: flex;
+    align-items: center;
+
+    .btnExport {
+      background-color: #3080e3;
+      color: white;
+    }      
+  }  
+}
+
+@media screen and (max-width: 960px){
+  .scrollableData{
+    margin-top: 1.5em;
+  }
+
+  .adjustForm .exportExcelContainer .btnExport {
+    position: relative;
+    bottom: -9px;
+  }
+}
+
+@media screen and (max-width: 720px){
+  .containerDialog{
+    height: 420px;
+  }
+
+  .titleDialog{
+    margin-bottom: 1em;
+  }
+
+  h2{
+    font-size: 16px;
+    line-height: normal;
+  }
+
+  // :host ::ng-deep .ngx-table__header-title{
+  //   font-size: 12px;
+  // }
+
+  :host ::ng-deep .ngx-container table{
+    // font-size: 12px;
+    overflow-x: auto;
+  }
+}
+
+@media screen and (max-width: 500px){
+  .showMobile{
+    display: block;
+    width: 100%;
+    height: 300px;
+    overflow-y: auto;
+  }
+  
+  .showTabletDesktop{
+    display: none;
+  }
+
+  :host ::ng-deep mat-card{
+    padding: 0px !important;
+  }
+
+  :host ::ng-deep .mat-card-header-text{
+    width: 100%;
+    margin: 0px !important;
+  }
+
+  :host ::ng-deep .mat-card-title{
+    margin: 0px !important;
+    font-size: 15px;
+  }
+
+  .adjustTitle{
+    margin: 0px !important;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .alignSpan{
+    align-self: end;
+    padding-top: 5px;
+  }
+
+  .adjustCard{
+    margin-bottom: 1em;
+  }
+
+  .cardHeader{
+    background-color: $color-drawer !important;
+    color: white;
+  }
+  .cardData{
+    background-color: $color-gray-light !important;
+    color: $color-drawer;
+  }
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}

@@ -1,0 +1,250 @@
+<!-- MENSAJE DE MANTENIMIENTO -->
+<div *ngIf="isOnMaintenance; else summaryTemplate" class="container">
+  <div class="tooltip" [ngClass.lt-md]="{'tooltip-mobile': true}">
+    <button type="button" mat-icon-button (click)="hideTooltip()">
+      <mat-icon class="iconToolCancel">close</mat-icon>
+    </button>
+    <div class="tooltip-text">
+      <button mat-mini-fab class="buttonUs" disabled>
+        <mat-icon class="iconTool" svgIcon="custom-cog" inline="true"></mat-icon>
+      </button>
+      <p>
+        <span class="tooltipSpa">Esta sección se encuentra</span><br /><span class="tooltipSpa">en reparación</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<ng-template #summaryTemplate>
+  <!-- LOADING BAR -->
+  <div *ngIf="isLoading" class="loading-page-indicator" ngStyle.lt-md="margin-left: 0px; margin-top: -20px;">
+    <mat-progress-bar class="fixed-bar" mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div class="component">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" ngStyle.lt-md="margin-top: -10px;"> 
+      <!-- TITULO -->
+      <h2 ngClass.lt-md="sectionTitle">Resumen de Cuenta</h2>
+      <!-- MENSAJE - SOLICITAR INFO -->
+      <div class="note" *ngIf="selectedTab === 1" ngStyle.lt-md="padding-top: 10px; line-height: 16px;">
+        <mat-icon>error</mat-icon>&nbsp;
+        <p class="classP" ngStyle.lt-md="margin-top: 5px;margin-bottom: 0px;">
+          Solicitar información anterior al 09/04/2018 a través de la sección Contacto
+          </p>
+      </div>
+    </div>
+
+        <div class="form">
+          <!-- SELECTOR DE CUIT -->
+          <mat-form-field *ngIf="cuits.length > 1 || canAccessEverybodyPayments()" class="selectInput" ngClass.lt-md="selectInput-mobile" class="formField" style="padding-right: 20px;" appearance="outline" ngStyle.lt-md="margin-bottom: 0px;">
+              <mat-select [(ngModel)]="selectedCuit" placeholder="Cuit"
+                [disabled]="filteredCuits.length === 0 || isLoading">
+                <mat-select-filter
+                  [placeholder]="'Filtrar'"
+                  [array]="cuits"
+                  (filteredReturn)="filteredCuits =$event"
+                  [noResultsMessage]="'No se encontró el cuit'"
+                ></mat-select-filter>
+                <mat-option [value]="'Todos'" (click)="filterCuentasByCuit('Todos')" style="width: inherit">Todos</mat-option>
+                <mat-option *ngFor="let c of filteredCuits"
+                [value]="c"
+                (click)="filterCuentasByCuit(selectedCuit)">
+                  {{ c }}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
+          <!-- SELECTOR DE PRODUCTO -->
+          <mat-form-field appearance="outline" id="idProducto" class="selectInput" ngClass.lt-md="selectInput-mobile" ngStyle.lt-md="margin-bottom: 0px; padding-bottom: 0px;">
+            <mat-select [(ngModel)]="selectedProperty" placeholder="Producto"
+              [disabled]="filteredProperties.length === 0 || isLoading">
+              <mat-select-filter
+                [placeholder]="'Filtrar'"
+                [array]="properties"
+                [displayMember]="'mixedEmpAndCode'"
+                (filteredReturn)="filteredProperties =$event"
+                [noResultsMessage]="'No se encontró la propiedad'"
+              ></mat-select-filter>
+              <mat-option *ngFor="let cc of filteredProperties" [value]="cc.mixedEmpAndCode"
+                (click)="getPaymentsSummary(cc.mixedEmpAndCode)">
+                {{ cc.mixedEmpAndCode }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- SELECTOR DE TABLA -->
+          <mat-form-field appearance="outline" id="idTabla" class="selectInput" ngClass.lt-md="selectInput-mobile" fxHide.gt-sm="true">
+            <mat-select [(value)]="selectedTab" [disabled]="isLoading">
+              <mat-option [value]="table.value" *ngFor="let table of summaryTables">{{ table.text }}</mat-option>
+            </mat-select>     
+          </mat-form-field>
+
+          <div *ngIf="selectedTab === 0 && showPayBtn" class="paySelectedContainer" [ngClass.gt-sm]="{'btnOnDesktop': true}">
+            <span class="paySelectedHeader">Pagar cuotas seleccionadas</span>
+            <mat-button-toggle-group appearance="legacy" name="moneda">
+              <mat-button-toggle 
+                value="ARS"
+                [ngClass]="!selectedPaymentsIndexes.length ? 'payDisable' : 'payEnabled'"
+                [disabled]="!selectedPaymentsIndexes.length"
+                (click)="paySelectedPayments('ARS')"    
+              >ARS</mat-button-toggle>
+              <mat-button-toggle 
+                value="USD"
+                [ngClass]="!selectedPaymentsIndexes.length ? 'payDisable' : 'payEnabled'"
+                [disabled]="!selectedPaymentsIndexes.length"
+                (click)="paySelectedPayments('USD')"    
+              >USD</mat-button-toggle>
+            </mat-button-toggle-group>            
+          </div>
+        </div>
+
+    <div>
+
+      <!-- CARTEL - AVISO DE CARGA DE DATOS -->
+      <div *ngIf="isLoading" class="container mobile-padding-bottom bigFont" ngClass.lt-sm="smallFont" ngClass.lt-md="mediumFont">
+        <div class="tooltip" [ngClass.lt-md]="{'tooltip-mobile':true}" ngStyle.lt-md="margin-top: 1em;">
+          <div class="tooltip-text">
+              <mat-icon>info</mat-icon>
+            <p>
+              Cargando...<br /><br />Esto puede demorar unos minutos
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- GRUPO DE PESTAÑAS / TABLAS -->
+      <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="_onTabChanged($event);">
+
+        <!-- SALDO PENDIENTE -->
+        <mat-tab class="matTabLab" label="Saldo pendiente">
+          <div class="columns">
+            <ng-container>
+              <div class="column col-12 tabla">
+                <ngx-table #summaryTable 
+                  [id]="'summary-table'" 
+                  [data]="summarys" 
+                  [columns]="columnsBalance" 
+                  [configuration]="configurationBalance" 
+                  [noResultsTemplate]="noResultsTemplateBalance">
+                </ngx-table>
+                <span class="ngx-pagination-span">Mostrar Resultados</span>
+              </div>
+              <ng-template #estado let-row>
+                <div *ngIf="_vencidaCheck(row.fecha)" ngClass.lt-md="venc-dot-mobile"><span fxHide.lt-md="true" class="venc-dot"> • </span>Vencido</div>
+                <div *ngIf="!_vencidaCheck(row.fecha)">Por vencer</div>
+              </ng-template>
+              <ng-template #pagar let-row let-rowIndex="rowIndex">
+                <div *ngIf="row.onDebtDetail">
+                  <div *ngIf="!row.processing">
+                      <mat-checkbox #ref [checked]="row.check" color="primary" (click)="changePagarValue(rowIndex, $event);"></mat-checkbox>
+                  </div>
+                  <div *ngIf="row.processing" class="processingPayment">
+                      <span>Procesando</span>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #saldo let-row>
+                <div>{{ row.saldo | amountConvert:undefined:true }}</div>
+              </ng-template>
+              <ng-template #intereses let-row>
+                <div>{{ row.intereses | amountConvert:undefined:true }}</div>
+              </ng-template>
+              <ng-template #capital let-row>
+                <div>{{ row.capital | amountConvert:undefined:true }}</div>
+              </ng-template>
+              <ng-template #noResultsTemplateBalance>
+                <td [attr.colspan]="columnsBalance.length" class="no-results" fxHide.lt-sm="true" >
+                  {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                </td>
+                <p fxHide.gt-xs="true" class="no-result-mobile">{{isLoading ? 'Cargando...' : 'Sin resultados'}}</p>
+              </ng-template>
+              <div *ngIf="summaryTotal" class="totals" ngClass.lt-md="totals-mobile">
+                <mat-card class="vencido" ngStyle.lt-md="background-color: white;">Total vencido<span>{{ summaryTotalVenc | amountConvert:summarys[0]?.moneda:true }}</span></mat-card>
+                <mat-card class="saldo" ngClass.lt-md="saldo-mobile">Total saldo<span>{{ summaryTotal | amountConvert:summarys[0]?.moneda:true }}</span></mat-card>
+                <mat-card class="saldo" ngClass.lt-md="saldo-mobile">Total cuotas<span>{{ summaryTotalCuotas }}</span></mat-card>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+
+        <!-- HISTORIAL DE PAGOS -->
+        <mat-tab label="Historial de pagos">
+
+        <div class="columns">
+          <ng-container>
+              <div class="column col-12 tabla">
+                <ngx-table #historyTable
+                  [id]="'history-table'" 
+                  [configuration]="nestedConfiguration" 
+                  [data]="paymentsHistory"
+                  [detailsTemplate]="detailsTemplate" 
+                  [columns]="columnsNested" 
+                  (event)="eventEmitter($event)" 
+                  [noResultsTemplate]="noResultsTemplateNested">
+                </ngx-table>
+                <span class="ngx-pagination-span">Mostrar Resultados</span>
+                <ng-template #importeHistory let-row>
+                  <div>{{ row.importe | amountConvert:undefined:true }}</div>
+                </ng-template>
+                <ng-template #saldoHistory let-row>
+                  <div>{{ row.saldo | amountConvert:undefined:true }}</div>
+                </ng-template>
+                <ng-template #action let-row let-rowIndex='rowIndex'>
+                  <mat-icon fxHide.lt-md="true" (click)="onRowClickEvent($event, rowIndex)">{{toggledRows.has(rowIndex) ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                  <mat-icon fxHide.gt-sm="true" (click)="openDialogDetails(row.details)">add_circle</mat-icon>
+                </ng-template>
+                <ng-template #noResultsTemplateNested>
+                  <td [attr.colspan]="columnsNested.length" class="no-results" fxHide.lt-sm="true" >
+                    {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                  </td>
+                  <p fxHide.gt-xs="true" class="no-result-mobile">{{isLoading ? 'Cargando...' : 'Sin resultados'}}</p>
+                  </ng-template>
+                <ng-template #detailsTemplate let-row>
+                  <app-details-table [data]="row.details"></app-details-table>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </mat-tab>
+
+        <!-- DETALLE DE RECIBOS -->
+        <mat-tab label="Detalle de Recibos">
+          <div class="columns">
+          <ng-container>
+              <div class="column col-12 tabla">
+                <ngx-table 
+                  [id]="'unapplied-table'" 
+                  [data]="unappliedPayments"
+                  [columns]="unappliedPaymentsColumns" 
+                  (event)="eventEmitter($event)" 
+                  [configuration]="configurationBalance" 
+                  [noResultsTemplate]="noResultsTemplateUnapplied">
+                </ngx-table>
+                <span class="ngx-pagination-span">Mostrar Resultados</span>
+              </div>
+              <button [disabled]="isLoading" *ngIf="unappliedPayments.length > 0" class="btnExport" mat-raised-button (click)="unappliedPaymentsExportToExcel()">Exportar a Excel</button>
+              <ng-template #noResultsTemplateUnapplied>
+                <td [attr.colspan]="unappliedPaymentsColumns.length" class="no-results" fxHide.lt-sm="true" >
+                  {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                </td>
+                <p fxHide.gt-xs="true" class="no-result-mobile">{{isLoading ? 'Cargando...' : 'Sin resultados'}}</p>
+              </ng-template>
+            </ng-container>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
+</ng-template>
+
+<!--Lo pongo acá abajo porque antes no se mostraba dependiendo de la pestaña-->
+<ng-template #invoiceBalance let-row>
+  <div *ngIf="row.trxId">
+    <mat-spinner class="mat-spinner-center" [diameter]="20" *ngIf="row.isInvoiceLoading"></mat-spinner>
+    <mat-icon *ngIf="!row.isInvoiceLoading" matTooltip="Descargar factura" (click)="downloadInvoice(row)">get_app</mat-icon>
+  </div>
+</ng-template>
+<ng-template #balanceTrxNumber let-row>
+  <div *ngIf="row.trxId">
+    <span>{{row.trxNumber}}</span>
+  </div>
+</ng-template>

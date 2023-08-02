@@ -1,0 +1,44 @@
+.container {
+    color: #fafafa;
+    font-family: 'Graphik-Light', 'Graphik-Medium';
+}
+
+.header {
+    width: 90%;
+    padding: 20px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+
+    mat-icon {
+        font-size: 30px !important;
+    }
+
+    span {
+        margin-top: 5px;
+        margin-left: 5px;
+    }
+}
+
+.content {
+    padding: 50px;
+    h4, h2 {
+        color: #fafafa;
+        font-weight: lighter;
+        margin: 7px 0px 0px 0px;
+    }
+
+    .step {
+        margin-top: 35px;
+    }
+
+    .step-title {
+        font-weight: bold;
+        font-size: 18.5px;
+    }
+
+    .step-desc {
+        font-size: 18px;
+        line-height: 25px;
+    }
+}

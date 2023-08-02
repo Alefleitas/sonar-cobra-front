@@ -1,0 +1,722 @@
+@import "../../../../themes/cobra-theme.scss";
+
+mat-icon.tourBtn{
+  position: relative; 
+  top: -2px;
+  color: $color-drawer !important;
+}
+
+.component {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+.componentAltC {
+  border-top: #c5c5c5 1px solid;
+  margin-right: 7px;
+  margin-bottom: 7px;
+}
+
+.contentFromCbu {
+  padding-top: 25px;
+}
+
+.paymentsContainer{
+  width: 430px;
+}
+.label-input {
+  background: $color-white;
+  padding-left: 2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+.label-inputCuit {
+  width: 500px;
+  height: 40px;
+  background: $color-white;
+}
+.line {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: $color-gray;
+}
+.labeput {
+  height: 40px;
+  width: 500px;
+  border-bottom: 2px solid $color-gray-light;
+}
+.divuno {
+  width: 25%;
+  border-right: 2px solid $color-gray-light;
+  height: 100%;
+  padding: 13px 0 2px 17px;
+  display: inline-block;
+}
+
+.divdos {
+  width: 45%;
+  height: 100%;
+  display: inline-block;
+  padding: 13px 0 2px 17px;
+}
+
+.CBU-button {
+  background-color: $color-button;
+  color: white;
+  border-radius: 30px;
+  margin-left: 5em;
+  width: 10em;
+  font-size: 13px;
+}
+.CBU-button:hover {
+  background-color: $color-drawer;
+}
+
+.buttonCancell {
+  background-color: $color-gray;
+  color: $color-gray-dark;
+  border-radius: 30px;
+  width: 10em;
+}
+.buttonCancell:hover {
+  background-color: $color-gray-dark;
+  color: $color-gray-light
+}
+
+.divCuentaSeleBut {
+  display: flex;
+  align-items: center;
+}
+.cuentaContainer{
+  width: 430px;
+}
+.divcbu {
+  margin-top: -41px;
+}
+.payDisable {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: $color-button;
+  color: $color-white;
+  width: 10em;
+  font-size: 14px;
+}
+.payEnabled {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: $color-button;
+  color: $color-white;
+  width: 10em;
+  font-size: 14px;
+}
+
+.payEnabled:hover {
+  background-color: $color-drawer;
+}
+.mat-icon {
+  color: $color-button !important;
+}
+.copyCVY-icon mat-icon{
+  font-size: 20px;
+}
+
+.adjustSelectTour{
+  padding-bottom: 15px;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: $color-button !important;
+}
+
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $color-drawer !important;
+}
+
+.fiels {
+  margin-left: 35px;
+  width: 250px;
+}
+.buttonSA {
+  border-color: $color-button;
+  border-style: solid;
+  color: $color-button;
+  border-radius: 5px;
+  margin-left: 10px;
+  border: dashed;
+  border-width: 1px;
+}
+.buttonSA:hover {
+  border-style: solid;
+  border-color: $color-drawer !important;
+  border: dashed;
+  border-width: 1px;
+}
+.lblTerms {
+  color: $color-button;
+  margin-left: 20px;
+  font-size: 14px;
+}
+.lblTerms:hover {
+  color: $color-drawer;
+}
+.classLabel {
+  font-size: 14px;
+  margin-top: 0px !important;
+  color: #002f55 !important;
+}
+.classLabelHea {
+  font-size: 14px;
+  color: $color-gray-custom;
+}
+
+.fielsInput {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 3px;
+  z-index: 3;
+  width: 230px;
+  height: 30px;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 5px 5px;
+}
+.cbuInput {
+  height: 20px;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 5px 5px;
+}
+.divCBUSelec {
+  margin-top: 17px;
+  margin-bottom: -7px;
+  display: flex;
+  align-items: center;
+}
+.validation-result {
+  padding-left: 30px;
+  font-weight: bold;
+  color: $color-success;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.iconConfir {
+  color: $color-success !important;
+  font-size: 24px;
+  margin-right: 11px;
+}
+.iconConfirError {
+  color: $color-error !important;
+  font-size: 24px;
+  margin-right: 11px;
+}
+.spConfirError {
+  color: $color-error !important;
+}
+.iconFile {
+  margin-left: -11px;
+  margin-right: 6px;
+}
+
+.payments-labels mat-label {
+  font-family: "Graphik-Light";
+  font-size: 14px;
+  color: #c5c5c5;
+  margin-top: 6%;
+}
+
+mat-input {
+  font-family: "Graphik-Light";
+  font-size: 14px;
+  color: #002f55 !important;
+  margin-left: 0%;
+  margin-top: 6%;
+}
+
+.dateTitle {
+  margin-left: 0px !important;
+  margin-top: 3% !important;
+}
+
+.totalLabel {
+  font-family: "Graphik-Medium" !important;
+  font-size: 15px !important;
+  color: #939393 !important;
+  margin-top: 0px !important;
+}
+
+.totalPagar {
+  margin-left: 30px;
+  font-family: "Graphik-Medium" !important;
+  font-size: 15px !important;
+  color: #002f55 !important;
+  min-width: max-content;
+  margin-left: 10%;
+}
+
+.label-input-totals {
+  width: 400px;
+  background: $color-white;
+  margin-bottom: 1%;
+  padding-left: 3%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  display: inline-flex;
+  margin-top: 1%;
+}
+
+.tooltipSpa {
+  color: white;
+  line-height: 1.5em;
+  margin-left: 1em;
+  margin-right: 1em;
+  line-height: 1.5em;
+  font-size: 14px;
+  a {
+    color: orange;
+  }
+}
+
+
+.iconToolCancel {
+  color: white !important;
+  cursor: pointer;
+  font-size: 20px;
+  align-self: auto;
+  margin-top: 0.5em;
+  padding-right: 0.5em;
+}
+
+.tooltipHelp {
+  background-color: $color-button;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.tooltipWarning {
+  @extend .tooltipHelp;
+  background-color: black;
+}
+
+.iconHelp {
+  color: white !important;
+  font-size: 35px;
+  display: inline;
+  margin-left: 15px;
+  vertical-align: middle;
+  margin-right: 15px;
+  margin-top: -10px;
+}
+.iconWarning {
+  color: $color-error !important;
+  font-size: 35px;
+  display: inline;
+  margin-left: 15px;
+  vertical-align: middle;
+  margin-right: 15px;
+  margin-top: -10px;
+}
+
+.tootip-container, .tootip-warning-container{
+  padding-top: 1em;
+  padding-bottom: 1em;
+  display: flex;
+  align-items: center;
+  .tooltipSpa{
+    padding: 0px;
+  }
+}
+// .tootip-warning-container{
+//   padding-top: 1em;
+//   padding-bottom: 1em;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   width: 100%;
+// }
+.tooltip-container-mobile, .tooltip-container-mobile{
+  .tooltipSpa{
+    margin-left: 1em;
+  }  
+}
+
+.loading-indica {
+  display: flex;
+  justify-content: center;
+  padding-top: 10em;
+  margin-left: -30px;
+}
+.loading-indica-mobile{
+  position: fixed;
+  top: 50%;
+  right: 40%;
+}
+
+.buttonDelete {
+  min-width: 20px !important;
+  padding: 0px;
+  top: 0px;
+  margin-left: 10px !important;
+  align-self: flex-start;
+}
+
+.iconDelete {
+  color: #307fe2;
+  font-size: 20x;
+  margin-left: 5%;
+}
+
+.rawQuota{
+  width: 100%; 
+  display: inline-flex;
+}
+
+.rawQuotaKey{
+  width: 60%; 
+  display: flex;
+  align-items: center;
+}
+
+.rawQuotaValue{
+  width: 40%; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+.razon-propiedad{
+  font-family: 'Graphik-Medium'; 
+  color: #002F55; 
+}
+
+.bttnsContainer{
+  width: 430px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.TYCcheck{
+  margin-bottom: 0.5em;
+  width: 430px;
+  text-align: center;
+}
+.TYCmobile{
+  margin-top: 1em;
+  width: auto;
+}
+
+.alertMsg{
+  color: red; 
+}
+.alertMsgSelect{
+  color: red; 
+  font-size: 14px;
+  padding-left: 15px;
+}
+
+.CVU-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.CVU-value{
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+  mat-spinner{
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 390px){
+  .rawQuotaKey{
+    width: 50%
+  }
+  .rawQuotaValue{
+    width: 50%
+  }
+}
+
+@media (min-width: 550px) and (max-width: 960px){
+
+  .alertMsgSelect, .alertMsg{
+    text-align: center;
+  }
+
+  :host ::ng-deep mat-form-field {
+    .mat-form-field-wrapper {
+      width: 400px !important;
+    }
+  }
+
+  .CBU-button{
+    width: 400px !important;;
+  }
+
+  .divCuentaSeleBut{
+    justify-content: center;
+  }
+
+  .tablet-container{
+    display: grid;
+    justify-content: center;
+  }
+
+  .tablet-content{
+    width: 400px;
+  }
+
+}
+
+@media (max-width: 960px) {
+
+  .alertMsgSelect, .alertMsg{
+    font-size: 14px;
+  }
+  .alertMsgSelect{
+    padding: 0px;
+    text-align: center;
+  }
+
+  .component {
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    padding-bottom: 100px;
+  }
+
+  .cuentaContainer{
+    width: auto;
+  }
+  .divCuentaSeleBut {
+    margin-top: 8px;
+    margin-bottom: 0px;
+    display: grid;
+    align-items: center;
+    width: 100%;
+  }
+
+  .select {
+    margin-left: 0px !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep .mat-form-field-wrapper {
+    width: 100% !important;
+  }
+
+
+  .CBU-button {
+    border-radius: 0px;
+    background-color: #307fe2;
+    color: white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  .CBU-button:hover {
+    border-color: $color-drawer;
+  }
+
+  .bottonDisabled {
+    border-radius: 0px;
+    background-color: $color-button;
+    color: $color-white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+
+  .headTitle {
+    text-transform: uppercase;
+  }
+
+  .paymentsContainer{
+    width: 100%;
+  }
+  
+  .label-input{
+    padding: 0px !important;
+  }
+
+  .label-input-totals {
+    width: 100%;
+    padding: 10px 0px 10px 0px !important;
+  }
+
+  .rawQuota{
+    height: 40px;    
+    border-bottom: 2px solid $color-gray-light;
+    width: 100%; 
+    display: inline-flex;
+  }
+
+  .payments-labels mat-label {
+    font-family: 'Graphik-Medium';
+    font-size: 14px;
+    color: #002f55;
+    padding-left: 20px;
+    margin-top: 0px;
+  }
+  
+  mat-input {
+    font-family: "Graphik-Light";
+    font-size: 14px;
+    color: #002f55 !important;
+    margin-left: 0;
+    margin-top: 0px;
+  }
+
+  .buttonDelete {
+    min-width: 20px !important;
+    padding: 0px;
+    top: 0px;
+    margin-left: 10px !important;
+  }
+
+  
+  .tooltipHelp {
+    background-color: $color-button;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tooltipWarning {
+    @extend .tooltipHelp;
+    background-color: black;
+  }
+  
+  .tooltip {
+    background-color: black;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .iconWarning {
+    color: $color-error !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .iconToolCancel {
+    color: white !important;
+    cursor: pointer;
+    font-size: 20px;
+    align-self: auto;
+    margin-top: 0.5em;
+    padding-right: 1em;
+    }
+
+  .totalPagar {
+    margin-left: 0px !important;
+  }
+
+  mat-checkbox {
+    display: flex;
+    justify-content: center;
+  }
+
+  :host ::ng-deep .mat-checkbox-label {
+    font-size: 14px;
+    font-family: 'Graphik-Light';
+    color: #012338;
+  }
+
+  :host ::ng-deep .payDisable {
+    border-radius: 0px;
+    background-color: $color-gray-light !important;
+    border: 1px solid $color-gray;
+    font-family: 'Graphik-Medium' !important;
+    font-size: 14px !important;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
+  :host ::ng-deep .payEnabled {
+    border-radius: 0px;
+    background-color: #307fe2 !important;
+    color: white !important;
+    font-family: 'Graphik-Medium' !important;
+    font-size: 14px !important;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
+  .bttnsContainer {
+    width: auto;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .buttonCancell {
+    border-radius: 0px;
+    background-color: $color-gray;
+    color: #002f55;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+    font-size: 14px;
+    border-width: 0px !important;
+  }
+
+  :host ::ng-deep .cdk-overlay-pane{
+    width: 80% !important;
+  }
+
+}
+
+@media screen and(min-width: 961px) {
+  .desktop-content{
+    flex-direction: column;
+    margin-top: 1em;
+    width: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .payEnabled.tourBtn{
+    width: auto;
+  }
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}

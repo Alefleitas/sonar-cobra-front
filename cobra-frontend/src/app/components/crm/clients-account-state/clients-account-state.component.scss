@@ -1,0 +1,355 @@
+@import "../../../../themes/cobra-colors.scss";
+
+.component {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.loading-page-indicator {
+  margin: 20px;
+}
+
+.sectionTitle{
+  text-transform: uppercase; 
+  font-size: 16px; 
+  margin-top: 30px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formContainer{
+  display: inline-flex; 
+  width: 100%;
+}
+.searchContainer
+.filterContainer, .searchContainer{
+  margin-right: 15px;
+}
+
+:host ::ng-deep mat-form-field.filterContainer {
+  margin-right: 15px;
+}
+
+:host ::ng-deep.ngx-table th {
+  //table column name
+  color: white !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+  //closes otuline gap
+  border-top-color: currentColor !important;
+}
+
+:host ::ng-deep.ngx-container {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.mat-icon-qw {
+  padding: 8px;
+}
+
+.cenText {
+  padding: 30px;
+  text-align: center;
+}
+
+.inline-select {
+  width: 120px;
+}
+
+.no-results {
+  text-align: center;
+  width: 1750px;
+}
+
+:host ::ng-deep.mat-form-field-label {
+  font-size: 15px;
+}
+
+:host ::ng-deep.mat-select-value {
+  font-size: 15px;
+}
+
+::ng-deep.mat-calendar-body-selected {
+  background-color: $color-button;
+}
+
+:host ::ng-deep.mat-datepicker-toggle-active {
+  color: $color-button;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  top: 1px !important;
+}
+
+:host ::ng-deep .mat-form-field-label-wrapper {
+  top: -10px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar {
+  width: 7px;
+  height: 8px;
+}
+
+:host ::ng-deep ::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 20px $color-gray;
+  border-radius: 7px;
+}
+
+:host::ng-deep ::-webkit-scrollbar-thumb {
+  background: $color-button;
+  border-radius: 5px;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: #3080e3;
+}
+
+.btnExport {
+  background-color: #3080e3;
+  color: white;
+}
+
+.tabla{
+  padding: 25px 20px 0px 5px;
+}
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 25px;
+  top: -5px;
+  font-weight: bold;
+  font-family: 'Graphik-Light';
+}
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 90px;
+  top: 0px;
+  font-family: 'Graphik-Light';
+}
+
+:host::ng-deep mat-tab-header{
+  display: none;
+}
+:host::ng-deep .ngx-table__table-loader-wrapper{
+  margin-top: 0px;
+}
+
+.mat-spinner-center {
+  margin: 0 auto;
+}
+
+:host::ng-deep .text-right {
+  text-align: right;
+}
+
+:host::ng-deep .custom-bg {
+  text-align: right;
+  background-color: #dedede;
+}
+
+:host ::ng-deep #table > thead > tr > th:nth-of-type(8) {
+  background-color: #002f55;
+}
+
+.svgIcon {
+  width: 40px;
+  height: 25px;
+}
+
+::ng-deep .ngx-table[id="table"] th {
+  color: #fff !important;
+  font-size: 13px !important;
+  font-family: "Graphik-Light" !important;
+  background-color: #3080e3 !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+  text-align: center;
+}
+
+::ng-deep .ngx-table th:first-child {
+  border-radius: 5px 0px 0px 0px;
+}
+
+::ng-deep .ngx-table th:last-child {
+  border-radius: 0px 5px 0px 0px !important;
+  border-left: 0px;
+  width: 100px;
+}
+
+
+::ng-deep .ngx-table[id="table"] tr {
+  color: #002f55 !important;
+  background-color: #ffffff !important;
+  font-family: "Graphik-Light" !important;
+  border-bottom: 5px solid #f3f3f3 !important;
+}
+
+::ng-deep .ngx-table[id="table"] td {
+  text-align: center;
+  border-right: 0px;
+  padding: 0px;
+}
+
+::placeholder {
+  color:    #002f55;
+}
+
+:host ::ng-deep .ngx-table {
+  max-height: 500px;
+}
+
+:host ::ng-deep thead {
+  position: sticky;
+  top: 0px;
+  z-index: 999;
+  text-align: center;
+}
+
+:host::ng-deep .ngx-dropdown .ngx-menu{
+  z-index: 999;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+.filtersContainer {
+  width: -webkit-fill-available;
+  display: flex;
+
+  .exportExcelContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    button {
+      position: relative;
+      top: -3px;
+    }
+  }
+}
+
+//
+// ESTILOS PARA TABLET
+//
+@media screen and (min-width: 961px) and (max-width: 1060px){
+  :host ::ng-deep .mat-form-field-wrapper{
+    width: 180px;
+  }
+}
+
+//
+// ESTILOS PARA MOBILE
+//
+@media screen and (max-width:430px){
+  :host ::ng-deep .ngx-pagination-wrapper{
+    font-size: 13px;
+  }
+  :host::ng-deep .ngx-pagination-span {
+    font-size: 13px;
+  }  
+  .btnExport{
+    font-size: 13px;
+  }
+
+  :host ::ng-deep .ngx-pagination .pagination-next a::after{
+    margin-left: 0px;
+  }
+  :host ::ng-deep .ngx-pagination .pagination-previous a::before{
+    margin-right: 0px;
+  }
+
+  :host ::ng-deep .ngx-pagination .pagination-next.disabled::after{
+    margin-left: 0px;
+  }
+  :host ::ng-deep .ngx-pagination .pagination-previous.disabled::before{
+    margin-right: 0px;
+  }
+}
+
+
+@media screen and (max-width: 960px){
+
+  .tabla{
+    padding: 40px 20px 0px 5px;
+  }
+
+  .container{
+    display: flex;
+    justify-content: center;
+    margin-left: 15px;
+  }
+  .formContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    max-width: 500px;
+    margin-right: 20px;
+    margin-top: 15px;
+  }
+
+  :host ::ng-deep mat-form-field {
+    .mat-form-field-wrapper {
+      width: 100% !important;
+    }
+  }
+
+  :host ::ng-deep mat-form-field.filterContainer {
+    width: 30% !important;
+    margin-right: 0px;
+  }
+
+  .searchContainer{
+    margin-right: 30px;
+  }
+  .filtersContainer{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 30px;
+  }
+  .filterContainer{
+    margin-bottom: 5px;
+  } 
+
+  :host ::ng-deep #accountBalanceTable table{
+    display: none !important;
+  }
+
+  :host::ng-deep .ngx-pagination-range {
+    right: 40px;
+    top: 40px;
+  }  
+  :host::ng-deep .ngx-pagination-span {
+    right: 90px;
+    top: 45px;
+  }
+  :host ::ng-deep .ngx-pagination-wrapper{
+    margin-top: 0px;
+  }
+  .btnExport{
+    position: relative;
+    right: 30px;
+    bottom: 0px;
+  }
+  h2{
+    margin: 0px;
+  }
+  
+}

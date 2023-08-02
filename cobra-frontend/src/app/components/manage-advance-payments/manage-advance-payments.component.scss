@@ -1,0 +1,164 @@
+@import '../../../themes/cobra-theme.scss';
+
+.container {
+  margin-left: 30px;
+  margin-top: 22px;
+}
+
+.inform-button {
+  background-color: $color-button;
+  color: white;
+}
+
+.actionsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.msjValidacionFechas{
+  color: $color-error;
+  font-weight: bold;
+  margin-right: 2em;
+}
+
+:host::ng-deep mat-form-field.large {
+  .mat-form-field-wrapper {
+    width: 240px !important;
+  }
+}
+
+:host::ng-deep mat-form-field.small {
+  .mat-form-field-wrapper {
+    width: 170px !important;
+  }
+}
+
+:host ::ng-deep mat-form-field .mat-form-field-wrapper{
+  width: 150px;
+  padding-bottom: 0px;
+}
+
+:host ::ng-deep .datePicker .mat-form-field-flex{
+  padding-top: 0px;
+  max-height: 30px;
+}
+:host ::ng-deep .datePicker .mat-form-field-infix{
+  top: -5px;
+}
+
+:host ::ng-deep .mat-form-field-underline{
+  bottom: 0px;;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  top: 2px !important;
+}
+
+.datePickerFilter {
+  color: $color-drawer;
+  position: relative;
+  bottom: -3px;
+}
+
+.cleanBtn{
+  background-color: $color-button;
+}
+
+:host ::ng-deep .ngx-table {
+  color: $color-drawer !important;
+  background-color: #f3f3f3 !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table tr {
+  background-color: white !important;
+  border-bottom: 2px solid #e7e9ed;
+  text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table tr td:nth-child(7){
+  padding: 0px;
+}
+
+:host ::ng-deep .ngx-table th {
+  color:white !important;
+  font-size: 14px !important;
+  border-bottom: 10px solid $color-gray-light !important;
+  background-color: $color-button !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+}
+
+:host::ng-deep .ngx-table[id=ordersTable] td {
+  border-bottom: 10px solid $color-gray-light !important;
+  border-right: 0px solid;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: #3080e3;
+}
+
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 0px;
+  top: -35px;
+  font-weight: bold;
+  font-family: 'Graphik-Light';
+  background-color: white;
+}
+
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 60px;
+  top: -30px;
+  font-family: 'Graphik-Light';
+}
+
+:host ::ng-deep .mat-checkbox.aprobarCheckbox .mat-checkbox-frame {
+  border-color: $color-success;
+}
+
+:host ::ng-deep .mat-checkbox.mat-checkbox-checked.aprobarCheckbox .mat-checkbox-background {
+  background-color: $color-success !important;
+}
+
+:host ::ng-deep .mat-checkbox.mat-checkbox.aprobarCheckbox.mat-checkbox-disabled .mat-checkbox-frame{
+  border-color: $color-gray-light;
+}
+
+:host ::ng-deep .mat-checkbox.rechazarCheckbox .mat-checkbox-frame {
+  border-color: $color-error;
+}
+
+:host ::ng-deep .mat-checkbox.mat-checkbox-checked.rechazarCheckbox .mat-checkbox-background {
+  background-color: $color-error !important;
+}
+
+:host ::ng-deep .mat-checkbox.mat-checkbox.rechazarCheckbox.mat-checkbox-disabled .mat-checkbox-frame{
+  border-color: $color-gray-light;
+}
+
+.checkBoxsColumn {
+  display: flex;
+  margin-left: 10px;
+  margin-right: 10px;
+  justify-content: space-around;
+}
+
+.checkBoxsColumnMobile {
+  display: flex;
+  flex-flow: column;
+  flex-wrap: wrap;
+  row-gap: 5px;
+  justify-content: space-evenly;
+  align-items: end;
+
+  > div {
+    display: flex;
+  }
+}
+
+:host ::ng-deep .ngx-table__table-loader-wrapper{
+  margin: 0px;
+}

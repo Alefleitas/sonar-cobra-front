@@ -1,0 +1,61 @@
+<div class="container">
+
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <h2>Echeq</h2>
+
+  <div class="actionsContainer">
+    <div style="display: flex;">
+          <mat-form-field class="large" appearance="outline" floatLabel="always">
+            <mat-label>Búsqueda general</mat-label>
+            <input type="text" (input)="filter($event.target.value)" matInput>
+          </mat-form-field>
+    </div>
+
+    <div style="display: flex;">
+      <div style="display: flex; position: relative">
+        <!-- SELECCION - FECHA DESDE -->
+        <mat-form-field appearance="outline" class="small" style="padding-right: 20px">
+          <mat-label>Desde</mat-label>
+          <input matInput [matDatepicker]="startDatePicker" [max]="maxDate" [(ngModel)]="dateDesde"
+            (dateChange)="adjustDate()" autocomplete="off" [disabled]="isLoading" />
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- SELECCION - FECHA HASTA -->
+        <mat-form-field appearance="outline" class="small" style="padding-right: 20px;">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="endDatePicker" [value]="dateHasta" [max]="maxDate" [min]="dateDesde"
+            [(ngModel)]="dateHasta" (dateChange)="adjustDate()" autocomplete="off" [disabled]="isLoading" />
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <p class="dateSelectorTitle">Fecha de reporte</p>
+      </div>
+
+      <button class="inform-button" style="align-self: flex-end;" [disabled]="isLoading || !selectedDatesChanged" mat-raised-button
+        (click)="getPaymentReportsByDate(dateDesde, dateHasta)">
+        Buscar
+      </button>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="column col-12" style="position: relative; margin-top: 60px;">
+      <ngx-table id="paymentReportsTable" #paymentReportsTable [data]="filteredEcheqReports" [configuration]="paymentReportConfig"
+        [columns]="paymentReportColumns" [noResultsTemplate]="noResults">
+      </ngx-table>
+      <span class="ngx-pagination-span">Mostrar Resultados</span>
+    </div>
+
+    <ng-template #noResults>
+      <td [attr.colspan]="paymentReportColumns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+      </td>
+    </ng-template>
+  </ng-container>
+</div>

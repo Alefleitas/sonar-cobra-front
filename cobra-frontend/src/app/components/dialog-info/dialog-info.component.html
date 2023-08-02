@@ -1,0 +1,16 @@
+<div class="container bigFont" ngClass.lt-sm="smallFont" ngClass.lt-md="mediumFont">
+    <div class="tooltipContainer">
+      <button type="button" mat-icon-button (click)="closePopUp()">
+        <mat-icon class="iconToolCancel">close</mat-icon>
+      </button>
+      <div class="tooltip-text">
+        <mat-icon class="messageIcon" [ngClass]="{'confirmation': data.icon === 'check_circle', 'errorIcon': data.icon === 'error'}">{{data.icon}}</mat-icon>
+        <h1 *ngIf="data.title" class="title">{{data.title}}</h1>
+        <p><span class="tooltipMessage" [innerHtml]="data.text"></span></p>
+        <div class="acciones">
+          <button *ngIf="data.negativeButton" mat-flat-button class="btnCancelar" (click)="closePopUp();">{{data.negativeButton}}</button>
+          <button  mat-flat-button class="btnConfirmar" (click)="positiveAction();">{{data.positiveButton}}</button>
+        </div>  
+      </div>
+    </div>
+  </div>

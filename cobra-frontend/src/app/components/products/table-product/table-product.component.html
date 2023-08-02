@@ -1,0 +1,36 @@
+<ng-container>
+    <div class="columns col-12">
+            <ngx-table #data_table 
+            [configuration]="configuration"
+            [data]="data" 
+            [columns]="columns"
+            [noResultsTemplate]="noResultsTemplate">
+            </ngx-table>
+    </div>
+
+    <ng-template #noResultsTemplate>
+        <td [attr.colspan]="columns.length" class="no-results">
+            Sin resultados
+        </td>
+    </ng-template>
+
+    <ng-template #amountMontoTotal let-row>
+        <span>{{ row.montoTotal | amountConvert :row.montoTotal:true }}</span>
+    </ng-template>
+
+    <ng-template #amountTotalPagado let-row>
+        <span>{{ row.totalPagado | amountConvert :row.monedaTotalPagado:true }}</span>
+    </ng-template>
+
+    <ng-template #amountSaldoPendiente let-row>
+        <span>{{ row.saldoPendiente | amountConvert :row.monedaSaldoPendiente:true }}</span>
+    </ng-template>
+
+    <ng-template #summary let-row>
+        <span class="celda-resumen">
+            <button mat-icon-button routerLink="/summary">
+                <mat-icon class="svgIcon" svgIcon="paper"></mat-icon>
+            </button>
+        </span>
+    </ng-template>
+</ng-container>

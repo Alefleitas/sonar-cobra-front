@@ -1,0 +1,106 @@
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items:center">
+    <h2>{{title}}</h2>
+    <mat-icon mat-dialog-close class="closeDialogBnt">close</mat-icon>
+  </div>
+
+
+  <div class="contForm">
+    <form [formGroup]="formGroup" (ngSubmit)="send(formGroup)">
+
+      <div class="formCont adjustFormMobile">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha comunicación</mat-label>
+          <input matInput [ngxMatDatetimePicker]="commDatepicker" formControlName="date" [max]="maxMinDate">
+          <mat-datepicker-toggle matSuffix [for]="commDatepicker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #commDatepicker [stepMinute]="5"></ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Proxima fecha comunicación</mat-label>
+          <input matInput [ngxMatDatetimePicker]="nextCommDatepicker" formControlName="nextCommunicationDate" [min]="maxMinDate">
+          <mat-datepicker-toggle matSuffix [for]="nextCommDatepicker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #nextCommDatepicker [stepMinute]="5"></ngx-mat-datetime-picker>
+          <mat-hint>(Opcional)</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <label>
+        <mat-checkbox 
+          class="esContacto"
+          #esContacto
+          [checked]="data.isEditing && this.data.communication.contactDetailId != null"
+          (click)="formGroup.controls['communicationChannel'].reset(); formGroup.controls['contactDetail'].reset()">
+          ¿Es contacto?
+        </mat-checkbox>
+      </label>
+
+      <div class="formCont">   
+        <div *ngIf="esContacto.checked">
+          <mat-form-field appearance="outline">
+            <mat-label>Contacto</mat-label>
+            <mat-select formControlName="contactDetail" >
+              <!-- DB -->
+              <mat-option *ngFor="let contact of data.contactDetails"
+                [value]="contact.id" (click)="formGroup.controls['communicationChannel'].setValue(contact.comChannel);
+                this.data.parent.updateCorreoElectronico('')">
+                {{contact.value}}
+              </mat-option>
+              <!-- Oracle -->
+              <mat-option *ngFor="let clientContact of data.clientContactDetails" 
+              [value]="-1" (click)="this.data.parent.updateCorreoElectronico(clientContact.emailAddress); 
+                formGroup.controls['communicationChannel'].setValue(eComChannelType.CorreoElectronico);">
+                {{clientContact.emailAddress}}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="data.isEditing && data.communication.contactDetailId != null && data.communication.contactDetailId > 0" style="color: #3080e3;">{{data.communication.contactDetail.value}}</mat-hint>
+          </mat-form-field>
+        </div>  
+        
+        <div *ngIf="!esContacto.checked">
+          <mat-form-field appearance="outline">
+            <mat-label>Medio</mat-label>
+            <mat-select formControlName="communicationChannel">
+              <mat-option *ngFor="let eComChannel of eComChannelType | enumToArray"
+                [value]="eComChannelType[eComChannel]" (click)="formGroup.controls['contactDetail'].setValue(-1);
+                this.data.parent.updateCorreoElectronico('')">
+                {{eComChannel}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Respuesta</mat-label>
+          <mat-select formControlName="communicationResult">
+            <mat-option *ngFor="let eComResult of eCommunicationResult | enumToArray"
+              [value]="eCommunicationResult[eComResult]">
+              {{eComResult|camelCaseToSentenceCase}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="formCont" ngStyle.lt-md="margin-top: 1em;">
+          <textarea class="textArea" matInput formControlName="description" [ngClass]="{'textAreaError': descriptionInvalid()}"
+            placeholder="En el día de la fecha nos comunicamos con..."></textarea>
+      </div>
+
+      <div class="formError">
+        <div *ngIf="formGroup.controls['date'].invalid && (formGroup.controls['date'].dirty || formGroup.controls['date'].touched)"> * Fecha de comunicación es obligatoria.</div>
+        <mat-error *ngIf="formGroup.controls['communicationResult'].invalid && (formGroup.controls['communicationResult'].dirty || formGroup.controls['communicationResult'].touched)"> * Respuesta es obligatoria.</mat-error>
+        <mat-error *ngIf="formGroup.controls['communicationChannel'].invalid && !esContacto.checked && (formGroup.controls['communicationChannel'].dirty || formGroup.controls['communicationChannel'].touched)"> * Medio es obligatorio.</mat-error>
+        <mat-error *ngIf="formGroup.controls['contactDetail'].invalid && esContacto.checked && (formGroup.controls['contactDetail'].dirty || formGroup.controls['contactDetail'].touched)"> * El contacto es obligatorio.</mat-error>
+        <mat-error *ngIf="formGroup.controls['description'].invalid && (formGroup.controls['description'].dirty || formGroup.controls['description'].touched)"> * Descripción es obligatoria.</mat-error>
+      </div>
+
+      <div class="formBtn">
+        <button mat-flat-button class="btnEnviar" type="submit" [disabled]="formGroup.invalid">
+            Guardar
+        </button>
+      </div>
+
+    </form>
+  </div>
+  <br>
+</div>

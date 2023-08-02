@@ -1,0 +1,98 @@
+<div class="containerDialog">
+    <div class="titleDialog"> 
+        <h2 mat-dialog-title>Deuda de ({{data.product}}) {{data.name}}</h2>
+        <mat-dialog-actions class="closeBtn">
+            <mat-icon mat-dialog-close class="closeDialogBnt">close</mat-icon>
+        </mat-dialog-actions>  
+    </div>
+      
+    <div *ngIf="isLoading">
+        <mat-spinner class="centerSpinner"></mat-spinner>
+    </div>
+    
+    <div *ngIf="!isLoading">
+
+        <div class="adjustForm">
+            <form>
+                <mat-form-field appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <mat-select [(ngModel)]="filters.isOverdue" [ngModelOptions]="{standalone: true}"
+                        (selectionChange)="applyFilters()">
+                        <mat-option [value]="-1">Todos</mat-option>
+                        <mat-option [value]="0">En mora</mat-option>
+                        <mat-option [value]="1">Al dia</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+            <div class="exportExcelContainer">
+                <button [disabled]="isLoading" [class.spinner]="isExporting" *ngIf="paymentDetails.length > 0" class="btnExport" mat-raised-button (click)="exportToExcel()">Exportar a Excel</button>
+            </div>    
+        </div>
+
+        
+        <div class="scrollableData">
+            <div class="showMobile">
+                <mat-card class="fixedHeader">
+                    <mat-card-header class="primary adjustCard">
+                        <mat-card-title>
+                            <div class="adjustTitle cardHeader">
+                                <span><span class="separator">Vencimiento</span>Moneda</span>
+                                <span class="alignSpan"><span class="separator">Saldo</span><span class="separator">Intereses</span>Balance</span>
+                            </div>
+                        </mat-card-title>
+                    </mat-card-header>
+                </mat-card>
+    
+                <ng-container *ngFor="let payment of filteredPaymentDetails">
+                    <mat-card class="adjustCard" style="margin-top: 1em;">
+                        <mat-card-header>
+                            <mat-card-title>
+                                <div class="adjustTitle cardData">
+                                    <span><span class="separator">{{payment.fechaPrimerVencimiento | date: 'dd/MM/YYYY'}}</span>{{payment.codigoMoneda}}</span>
+                                    <span class="alignSpan"><span class="separator">{{payment.saldoActual | amountConvert:undefined:true}}</span><span class="separator">{{payment.intereses | amountConvert:undefined:true}}</span>{{payment.importePrimerVenc | amountConvert:undefined:true}}</span>
+                                </div>
+                            </mat-card-title>
+                        </mat-card-header>
+                    </mat-card>    
+                </ng-container>
+
+                <div *ngIf="!filteredPaymentDetails.length" style="text-align: center; font-size: 15px;">
+                    <p>No hay información disponible para el filtro seleccionado</p>
+                </div>
+            </div>
+
+            <div class="showTabletDesktop">
+                <div class="column col-12 adjustTable">
+                    <ngx-table id="balanceDetailTable" [data]="filteredPaymentDetails" [configuration]="configuration" [columns]="columns"
+                        [noResultsTemplate]="noResultsTemplate">
+                    </ngx-table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #fechaPrimerVencimiento let-row>
+    {{row.fechaPrimerVencimiento | date: 'dd/MM/YYYY'}}
+</ng-template>
+<ng-template #saldoActual let-row>
+    <span>
+        {{row.saldoActual | amountConvert:undefined:true}}
+    </span> 
+</ng-template>
+<ng-template #intereses let-row>
+    <span>
+        {{row.intereses | amountConvert:undefined:true}}
+    </span> 
+</ng-template>
+<ng-template #importePrimerVenc let-row>
+    <span>
+        {{row.importePrimerVenc | amountConvert:undefined:true}}
+    </span>
+</ng-template>
+<ng-template #noResultsTemplate>
+    <td [attr.colspan]="columns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'No hay información disponible para el filtro seleccionado'}}
+    </td>
+</ng-template>

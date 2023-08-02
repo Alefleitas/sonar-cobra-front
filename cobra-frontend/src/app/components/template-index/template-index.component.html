@@ -1,0 +1,47 @@
+<mat-card>
+  <mat-card-header class="primary cardHeader">
+    <mat-card-title class="cardTitle">Lista de templates para notificaciones</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div *ngIf="isLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <mat-expansion-panel *ngFor="let notType of notificationTypes; first as isFirst" [expanded]="isFirst">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-list style="position: relative; left:0px">
+            <mat-list-item>
+              <mat-icon matListIcon>email</mat-icon>
+              <h3 matLine [ngClass]="notType.template && notType.template.disabled ? 'template-disabled' : ''"> {{notType.description}} </h3>
+            </mat-list-item>
+          </mat-list>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="notType.template else elseBlock">
+        <p> {{notType.template.subject}} </p>
+        <angular-editor [(ngModel)]="notType.template.htmlBody" [config]="editorConfig"></angular-editor>
+        <div class="btn-container">
+          <button
+            *ngIf="notType.template"
+            [ngClass]="notType.template.disabled ? 'btn enable' : 'btn disable'"
+            mat-flat-button (click)="toggleTemplate(notType.template.id)"
+            [class.spinner]="isLoading" [disabled]="isLoading"
+          >
+            {{notType.template.disabled ? 'Habilitar template' : 'Deshabilitar template'}} </button>
+          <button mat-flat-button class="btn" (click)="editNotificationType(notType)">
+            Editar template </button>
+        </div>
+      </ng-container>
+      <ng-template #elseBlock>
+        <div class="cenText">
+          No hay un template creado para esta notificación.
+        </div>
+        <button mat-flat-button class="btn" (click)="editNotificationType(notType)">
+          Crear template </button>
+      </ng-template>
+    </mat-expansion-panel>
+    <div class="cenText" *ngIf="notificationTypes.length == 0">
+      No hay templates creados para mostrar.
+    </div>
+  </mat-card-content>
+</mat-card>

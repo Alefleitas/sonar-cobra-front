@@ -1,0 +1,127 @@
+<div *ngIf="isLoading" class="loading-page-indicator" ngStyle.lt-md="margin-left: 0px; margin-top: -20px;">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="component">
+  <h2>Reporte de rendiciones</h2>
+
+  <div style=" width: 100%; display:flex; align-items: center; justify-content: space-between;">
+    <div style="display:flex; align-items: center; justify-content: space-between;">
+      <!-- BUSQUEDA GENERAL -->
+      <mat-form-field
+        style="padding-right: 20px; position: relative; top: -2px;"
+        appearance="outline"
+        floatLabel="always"
+      >
+        <mat-label>Búsqueda general</mat-label>
+        <input type="text" [(ngModel)]="searchValue" (input)="filter(searchValue)" matInput [disabled]="isLoading"/>
+      </mat-form-field>
+
+      <!-- SELECCION - FECHA DESDE -->
+      <mat-form-field class="fiels" appearance="outline" style="padding-right: 20px">
+        <mat-label>Fecha Desde</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [max]="maxDate"
+          [(ngModel)]="dateDesde"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- SELECCION - FECHA HASTA -->
+      <mat-form-field class="fiels" appearance="outline" style="padding-right: 20px;">
+        <mat-label>Fecha Hasta</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endDatePicker"
+          [value]="dateHasta"
+          [max]="maxDate"
+          [min]="dateDesde"
+          [(ngModel)]="dateHasta"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+      
+    </div>
+    <div style="position: relative; top: -2px; justify-self: flex-end; margin-right: 25px;">
+      <button mat-flat-button color="primary" class="btnReset" (click)="showAllRenditions()" [disabled]="isLoading">Mostrar Todo</button>
+        
+      <button
+        mat-raised-button
+        [ngClass]="isLoading ? 'btnExportDisable' : 'btnExport'"
+        class="btnExport"
+        (click)="exportToExcel()"
+        [matTooltip]="getExportTooltip()"
+        [matTooltipClass]="'tooltipRendiciones'"
+        [disabled]="isLoading || !checkTableData()"
+      >
+        <mat-icon>get_app</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group (selectedTabChange)="_onTabChanged($event)">
+    <mat-tab label="Aprobadas">
+      <app-report-table #aprobadoTable [receivedData]="rendicionesAprobadas"></app-report-table>
+    </mat-tab>
+    <mat-tab label="Rechazadas">
+      <app-report-table #rechazadoTable [receivedData]="rendicionesRechazadas"></app-report-table>
+    </mat-tab>
+    <mat-tab label="Pendientes">
+      <app-report-table #pendienteTable [receivedData]="rendicionesPendientes"></app-report-table>
+    </mat-tab>
+    <mat-tab label="No Procesadas">
+      <app-report-table #noProcesadoTable [receivedData]="rendicionesNoProcesadas"></app-report-table>
+    </mat-tab>
+    <mat-tab label="Todas">
+      <app-report-table #todoTable [receivedData]="fullRendiciones"></app-report-table>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="totales" *ngIf="(selectedTab === 0 || selectedTab === 4) && !isLoading">
+    <mat-card class="cantidad">
+      <span class="titleCard">CANTIDAD</span>
+      <div class="cantidadContainer">
+        <div class="cantidadItem">
+          <span>ARS: {{ cantidadAcreditada("ARS") }}</span>
+        </div>
+        <div class="cantidadItem">
+          <span>USD: {{ cantidadAcreditada("USD") }}</span>
+        </div>
+        <div class="cantidadItem">
+          <span>EUR: {{ cantidadAcreditada("EUR") }}</span>
+        </div>
+        <div class="cantidadItem">
+          <span>UVA: {{ cantidadAcreditada("UVA") }}</span>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="saldo">
+      <span class="titleCard">TOTAL ACREDITADO</span>
+      <div class="saldoContainer">
+        <div class="saldoItem">
+          <span>ARS {{ totalAcreditado("ARS") | amountConvert: undefined:true }}</span>
+        </div>
+        <div class="saldoItem">
+          <span>USD {{ totalAcreditado("USD") | amountConvert: undefined:true }}</span>
+        </div>
+        <div class="saldoItem">
+          <span>EUR {{ totalAcreditado("EUR") | amountConvert: undefined:true }}</span>
+        </div>
+        <div class="saldoItem">
+          <span>UVA {{ totalAcreditado("UVA") | amountConvert: undefined:true }}</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+</div>

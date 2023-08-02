@@ -1,0 +1,65 @@
+<div *ngIf="isLoading" class="loading-page-indicator" ngStyle.lt-md="margin:0px;">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+<div class="container">
+    <h2 ngClass.lt-md="sectionTitle">Cotizaciones</h2>
+
+    <div class="tablet">
+        <div class="tabla">
+            <!-- FECHA -->
+            <div class="fila">
+                <p class="header">Fecha</p>
+                <p class="fecha data">{{fecha}} </p>
+            </div>
+        
+            <!-- TC USD -->
+            <div class="fila">
+                <p class="header">TC USD<span *ngIf="cartelCotizacion.mostrar"> ¹</span></p>
+                <p *ngIf="(usdExchangeRate | async) != (uvaExchangeRate | async); else no_data" class="data">
+                    {{ usdExchangeRate | async }}
+                    <a 
+                    #tooltip="matTooltip"
+                    [matTooltip]="cartelCotizacion.mostrar ? cartelCotizacion.texto : null"
+                    href="https://new.bymadata.com.ar/#/public-bonds/"
+                    target="_blank" rel="noopener">
+                    <mat-icon>open_in_new</mat-icon>
+                    </a>
+                </p>
+            </div>
+
+            <!-- TC UVA -->
+            <div class="fila">
+                <p class="header">TC UVA</p>
+                <p *ngIf="uvaExchangeRate | async as uva; else no_data" class="data">
+                    {{ uva }}
+                    <a 
+                    href="http://www.bcra.gov.ar/" target="_blank"
+                    rel="noopener">
+                        <mat-icon>open_in_new</mat-icon>
+                    </a>
+                </p>
+            </div>
+        
+            <!-- TC CAC -->
+            <div class="fila">
+                <p class="header">TC CAC</p>
+                <p *ngIf="cacExchangeRate | async as cac; else no_data" class="data">
+                    {{ cac }}
+                    <a 
+                    href="https://www.camarco.org.ar/indicadores/indicadores-de-costos/"
+                    target="_blank" rel="noopener">
+                        <mat-icon>open_in_new</mat-icon>
+                    </a>
+                </p>
+            </div>
+        
+            <ng-template #no_data><p class="data">...</p></ng-template>
+
+            <div *ngIf="cartelCotizacion.mostrar" class="footnote">
+                <p>1 - Cotización basada en el bono GD30</p>
+            </div>
+        </div>
+
+    </div>
+</div>

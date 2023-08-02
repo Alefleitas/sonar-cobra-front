@@ -1,0 +1,168 @@
+@use '@angular/material' as mat;
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import 'node_modules/@angular/material/theming';
+// Plus imports for other components in your app.
+@import "node_modules/ngx-easy-table/style.scss";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$cobra-frontend-primary: mat.define-palette(mat.$indigo-palette);
+$cobra-frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$cobra-frontend-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$cobra-frontend-theme: mat.define-light-theme($cobra-frontend-primary, $cobra-frontend-accent, $cobra-frontend-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($cobra-frontend-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+
+body {
+  height: 100%;
+  margin: 0 !important;
+  font-family: 'Graphik-Light', 'Graphik-Medium';
+  background-color: #f3f3f3;
+  overflow: hidden;
+}
+
+.mat-toolbar {
+  font-family: 'Graphik-Light', 'Graphik-Medium';
+}
+
+
+
+h2 {
+  font-family: 'Graphik-Medium';
+  font-size: 20px;
+}
+.mat-form-field{
+  font-family:'Graphik-Light';
+}
+.mat-select{
+  font-family:'Graphik-Light';
+  font-size: 12px;
+}
+.mat-option{
+  font-family:'Graphik-Light';
+}
+
+.ngx-table {
+  font-family: 'Graphik-Light', 'Graphik-Medium';
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.ngx-table th:first-child {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.ngx-table th:last-child {
+  border-radius: 0px 10px 10px 0px;
+}
+
+@font-face {
+  font-family: 'Graphik-Light';
+  src: url('assets/fonts/Graphik-Light.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Graphik-Medium';
+  src: url('assets/fonts/Graphik-Medium.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Graphik-Semibold';
+  src: url('assets/fonts/Graphik-Semibold.otf') format('opentype');
+}
+
+
+  /* Absolute Center Spinner */
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: -60px;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading-indicator:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #002f55;
+}
+
+/*line breaks for column titltes*/
+.word-wrap{
+  white-space: normal !important;
+  text-align: center !important;
+}
+
+.panelQuestions .mat-expansion-panel-body {
+  padding-left: 0px;
+  padding-right: 40px;
+}
+
+// GLOBAL STYLES - VENTANAS DE DIALOGO
+.dialog-responsive {
+  width: 600px;
+  font-size: 20px;
+
+  @media screen and (max-width: 959px) {
+    width: 450px;
+    font-size: 17px !important;
+  }
+
+  @media screen and (max-width: 599px) {
+    width: 300px;
+    font-size: 15px !important;
+  }
+}
+
+.account-dialog-responsive {
+  width: 600px;
+
+  @media screen and (max-width: 959px) {
+    width: 450px;
+  }
+
+  @media screen and (max-width: 599px) {
+    width: 300px;
+  }
+}
+
+.CVUsnackbar {
+  background-color: #099d45;
+  color: white;
+  font-weight: 500;
+  .mat-simple-snackbar{
+    justify-content: center;
+  }
+}
+
+.mat-tooltip.tooltipRendiciones{
+  font-size: 13px;
+  white-space: pre-line;
+}

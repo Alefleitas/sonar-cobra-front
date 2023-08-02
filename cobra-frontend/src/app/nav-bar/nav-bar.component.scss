@@ -1,0 +1,598 @@
+@import "../../themes/cobra-theme.scss";
+
+.sidenav-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 60px;
+  bottom: 40px;
+  left: 84px;
+  right: 0;
+}
+
+.hideIfEmpty:empty{
+  display: none;
+}
+
+.content {
+  margin-left: 54px;
+  margin-right: 84px;
+  margin-bottom: 200px;
+}
+.mobile-content{
+  height: 100%;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.mat-drawer-container {
+  background-color: #f3f3f3;
+}
+small {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 20px $color-gray;
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-button;
+  border-radius: 10px;
+}
+
+.svgIcon {
+  width: 180px;
+  height: 60px;
+}
+.svgIcon-resp {
+  width: 130px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.scndIcon {
+  width: 300px;
+  height: 54px;
+}
+
+.iconDivider {
+  border-right: 1px solid darkgray;
+  width: 170px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.sidenav {
+  width: 200px;
+  margin-top: 60px;
+  background-color: $color-drawer;
+  margin-bottom: 40px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.hidden {
+  visibility: 0;
+  display: None;
+}
+.head {
+  height: 75px !important;
+  background-color: #002f55;
+  padding-left: 84px !important;
+  padding-right: 84px !important;
+  border-bottom: 2px outset #3080e3;
+}
+.head-resp {
+  height: 60px !important;
+  padding-left: 35px !important;
+  padding-right: 20px !important;
+}
+
+label {
+  margin-left: 20px;
+  margin-right: 20px;
+  @media only screen and (max-width: 960px){
+    margin-left: 0px;
+    margin-right: 0px;  
+  }
+}
+
+.head-button {
+  right: 84px;
+  position: absolute;
+  padding-top: 10px;
+}
+.head-button-margin{
+  margin-right: 10px;
+}
+.hideLogo {
+  display: none !important;
+}
+
+.medium {
+  height: 65px !important;
+  transition: all 0.1s linear;
+}
+
+.instructions {
+  display: inline-flex;
+  margin-top: 8px;
+
+  mat-icon {
+    color: $color-button;
+    font-size: 15px;
+    line-height: 23px;
+  }
+}
+
+.instructions-span {
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.instructions-sidenav {
+  width: 38%;
+  background-color: #319cb4;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.mat-sidenav-c {
+  background-color: rgb(243, 243, 243);
+  scrollbar-face-color: aqua !important;
+}
+.buttonUs {
+  background-color: $color-button;
+  position: relative;
+  top: -5px;
+}
+.support-fab {
+  background-color: #002f55 !important;
+  margin-right: 10px;
+}
+.signOff {
+  font-family: "Graphik-Light";
+  font-size: 16px;
+  color: #c5c5c5 !important;
+}
+.signOff:hover {
+  color: #307fe2 !important;
+}
+.signOffButton {
+  font-family: "Graphik-Light";
+  font-size: 16px;
+  padding-left: 15px !important;
+}
+.tcUva {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .tcValue {
+    font-weight: lighter !important;
+  }
+}
+.tcUsd {
+  @extend .tcUva;
+  border-right: 1px solid darkgray;
+}
+.tcCac {
+  @extend .tcUva;
+  border-left: 1px solid darkgray;
+}
+.timeHeader {
+  color: #ffffff;
+  font-weight: bold;
+  margin-right: 0px;
+}
+.timeWithBorder {
+  padding-right: 10px;
+  border-right: 1px solid darkgray;
+}
+
+.highlight {
+  background-color: #307fe2;
+}
+
+.highlight:hover {
+  background-color: #0d478f;
+}
+
+@media only screen and (max-width: 1400px) {
+  .head-button {
+    flex-direction: column-reverse;
+  }
+
+  .quotationContainer {
+    position: relative;
+    right: 50px;
+    bottom: 12px;
+  }
+
+  .buttonUs {
+    position: relative;
+    top: 13px;
+  }
+}
+
+.submenu {
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+.submenu.expanded {
+  transform: scaleY(1);
+  background-color: #123d60;
+}
+
+.menu-button {
+  color: $color-white;
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.menuChildItem {
+  background-color: #123d60 !important;
+}
+
+.menuChildItem:hover {
+  background-color: #123d60 !important;
+}
+
+.menuChildItem:focus {
+  background-color: #123d60 !important;
+}
+
+.menu {
+  background-color: #002f55;
+  padding-left: 84px;
+  padding-right: 84px;
+}
+
+.menuItem {
+  text-align: left;
+  font-family: "Graphik-Light";
+  font-size: 14px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.86;
+  letter-spacing: normal;
+  padding-left: 16px !important;
+  color: white !important;
+  height: 100% !important;
+}
+.optionContainer{
+  height: 48px; 
+  display: flex;
+}
+.menuOption{
+  width: 100%; 
+  padding-left: 45px;
+}
+.subMenuOption{
+  width: 100%;
+  padding-left: 70px
+}
+
+.menuSmall {
+  width: 110px;
+}
+
+.menuMedium {
+  width: 150px;
+}
+
+.menuLarge {
+  width: 200px;
+}
+
+.menuItem:hover {
+  background-color: #113c5f !important;
+  border-radius: 0px;
+}
+
+.menuItem:hover {
+  background-color: #113c5f !important;
+  border-radius: 0px;
+}
+
+.menuOpen {
+  background-color: #113c5f !important;
+  border-radius: 0px;
+}
+
+:host ::ng-deep .menuItem .mat-button-wrapper {
+  display: flex !important;
+  justify-content: space-between;
+}
+
+:host ::ng-deep .menuLast .mat-button-wrapper {
+  display: block !important;
+}
+
+.menuFirst {
+  padding-left: 5px !important;
+}
+
+.menuBeforeLast {
+  text-align: right !important;
+  min-width: 100px !important;
+}
+
+.menuLast {
+  text-align: right !important;
+  min-width: 100px !important;
+}
+
+.is-active {
+  font-weight: bold;
+  .selecIcon {
+    visibility: visible !important;
+  }
+}
+
+.menuIcon {
+  color: white;
+  margin-right: 10px;
+  font-size: 21sp !important;
+}
+
+.dot {
+  height: 5px;
+  width: 5px;
+  background-color: #3080e3;
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+::ng-deep .mat-menu-panel.adjustMenu {
+  width: auto !important;
+  background-color: #ffffff;
+  border-radius: 0px !important ;
+}
+
+.menuText {
+  color: #939393 !important;
+  font-family: "Graphik-Light" !important;
+  font-size: 12px !important;
+}
+
+.menuText:hover {
+  color: #002f55 !important;
+  font-family: "Graphik-Light" !important;
+}
+
+.selecIcon {
+  color: $color-button;
+  font-size: 25px;
+  margin-top: 5px !important;
+}
+
+.menuContainer {
+  height: 100%;
+}
+
+
+.menuContainerRight {
+  height: 100%;
+  margin-left: auto;
+}
+
+::ng-deep .mat-menu-panel.userMenu {
+  width: 200px !important;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.buttonMenu {
+  color: white;
+}
+
+:host ::ng-deep mat-sidenav {
+  width: 80%;
+}
+
+:host ::ng-deep .mat-sidenav-container {
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+
+.sidenav-menu-header {
+  max-height: 95px;
+  padding: 30px 20px 20px 40px;
+  border-bottom: 2px solid #002f55;
+}
+
+.sidenav-menu-container {
+  padding: 30px 0px 20px 0px;
+}
+
+.sidenav-menu-header-icon-profile {
+  position: relative;
+  bottom: 18px;
+  right: 10px;
+  background-color: #307fe2;
+}
+
+.sidenav-menu-header-icon-close {
+  font-size: 35px;
+  position: relative;
+  bottom: 15px;
+  right:10px;
+  color: #113c5f;
+}
+
+.sidenav-menu-header-label {
+  font-size: 16px;
+  color: #307fe2;
+  width: -webkit-fill-available;
+  margin-right: 0px !important;
+  margin-top: -5px;
+}
+
+.sidenav-menu {
+  text-align: left;
+  font-family: "Graphik-Light";
+  font-size: 16px;
+  color: #939393 !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+  align-items: center;
+  display: flex;
+  width: 100% !important;
+}
+
+.sidenav-menu:active {
+  background-color: white !important;
+}
+
+.sidenav-submenu {
+  text-align: left;
+  font-family: "Graphik-Light";
+  font-size: 16px;
+  color: #939393 !important;
+  padding: 0px !important;
+  text-decoration: none !important;
+  width: 100%;
+}
+
+.sidenav-submenu:hover {
+  background-color: white !important;
+}
+
+.sidenav-submenu:focus {
+  background-color: white !important;
+}
+
+.sidenav-submenu:active {
+  background-color: white !important;
+}
+
+
+.sidenav-menu-footer {
+  height: auto;
+  padding-top: 20px;
+  border-top: 1px solid #e7e7e7;
+}
+
+.sidenav-menu-footer-icon {
+  color: #113c5f;
+  font-size: 22px !important;
+  margin-right: 9px;
+  position: relative;
+  bottom: -5px;
+}
+
+.sidenav-submenu-container{
+  display: flex;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  padding-right: 5px;
+}
+
+:host ::ng-deep .mat-expansion-panel-header, .mat-expansion-panel-header:active {
+  padding: 0px;
+  padding-left: 45px;
+  padding-right: 45px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:host ::ng-deep  .mat-expansion-panel-header:active, .mat-expansion-panel-header .sidenav-menu:active{
+  background-color: #F4F4F4 !important;
+}
+
+.expand-icon{
+  color: $color-button !important;
+  font-size: 25px;
+}
+
+.mat-expanded .mat-expansion-panel-header .expand-icon{
+  transform: rotate(180deg);
+}
+
+:host ::ng-deep .mat-expansion-panel-body{
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.selected, .submenuSelected{
+  font-weight: bold !important;
+  color: #113c5f !important;
+}
+
+:host ::ng-deep .mat-drawer-inner-container{
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-height: 600px){
+  .footer-caption{
+  margin-top: 2em;
+  padding-left: 45px;
+  margin-bottom: 1em;
+  font-weight: 600;
+  }
+}
+
+.footer-caption{
+  height: auto;
+  position: relative;
+  padding-top: 3em;
+  margin-top: auto;
+  margin-bottom: 1em;
+  padding-left: 45px;
+  font-weight: 600;
+  
+  span{
+    font-size: 16px;
+    font-family: 'Graphik-Light';
+    color: #002f55;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .content {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-bottom: 100px;
+  }
+
+}
+

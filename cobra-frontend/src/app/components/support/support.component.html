@@ -1,0 +1,43 @@
+<div class="component">
+    <div *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <h2>Soporte a clientes</h2>
+  <form>
+    <mat-form-field class="search" appearance="outline" floatLabel="always">
+      <mat-label>Búsqueda general</mat-label>
+      <input type="text" (input)="filter($event.target.value)" matInput>
+    </mat-form-field>
+  </form>
+    <ng-container>
+<!--        <div class="form-group">-->
+<!--            <div class="col-3 col-sm-12 col-ml-auto">-->
+<!--                <input class="filter" type="text" id="globalSearch" (input)="filter($event.target.value)" placeholder="Filtrar...">-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="column col-12" style="padding: 50px 20px 20px 0px;">
+            <ngx-table
+                #table
+                [data]="clientsDS"
+                [configuration]="configurationClients"
+                [columns]="columns"
+                [noResultsTemplate]="noResultsTemplate">
+            </ngx-table>
+        </div>
+        <ng-template #restringirCliente let-row>
+            <button mat-icon-button class="restrictUser"  (click)="openRestrictDialog(row.id, row.razonSocial)" #tooltip="matTooltip" matTooltip="Editar restricciones del cliente" [matTooltipShowDelay]=2000>
+                <mat-icon>edit</mat-icon>
+            </button>
+        </ng-template>
+        <ng-template #loginAsClient let-row>
+            <button mat-icon-button class="loginAsUser" (click)='loginAs(row.id)' #tooltip="matTooltip" matTooltip="Logearse con credenciales del cliente" [matTooltipShowDelay]=2000>
+                <mat-icon>supervisor_account</mat-icon>
+            </button>
+        </ng-template>
+      <ng-template #noResultsTemplate>
+        <td [attr.colspan]="columns.length" class="no-results">
+          {{isLoading ? 'Cargando...' : 'No hay información disponible para el filtro seleccionado'}}
+        </td>
+      </ng-template>
+    </ng-container>
+</div>

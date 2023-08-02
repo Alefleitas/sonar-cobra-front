@@ -1,0 +1,115 @@
+
+<div class="columns">
+  <div class="column col-12 no-padding">
+    <ngx-table
+      [id]="'fee-table'"
+      [configuration]="configuration"
+      [data]="data"
+      [columns]="columns"
+      [noResultsTemplate]="noResultsTemplate"
+    >
+    </ngx-table>
+  </div>
+</div>
+<div>
+  <!-- <ng-template #tipoComprobanteTpl let-row let-rowIndex="rowIndex">
+    <div>{{ row.tipoComprobante }}</div>
+  </ng-template> -->
+  <!-- <ng-template #obsLibreSegundaTpl let-row let-rowIndex="rowIndex">
+    <div>{{ row.obsLibreSegunda }}</div>
+  </ng-template> -->
+  <ng-template #noResultsTemplate>
+    <td [attr.colspan]="columns.length" class="no-results">
+        Sin resultados
+    </td>
+  </ng-template>
+  <ng-template #fechaPrimerVencTpl let-row style="margin-left: 30px;">
+    <span class="adjustFecha adjustCellMobile">
+      {{ row.fechaPrimerVenc }}
+    </span>
+  </ng-template>
+  <ng-template #importePrimerVencTpl let-row let-rowIndex="rowIndex">
+    <div style="display:flex;justify-content:center;" class="adjustCell">
+      <div *ngIf="!openModify || !row.lastCheck">
+        <div *ngIf="row.codigoMoneda === '2'" class="adjustCellMobile">
+          {{ row.importePrimerVenc | amountConvert:'USD':true }}
+          <a
+            *ngIf="(row.lastCheck && !openModify) && row.pay"
+            class="btnModificate"
+            mat-button
+            routerLink="."
+            matTooltip="Podés modificar el valor"
+            (click)="modifyBttn(rowIndex)"
+            >
+            <mat-icon aria-hidden="false" style="color: #307FE2;font-size: 15px;" svgIcon="payment-edit"></mat-icon>
+            </a
+          >
+        </div>
+        <div *ngIf="row.codigoMoneda === '0'" class="adjustCellMobile adjustEditCell">
+          <span *ngIf="(row.lastCheck && !openModify) && row.pay" class="manipulateCellMargin"></span>
+          <span>
+            {{ row.importePrimerVenc | amountConvert :'ARS':true }}
+          </span>
+          <a
+            *ngIf="(row.lastCheck && !openModify) && row.pay"
+            class="btnModificate"
+            mat-button
+            routerLink="."
+            matTooltip="Podés modificar el valor"
+            (click)="modifyBttn(rowIndex)"
+            >
+            <mat-icon aria-hidden="false" style="color: #307FE2;font-size: 18px;" svgIcon="payment-edit"></mat-icon>
+            </a>
+        </div>
+      </div>
+      <div *ngIf="openModify && row.lastCheck">
+        <form
+          class="contenedor adjustEdit"
+          [formGroup]="formGroup"
+          (ngSubmit)="reloadValue(rowIndex)"
+        >
+          <input
+            class="impor"
+            class="fielsInput"
+            *ngIf="openModify && row.lastCheck"
+            type="number"
+            (change)="saveModifiedPayment(formGroup, rowIndex, $event)"
+            step="0.01"
+            matInput
+            formControlName="importePrimerVenc"
+            mdInput
+            matTooltip="Actualizar el monto de la cuota"
+          />
+          <button
+            class="btnRefresh"
+            *ngIf="openModify && row.lastCheck"
+            type="submit"
+            mat-button
+            [disabled]="formGroup.invalid"
+          >
+          <mat-icon aria-hidden="false" style="color: #307FE2; transform: rotateY(180deg); font-size: 25px;">refresh</mat-icon>
+          </button>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #payActionTpl let-row let-rowIndex="rowIndex">
+    <div class="containerAction adjustCellMobile">
+      <mat-checkbox
+        #ref
+        *ngIf="row.status === 'pending'"
+        [disabled]="!modify || thereIsAPartialSelectedBefore(rowIndex) || paymentConfirm"
+        [checked]="row.pay"
+        (click)="changeValue(rowIndex, $event)"
+      ></mat-checkbox>
+    </div>
+    <div class="containerAction containerMsg adjustCellMobile">
+      <ng-container [ngSwitch]="row.status">
+        <ng-container *ngSwitchCase="'processing'"><a class="confirmMsg">Procesando pago <br/> {{ row.pagado }}</a></ng-container>
+        <ng-container *ngSwitchCase="'accepted'"><a class="acceptedMsg">Pago correcto <br/> {{ row.pagado }}</a></ng-container>
+        <ng-container *ngSwitchCase="'rejected'"><a class="rejectedMsg">Pago rechazado <br/> {{ row.pagado }}</a></ng-container>
+        <ng-container *ngSwitchCase="'error'"><a class="rejectedMsg">Error al procesar el pago <br/> {{ row.pagado }}</a></ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+</div>

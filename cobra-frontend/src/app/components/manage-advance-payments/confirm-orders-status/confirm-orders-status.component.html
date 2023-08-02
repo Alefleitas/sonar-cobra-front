@@ -1,0 +1,76 @@
+<div class="container bigFont">
+  <div class="confirmContainer">
+    <button type="button" mat-icon-button (click)="closeDialog()">
+      <mat-icon class="iconToolCancel">close</mat-icon>
+    </button>
+
+    <div class="bodyContainer">
+      <div class="title">Verifique el estado de las solicitudes que serán actualizadas</div>
+
+      <div class="orderViewport">
+        <div *ngFor="let order of data.itemsToShow | keyvalue">
+          <div class="dataContainer">
+            <div class="cuitHeader">{{ order.key }}</div>
+            <div class="row" style="display: flex;">
+              <div class="column">
+                <div class="orderData" style="font-weight: bold;">
+                  <span>Producto</span>
+                </div>
+                <div class="orderData" *ngFor="let data of order.value">
+                  <span>{{data.codProducto}}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="orderData" style="font-weight: bold;">
+                  <span>Importe</span>
+                </div>
+                <div class="orderData" *ngFor="let data of order.value">
+                  <span>{{getCurrencyType(data.moneda)}} {{ data.importe | amountConvert: undefined:true }}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="orderData" style="font-weight: bold;">
+                  <span>Vencimiento</span>
+                </div>
+                <div class="orderData" *ngFor="let data of order.value">
+                  <span>{{data.vencimiento | date:'dd/MM/YYYY'}}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="orderData" style="font-weight: bold;">
+                  <span>Estado original</span>
+                </div>
+                <div class="orderData" *ngFor="let data of order.value">
+                  <span>{{parseStatus(data.status)}}</span>
+                </div>
+              </div>
+              <div class="column">
+                <div class="orderData" style="font-weight: bold;">
+                  <span>Estado actualizado</span>
+                </div>
+                <div class="orderData" *ngFor="let data of order.value">
+                  <span>{{parseStatus(data.updatedStatus)}}</span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row" [hidden]="!enableReasonRejectionBox(order.value[0])">
+              <div class="orderData" style="font-weight: bold;">
+                <span>Motivo Rechazo</span>
+              </div>
+              <mat-form-field style="width: 100%">
+                <textarea #motivoRechazoTextarea matInput (input)="onMotivoRechazoInput($event.target.value, order.value)"></textarea>
+              </mat-form-field>              
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="acciones">
+        <button mat-flat-button class="btnCancelar" (click)="closeDialog();">Cancelar</button>
+        <button mat-flat-button class="btnConfirmar" (click)="closeDialog('send');">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

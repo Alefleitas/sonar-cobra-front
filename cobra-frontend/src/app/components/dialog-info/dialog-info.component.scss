@@ -1,0 +1,106 @@
+@import "../../../themes/cobra-theme.scss";
+
+::ng-deep mat-dialog-container{
+  padding: 0px !important;
+}
+
+// Font-size responsive
+.bigFont{
+  font-size: 20px;
+}
+.mediumFont{
+  font-size: 17px !important; 
+}
+.smallFont{
+  font-size: 15px !important;
+}
+.title{
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+//
+// Estilos de componente
+
+.container {
+  width: auto !important;
+  font-family: 'Graphik-Light';
+  font-size: 20px;
+  color: $color-primary;
+}
+.tooltipContainer {
+  border: 1.5px solid #3080e3;
+  text-align: end;
+
+  .iconToolCancel {
+    background-color: #ffffff !important;
+    color: $color-button !important;
+  }
+}
+
+.tooltip-text {
+  padding: 0px 2em 2em;
+  @media screen and (max-width: 599px) {
+    padding: 0px 1.5em 2em !important;
+  }  
+
+  text-align: center;
+  color: $color-primary;
+  mat-icon {
+    margin-top: 0px !important;
+  }
+  .buttonUs {
+    background-color: #ffffff;
+  }
+  .messageIcon {
+    font-size: 35px;
+    margin-bottom: 1em;
+    @media screen and (max-width: 959px) {
+      font-size: 30px !important;
+    }  
+    @media screen and (max-width: 599px) {
+      font-size: 25px !important;
+    }  
+  }
+  .confirmation {
+    color: $color-success !important;
+  }
+  .errorIcon{
+    color: $color-error !important;
+  }
+  p {
+    margin:0;
+  }
+  .tooltipMessage{
+    color: #34495e;
+  }
+}
+
+// BOTONES
+.acciones {
+  padding-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+.btnConfirmar, .btnCancelar {
+  border-radius: 30px;
+  padding-right: 2em;
+  padding-left: 2em;
+  @media screen and (max-width: 599px) {
+    border-radius: 0px;
+    padding-right: 20px;
+    padding-left: 20px; 
+    font-size: 13px !important;
+  }  
+
+} 
+.btnConfirmar{
+  background-color: $color-button;
+  color:#fafafa;
+  }
+
+.btnCancelar{
+  background-color: $color-gray;
+  color: $color-primary-dark;
+  margin-right: 20px;
+  }

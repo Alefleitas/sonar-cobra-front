@@ -1,0 +1,28 @@
+<div class="component">
+    <h2 class="sectionTitle" ngClass.lt-md="sectionTitleMobile">Mis productos</h2>
+    <div *ngIf="isLoading" class="loading-page">
+      <mat-spinner fxHide.lt-md="true" mode="indeterminate"></mat-spinner>
+      <mat-spinner fxHide.gt-sm="true" mode="indeterminate" diameter="70"></mat-spinner>  
+    </div>
+    <div *ngFor="let prod of products | keyvalue" class="expansionPanel" ngClass.lt-md="expansionPanelMobile" >
+
+      <div class="containerProduct" ngClass.lt-md="containerProductMobile">
+        <div class="headerProduct" [ngClass.lt-md]="{'headerProduct': false, 'headerProductMobile': true}">
+          <b class="titleheader" [ngClass.lt-md]="{'titleheader': false, 'titleheaderMobile': true}">{{prod.key}}</b>
+        </div>
+
+        <div *ngFor="let emp of prod.value" class="expansionProd" ngClass.lt-md="expansionProdMobile">
+          <mat-expansion-panel #expansionPanelArs>
+            <mat-expansion-panel-header class="panelHeader" ngClass.lt-md="panelHeaderMobile">
+              <mat-panel-title>
+                <b class="titleExpandedHeader" ngClass.lt-md="titleExpandedHeaderMobile">{{emp.name}}</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="contenedorTabla">
+              <app-table-product #refTableArs [data]="emp.products"></app-table-product>
+            </p>
+          </mat-expansion-panel>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+cobra-frontend/src/environments/environment.dev.ts
+/.idea/
+cobra-frontend/.angular/cache
+tmp/

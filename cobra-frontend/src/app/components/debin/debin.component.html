@@ -1,0 +1,169 @@
+<div class="container">
+
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <h2>Debines</h2>
+
+  <div class="actionsContainer">
+    <div style="display: flex;">
+      <!-- FILTRO DE CUITS -->
+      <mat-form-field appearance="outline" class="large" style="padding-right: 20px">
+        <mat-label>Cuit</mat-label>
+        <mat-select
+          (selectionChange)="selectDebinesByCuit($event.value, true)"
+          [disabled]="isLoading"
+        >
+          <mat-select-filter
+            [placeholder]="'Filtrar'"
+            [array]="payers"
+            [displayMember]="'cuit'"
+            (filteredReturn)="filteredPayers = $event"
+            [noResultsMessage]="'No se encontró el cuit'"
+          >
+          </mat-select-filter>
+          <mat-option [value]="'Todos'" style="width: inherit">Todos</mat-option>
+          <mat-option *ngFor="let payer of filteredPayers" [value]="payer.id">
+            {{ payer.cuit }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <!-- SELECCION - FECHA DESDE -->
+      <mat-form-field appearance="outline" class="small" style="padding-right: 20px">
+        <mat-label>Fecha Desde</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [max]="maxDate"
+          [(ngModel)]="dateDesde"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+      
+      <!-- SELECCION - FECHA HASTA -->
+      <mat-form-field appearance="outline" class="small" style="padding-right: 20px;">
+        <mat-label>Fecha Hasta</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endDatePicker"
+          [value]="dateHasta"
+          [max]="maxDate"
+          [min]="dateDesde"
+          [(ngModel)]="dateHasta"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- LIMPIAR FILTRO DE FECHAS -->
+      <div style="align-self: flex-end;" #tooltip="matTooltip" matTooltip="Quitar filtros de fecha">
+        <button mat-mini-fab class="cleanBtn" (click)="removeDateFilter();" [disabled]="!filteredByTransaction">
+          <mat-icon>cleaning_services</mat-icon>
+        </button>
+      </div>
+
+    </div>
+      
+      <div style="display: flex; align-items: center;">
+        <!-- MENSAJE DE ERROR -->
+        <div >
+          <span class="msjValidacionFechas" *ngIf="fechasReciboGroup.invalid"> Verifique las fechas de recibo ingresadas</span>
+      </div>
+      <!-- BOTÓN INFORMAR -->
+      <button
+        class="inform-button"
+        [disabled]="isLoading || validateDebins()"
+        mat-raised-button
+        (click)="openConfirmDebinDialog()"
+      >
+        Informar
+      </button>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="column col-12" style="position: relative; margin-top: 60px;">
+      <ngx-table
+        id="debinTable"
+        #debinTable
+        [data]="filteredDebines"
+        [configuration]="debinConfig"
+        [columns]="debinColumns"
+        [pagination]="pagination"
+        [noResultsTemplate]="noResults"
+        (event)="eventEmitted($event)"
+      >
+      </ngx-table>
+      <span class="ngx-pagination-span">Mostrar Resultados</span>
+    </div>
+
+    <ng-template #noResults>
+      <td [attr.colspan]="debinColumns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+      </td>
+    </ng-template>
+
+    <ng-template #nombre let-row>
+      <div>{{ row.payer.firstName + " " + row.payer.lastName }}</div>
+    </ng-template>
+
+    <ng-template #cuit let-row>
+      <div>{{ row.payer.cuit }}</div>
+    </ng-template>
+
+    <ng-template #moneda let-row>
+      <div>{{ getCurrencyType(row.currency) }}</div>
+    </ng-template>
+
+    <ng-template #monto let-row>
+      <div>{{ row.amount | amountConvert: undefined:true }}</div>
+    </ng-template>
+
+    <ng-template #status let-row>
+      <div>{{ parseStatus(row.status) }}</div>
+    </ng-template>
+
+    <ng-template #fechaTransaccion let-row>
+      <div>{{ row.transactionDate | date:'dd/MM/YYYY' }}</div>
+    </ng-template>
+
+    <ng-template #fechaRecibo let-row>
+      <div class="datePicker" *ngIf="row.seleccion">
+        <mat-form-field appearance="fill" [formGroup]="fechasReciboGroup" [disabled]="isLoading">
+          <input
+            matInput
+            [formControlName]="row.id"
+            [matDatepicker]="picker"
+            (dateChange)="setDate($event, row.id)"
+            placeholder="DD/MM/YYYY"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </ng-template>
+    
+    <ng-template #seleccion let-row>
+      <div>
+        <mat-checkbox
+          [checked]="row.seleccion"
+          (change)="updateChecked($event, row)"
+          [disabled]="isLoading"
+        ></mat-checkbox>
+      </div>
+    </ng-template>
+
+  </ng-container>
+</div>

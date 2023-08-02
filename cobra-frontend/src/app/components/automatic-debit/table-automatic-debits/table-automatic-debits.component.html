@@ -1,0 +1,20 @@
+<div>
+  <div class="column col-12 no-padding">
+    <ngx-table [id]="'debit-table'" [configuration]="configuration" [data]="data" [columns]="columns" [noResultsTemplate]="noResultsTemplate">
+    </ngx-table>
+    <span class="ngx-pagination-span">Mostrar Resultados</span>
+  </div>
+  <ng-template #adhereDebit let-row>
+    <mat-checkbox
+      class="btnBlue"
+      [checked]="row.adhereDebit"
+      (change)="sendRequest($event.checked, row)"
+    >
+    </mat-checkbox>
+  </ng-template>
+  <ng-template #noResultsTemplate>
+    <td [attr.colspan]="columns.length" class="no-results">
+        Sin resultados
+    </td>
+</ng-template>
+</div>

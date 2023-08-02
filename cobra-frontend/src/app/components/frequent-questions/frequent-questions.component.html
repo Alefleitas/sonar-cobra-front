@@ -1,0 +1,20 @@
+<div class="component" [ngClass.lt-md]="{'component': false, 'component-mobile': true}">
+    <div class="title" [ngClass.lt-md]="{'title': false, 'title-mobile': true}">
+        <h2 ngStyle.lt-md="font-size: 16px;">Preguntas frecuentes</h2>
+    </div>
+    <div ngClass.lt-md="questionContent-mobile" class="questionContent" >
+        <div *ngFor="let qa of questionAnswers" class="question" [ngClass.lt-md]="{'question': false, 'question-mobile': true}">
+              <mat-expansion-panel class="panelQuestions" hideToggle="true">
+                <mat-expansion-panel-header style="height: 32px; padding: 15px 20px 15px 20px;">
+                    <mat-panel-title>
+                    <b class="questionTitle" ngStyle.lt-md="font-size: 13px;">{{qa.question}}</b>
+                    </mat-panel-title>
+                    <mat-icon class="expand-icon">arrow_drop_down</mat-icon>
+                </mat-expansion-panel-header>
+                <p class="questionDesc" ngStyle.lt-md="width: 85%; font-size: 14px;" [innerHtml]="qa.answer"></p>
+            </mat-expansion-panel>
+        </div>
+
+    </div>
+
+</div>

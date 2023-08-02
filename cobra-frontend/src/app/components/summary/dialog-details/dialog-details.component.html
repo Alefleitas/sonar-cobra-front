@@ -1,0 +1,9 @@
+
+<div class="closeButton" >
+    <button type="button" mat-icon-button (click)="closePopUp()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div class="columns" mat-dialog-content>
+    <app-details-table [data]="data.details"></app-details-table>
+</div>

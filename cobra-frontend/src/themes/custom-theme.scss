@@ -1,0 +1,84 @@
+@use '~@angular/material' as mat;
+@import '~@angular/material/theming';
+@include mat.core();
+$md-primary: (
+    50 : #FFFFFF,
+    100 : #F5F6F6,
+    200 : #a0a4a7,
+    300 : #797f83,
+    400 : #5d6369,
+    500 : #40484e,
+    600 : #3a4147,
+    700 : #32383d,
+    800 : #2a3035,
+    900 : #1c2125,
+    A100 : #6dc1ff,
+    A200 : #3aacff,
+    A400 : #0895ff,
+    A700 : #0088ed,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-secundary: (
+    50 : #fdf9e4,
+    100 : #faf1bb,
+    200 : #f7e88d,
+    300 : #f4de5f,
+    400 : #f1d73d,
+    500 : #efd01b,
+    600 : #edcb18,
+    700 : #ebc414,
+    800 : #e8be10,
+    900 : #e4b308,
+    A100 : #ffffff,
+    A200 : #fff6da,
+    A400 : #ffe9a7,
+    A700 : #ffe38d,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$my-app-primary: mat.define-palette($md-primary);
+$my-app-accent:  mat.define-palette($md-secundary, 500, 900, A100);
+$my-app-warn:    mat.define-palette(mat.$deep-orange-palette);
+
+$my-app-theme: mat.define-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+@include mat.all-component-themes($my-app-theme);
+
+.alternate-theme {
+  $alternate-primary: mat.define-palette(mat.$light-blue-palette);
+  $alternate-accent:  mat.define-palette(mat.$yellow-palette, 400);
+
+  $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
+
+  @include mat.all-component-themes($alternate-theme);
+}

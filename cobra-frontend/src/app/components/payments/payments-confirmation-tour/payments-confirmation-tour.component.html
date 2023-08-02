@@ -1,0 +1,75 @@
+<div class="tablet-container payments-labels">
+    <div style="margin-top: 2em;" class="tablet-content">
+        
+    <div class="paymentsContainer" tourAnchor="stepSelectPayments">
+        <div fxHide.gt-sm="true" class="product-header">
+            <b class="razon-propiedad" style="font-size: 14px;"> Emprendimiento - Producto</b>
+            <div style="font-size: 14px;" class="CVU-value" [tourAnchor]="mediaObserver.isActive('lt-md') ? 'stepCVU-mobile' : ''">
+              <p>CVU - </p><div>
+                <span> 111111111 </span>
+                <button mat-icon-button class="copyCVY-icon" color="primary"><mat-icon>content_copy</mat-icon></button>          
+              </div>
+            </div>
+        </div>
+
+            <div class="label-input">
+    
+                <div style="display: grid;" *ngIf="!mediaObserver.isActive('lt-md')">
+                    <div class="CVU-container">
+                      <b class="razon-propiedad"> Emprendimiento - Producto</b>
+                      <div class="CVU-value" [tourAnchor]="!mediaObserver.isActive('lt-md') ? 'stepCVU' : ''">
+                        <p>CVU - </p><div>
+                          <span> 111111111 </span> 
+                          <button mat-icon-button class="copyCVY-icon" color="primary"><mat-icon>content_copy</mat-icon></button>          
+                        </div>
+                      </div>
+                    </div>
+                    <mat-input class="dateTitle">{{ currentDate | date: "dd.MM.yyyy" }}</mat-input>
+                </div>
+        
+                <div style="margin-top: 5%;">
+                    <!-- FECHA DE PAGO -->
+                    <div class="rawQuota" *ngIf="!mediaObserver.isActive('gt-sm')">
+                        <div class="rawQuotaKey">
+                        <mat-label> Fecha </mat-label>
+                        </div>
+                        <div class="rawQuotaValue">
+                        <mat-input> {{ currentDate | date: "dd.MM.yyyy" }}</mat-input>
+                        </div>
+                    </div>
+    
+                    <!-- CUOTAS -->
+                    <div class="rawQuota">
+                        <div class="rawQuotaKey">
+                            <mat-label> Cuota 1 </mat-label>
+                        </div>
+                        <div class="rawQuotaValue">
+                            <mat-input> $ 1.111.111,11</mat-input>
+                        </div>
+                    </div>
+                    <div class="rawQuota">
+                        <div class="rawQuotaKey">
+                            <mat-label> Cuota 2 </mat-label>
+                        </div>
+                        <div class="rawQuotaValue">
+                            <mat-input> $ 1.111.111,11</mat-input>
+                        </div>
+                    </div>
+                    <div class="rawQuota">
+                        <div class="rawQuotaKey">
+                            <mat-label> Cuota 3 </mat-label>
+                        </div>
+                        <div class="rawQuotaValue">
+                            <mat-input> $ 1.111.111,11</mat-input>
+                            <a mat-button
+                            matTooltip="Eliminar" class="buttonDelete">
+                                <mat-icon aria-hidden="false" class="iconDelete">delete_outline</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

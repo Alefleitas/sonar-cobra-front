@@ -1,0 +1,109 @@
+@import "../../../themes/cobra-theme.scss";
+
+.component {
+    margin-left: 30px;
+    margin-top: 30px;
+  }
+  .loading-page{
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    margin-left: -15px;
+    justify-content: center;
+    align-items: center;
+  }
+  .sectionTitle{
+    margin-top: 50px; margin-bottom: 40px;
+  }
+  .sectionTitleMobile{
+    text-transform: uppercase; 
+    font-size: 16px; 
+    margin: 0px !important;
+    padding-bottom: 2em;
+  }
+
+  .containerProduct {
+    margin-bottom: 2em;
+  }
+  .containerProductMobile{
+    margin-bottom: 1em;
+  }
+
+  .headerProduct {
+    background-color: #307FE2;
+    color: white;
+    width: 100%;
+    height: 40px;
+    padding-top: 25px;
+    margin-bottom: 10px;
+    border-radius: 5px 5px 0px 0px;
+  }
+  .headerProductMobile{
+    padding-bottom: 1em;
+  }
+
+  .titleheader {
+    padding-left: 97px;
+  }
+  .titleheaderMobile{
+    padding-bottom: 1em;
+    font-size: 14px;
+    font-family: "Graphik-Medium";
+    color: $color-drawer;
+  }
+
+  .expansionPanel {
+    margin-bottom: 10px;
+  } 
+  .expansionPanelMobile {
+    margin-bottom: 1.5em;
+  }
+
+  .expansionProd{
+    margin-bottom: 10px;
+  }
+  .expansionPanelMobile {
+    margin-bottom: 0.5em;
+    margin-right: 30px;
+  }
+
+  .panelHeader{
+    padding: 0px 46px 0px 0px;
+    font-family: 'Graphik-Light';
+  }
+  .panelHeaderMobile{
+    padding: 0px;
+    padding-right: 2em;
+  }
+
+  .titleExpandedHeader{
+    font-family: 'Graphik-Light' !important;
+    font-size: 14px !important;
+    color:#002F55 !important;
+    padding-left: 97px;
+  }
+  .titleExpandedHeaderMobile{
+    padding-left: 2em;
+  }
+
+  .contenedorTabla{
+    padding: 0px 20px 0px 20px; 
+    margin-top: 0px;
+  }
+
+  ::ng-deep.mat-expansion-panel-header {
+    height: 60px;
+    @media screen and (max-width: 959px){
+      height: 48px;
+    }
+  }
+
+  mat-expansion-panel{
+    padding-right: 0px;
+  }
+
+  @media screen and (max-width: 959px){
+    mat-expansion-panel{
+      box-shadow: none !important;
+    }
+  }

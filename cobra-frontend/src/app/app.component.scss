@@ -1,0 +1,71 @@
+@import "../themes/cobra-theme.scss";
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+}
+  
+.routerOutletContainer {
+  visibility: hidden;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: right;
+  color: #9e9e9e;
+  font-size: 12px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: inline-flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  z-index: 99;
+
+  .leftSide {
+    width: 50%;
+    text-align: left;
+    padding-left: 84px;
+  }
+
+  .rightSide {
+    width: 50%;
+    text-align: right;
+    padding-right: 104px;
+  }
+
+}
+
+.svgIcon{
+    width: 195px;
+    height: 35px;
+    position: relative;
+  }
+  .divSvg{
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    margin: auto;
+    top: 181px;
+    left: -165px;
+    bottom: 272px;
+    right: 0;
+  }
+
+tour-step-template .mat-card{
+  color: white !important;
+  background-color: $color-drawer !important;
+}

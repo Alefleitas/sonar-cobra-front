@@ -1,0 +1,76 @@
+@import "../../../../themes/cobra-theme.scss";
+
+::ng-deep mat-dialog-container{
+  padding: 0px !important;
+}
+
+.container {
+  width: auto !important;
+  font-family: 'Graphik-Light';
+  font-size: 1em;
+  color: $color-primary;
+  border: 1.5px solid #3080e3;
+}
+
+.iconToolCancel {
+  text-align: end;
+  background-color: #ffffff !important;
+  color: $color-button !important;
+}
+
+.textHeader{
+  text-align: center;
+  color: #34495e;
+}
+
+.optionsBody{
+  padding: 1em;
+}
+
+.optionesHeader {
+  background-color: $color-secondary;
+  color: $color-white;
+  font-weight: bold;
+}
+
+.actions{
+  padding: 1em;
+  text-align: center;
+}
+
+.btnConfirmar{
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: #307FE2;
+  color: white;
+  width: 10em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+  
+.btnConfirmar:hover{
+  background-color: $color-drawer;
+}
+
+.btnDisabled{
+  border-radius: 30px;
+  margin-left: 10px;
+  width: 10em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.btnCancelar{
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: #d4d4d4;
+  color: rgb(0, 0, 0);
+  width: 10em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.warning{
+  color: $color-warning;
+  text-align: center;
+}

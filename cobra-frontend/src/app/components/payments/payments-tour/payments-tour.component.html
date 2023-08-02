@@ -1,0 +1,119 @@
+<div tourAnchor="stepPaymentsContainer">
+    <p class="exampleTitle" style="margin-top: 30px;">EJEMPLO AYUDA</p>
+    <div class="exampleTour">
+        <div>
+            <div fxHide.gt-sm="true" class="empMobile">
+                <b class="razon-social">Emprendimiento</b>
+            </div>
+            <div class="expansionPanel" style="margin-top: 20px;">
+                <mat-expansion-panel disabled="true" expanded="false" hideToggle="true">
+                    <mat-expansion-panel-header class="expansionPanelheader">
+                        <mat-panel-title>
+                        <div class="panelTitleNoExpandend">
+                            <div class="containerMainCheckbox" tourAnchor="stepClosedPanel">
+                                <mat-checkbox color="primary"></mat-checkbox>
+                            </div>
+                            <b class="titleExpansionPanelHeader" fxHide.lt-md="true">Emprendimiento  |  Código</b>
+                            <b class="titleExpansionPanelHeader" fxHide.gt-sm="true">Código</b>
+                            <div class="amount">
+                              <b class="totalTitleExpansionPanelHeader">Total ARS/USD</b>
+                            </div>
+                        </div>
+                        </mat-panel-title>
+                        <mat-icon class="expand-icon" >arrow_drop_down</mat-icon>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        
+        <div class="expansionPanel">
+            <mat-expansion-panel disabled="true" expanded="true" hideToggle="true">
+                <mat-expansion-panel-header class="expansionPanelheader">
+                    <mat-panel-title>
+                        <div style="width: 100%;">
+                            <div class="panelTitleExpandend">
+                            <b class="titleExpandedHeader" fxHide.lt-md="true">Emprendimiento  |  Código</b>
+                            <b class="titleExpandedHeader" fxHide.gt-sm="true">Código</b>
+                            <b class="quotationExpandedHeader">Cotización</b>
+                            </div>
+                        </div>
+                        </mat-panel-title>
+                    <mat-icon class="expand-icon">arrow_drop_up</mat-icon>
+                </mat-expansion-panel-header>
+                <div style="padding: 0px 2px 0px 20px; margin-top: 0px;">
+                    <div class="columns">
+                        <div class="column col-12 no-padding">
+                          <ngx-table
+                            [id]="'fee-table-tour'"
+                            [configuration]="configuration"
+                            [data]="tourData"
+                            [columns]="columns"
+                          >
+                          </ngx-table>
+                        </div>
+                    </div>                      
+                </div>
+            </mat-expansion-panel>
+        </div>
+    
+    </div>    
+</div>
+
+<ng-template #fecha let-row style="margin-left: 30px;">
+    <span class="adjustFecha">
+      {{ row.fecha }}
+    </span>
+</ng-template>
+
+<ng-template #importe let-row let-rowIndex="rowIndex">
+    <div style="display:flex;justify-content:center;" class="adjustCell">
+        <div *ngIf="!row.lastCheck">
+            {{ row.importe }}
+        </div>
+        <div *ngIf="row.lastCheck && !row.showEdit" class="adjustDesktop" tourAnchor="stepEdit">
+            <div class="contenedor">
+                {{ row.importe }}
+                <a
+                    class="btnModificate"
+                    mat-button
+                    routerLink="."
+                    matTooltip="Podés modificar el valor"
+                    >
+                    <mat-icon aria-hidden="false" style="color: #307FE2;font-size: 18px;" svgIcon="payment-edit"></mat-icon>
+                </a>
+            </div>
+        </div>
+        <div *ngIf="row.lastCheck && row.showEdit" class="adjustDesktop" tourAnchor="stepRefresh">
+            <form class="contenedor adjustEdit">
+                <input
+                    class="impor"
+                    class="fielsInput"
+                    type="number"
+                    step="0.01"
+                    matInput
+                    mdInput
+                    [value]=inputNumber
+                />
+                <button class="btnRefresh" mat-button
+                matTooltip="Actualizar el monto de la cuota"
+                >
+                    <mat-icon aria-hidden="false" style="color: #307FE2; transform: rotateY(180deg); font-size: 25px;">refresh</mat-icon>
+                </button>
+            </form>
+        </div>
+    </div>
+  </ng-template>
+
+<ng-template #action let-row let-rowIndex="rowIndex">
+    <div class="containerAction" [tourAnchor]="row.action === 'ok' ? 'stepSelectPayments' : ''">
+        <mat-checkbox
+          color="primary"
+          *ngIf="row.canPay"
+          [checked]="row.pay"
+          (change)="changeValue(rowIndex, row.pay)"
+        ></mat-checkbox>
+    </div>
+    <div class="containerAction containerMsg" [tourAnchor]="row.action === 'msg' ? 'stepPaymentMsg' : ''">
+        <a *ngIf="row.action === 'msg'" class="confirmMsg">Procesando pago <br/> $11.111,11</a>
+    </div>
+</ng-template>

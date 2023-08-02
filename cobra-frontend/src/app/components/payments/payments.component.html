@@ -1,0 +1,253 @@
+
+<div *ngIf="!isPaymentConfirmation" class="title">
+
+    <!-- MENSAJES BANNER -->
+    <div *ngIf="!isLoading  && !hideBanners">
+      <div *ngIf="tooltipHelp" class="tooltipHelp">
+        <div class="tootip-container" ngClass.lt-md="tooltip-container-mobile">
+          <mat-icon class="iconHelp">help_outline</mat-icon>
+          <span class="tooltipSpa">Si querés saber más sobre los pagos y las opciones disponibles en esta plataforma consultá <a href="/#/frequent-questions">Preguntas frecuentes</a>.</span>
+        </div>
+        <mat-icon (click)="hideTooltip()" class="iconToolCancel">close</mat-icon>
+      </div>
+  
+      <div *ngFor="let banner of paymentInfoBanners"> 
+        <div *ngIf="banner.enabled" class="bannerInfo">
+          <mat-icon class="bannerInfoIcon">error_outline</mat-icon>
+          <span class="bannerInfoText">{{banner.text}}</span>
+          <mat-icon (click)="hidePaymentInfoBanner(banner.id)" class="bannerInfoIconCancel">close</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="isFromSummary" class="custom-bold">
+      Redirigiendo a medios de pago...
+    </h2>
+    <div *ngIf="!isFromSummary" style="display: flex; justify-content: space-between; align-items: center;">
+      <h2 class="custom-bold">
+        Pagos Pendientes al {{ currentDate | date: "dd.MM.yyyy" }}
+      </h2>
+      <div *ngIf="!isLoading" style="text-align: end;">
+        <span>Ayuda</span>
+        <button mat-icon-button (click)="runTour()">
+          <mat-icon class="tourBtn">help</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+</div>
+
+<!-- LOADING SPINNER -->
+<div *ngIf="isLoading || isLoadingPayments" class="loading-page-indicator" [ngClass.lt-md]="{'loading-page-indicator-mobile': true, 'loading-page-indicator': false}">
+    <mat-spinner fxHide.lt-md="true" mode="indeterminate"></mat-spinner>
+    <mat-spinner fxHide.gt-sm="true" mode="indeterminate" diameter="70"></mat-spinner>
+</div>
+
+<div class="payments-container" *ngIf="!isPaymentConfirmation && !isLoading && !isLoadingPayments">
+
+  <div>
+    <form class="form">
+      <!-- CUIT -->
+      <mat-form-field *ngIf="enableCuitFilter()" appearance="outline" class="fiels" [ngClass]="checkTourStyle()" tourAnchor="stepCuit">
+        <mat-label class="labelCuit">Cuit</mat-label>
+        <mat-select [(value)]="selectCuit" placeholder="Cuit" [disabled]="cuits.length === 0 || isTourRunning">
+          <mat-select-filter
+            [placeholder]="'Filtrar'"
+            [array]="cuits"
+            (filteredReturn)="filteredCuits =$event"
+            [noResultsMessage]="'No se encontró el cuit'"
+          ></mat-select-filter>
+          <mat-option
+            [value]="'Todos'"
+            (click)="filterPropertiesByCuit('Todos')"
+          >Todos</mat-option>
+          <mat-option
+            *ngFor="let c of filteredCuits"
+            [value]="c"
+            (click)="filterPropertiesByCuit(selectCuit)"
+          >
+            {{ c }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- EMPRENDIMIENTO -->
+      <mat-form-field appearance="outline" class="large" [ngClass]="checkTourStyle()" tourAnchor="stepProducto">
+        <mat-select [(value)]="selectedEmp" placeholder="Emprendimiento" [disabled]="emprendimientos.length === 0 || isTourRunning">
+          <mat-select-filter
+            [placeholder]="'Filtrar'" 
+            [array]="emprendimientos"
+            [displayMember]="'nombre'"
+            (filteredReturn)="filteredEmprendimientos = $event"
+            [noResultsMessage]="'No se encontró el emprendimiento'"
+          ></mat-select-filter>
+          <mat-option
+            *ngFor="let emp of filteredEmprendimientos"
+            [value]="emp"
+            (click)="filterPaymentsByEmpAndCode(selectedEmp)"
+          >
+            {{ emp.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- *ngIf="isLoadingProperties" -->
+
+      <!-- MONEDA -->
+      <mat-form-field appearance="outline" class="fiels" [ngClass]="checkTourStyle()" tourAnchor="stepMoneda">
+        <mat-select [(value)]="codigoMoneda" placeholder="Moneda" [disabled]="emprendimientos.length === 0 || !selectedEmp || isTourRunning">
+          <mat-option [value]="0" (click)="setTipodeMoneda('0')"
+            >ARS</mat-option
+          >
+          <mat-option [value]="2" (click)="setTipodeMoneda('2')"
+            >USD</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+
+      <!-- INFORMACION - DESKTOP -->
+      <div class="data-desktop" *ngIf="mediaObserver.isActive('gt-sm')">
+        <div class="data-container" style="padding-left: 20px;" tourAnchor="stepTotalPay">
+          <mat-label class="classLabel">Total: </mat-label>
+          <mat-input
+            *ngIf="codigoMoneda === 2"
+            class="totalAmount"
+          >{{ total | amountConvert:'2':true }}</mat-input>
+          <mat-input
+            *ngIf="codigoMoneda === 0"
+            class="totalAmount"
+          >{{ total | amountConvert:'0':true }}</mat-input>
+          <mat-label
+            *ngIf="codigoMoneda != 0 && codigoMoneda != 2"
+            class="totalAmount"
+          >{{ total | amountConvert:undefined:true }}</mat-label>
+          <button
+            mat-flat-button
+            [ngClass]="total === 0 ? 'payDidsable' : 'payEnabled'"
+            [disabled]="checkTotal() || isTourRunning"
+            (click)="openPay()"
+          >Pagar
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- CONTENEDOR TABLA -->
+  <div>
+    <div *ngIf="!checkPayments() && isTourRunning">
+      <app-payments-tour></app-payments-tour>
+    </div>
+    
+    <ng-container
+      *ngIf="
+        checkPayments() && !isTourRunning;
+        then NoPaymentsAvailableTemplate;
+        else PaymentFeeTemplate
+      "
+    ></ng-container>
+
+    <ng-template #NoPaymentsAvailableTemplate>
+      <p class="no-payments-available">No hay pagos disponibles</p>
+    </ng-template>
+
+
+    <ng-template #PaymentFeeTemplate style="margin-top: 40px;">
+      <ng-container *ngIf="paymentsByProductSelected && !hiddenPanels">
+
+        <div fxHide.gt-sm="true" class="empMobile" style="margin-top: 30px;">
+          <b class="razon-social">{{selectedEmp.emprendimiento}}</b>
+        </div>
+              
+        <div *ngFor="let paymentByProd of paymentsByProductSelected | keyvalue" class="expansionPanel">
+          <mat-expansion-panel #expansionPanelArs hideToggle="true">
+            <mat-expansion-panel-header class="expansionPanelheader">
+                <mat-panel-title>
+                  <div *ngIf="expansionPanelArs.expanded === true" style="width: 100%;">
+                    <div class="panelTitleExpandend">
+                      <b class="titleExpandedHeader" fxHide.lt-md="true">{{selectedEmp.emprendimiento}}  |  {{paymentByProd.key.name}}</b>
+                      <b class="titleExpandedHeader" fxHide.gt-sm="true">{{paymentByProd.key.name}}</b>
+                      <b class="quotationExpandedHeader">{{paymentByProd.key.TC}}</b>
+                    </div>
+                  </div>
+                  <div *ngIf="expansionPanelArs.expanded === false" class="panelTitleNoExpandend">
+                    <div class="containerMainCheckbox">
+                      <mat-checkbox 
+                          (click)="$event.stopPropagation();" 
+                          (keydown)="$event.stopPropagation()"
+                          [disabled]="paymentByProd.key.disabled"
+                          (change)="handleMainCheck(paymentByProd.key, $event);"
+                          [(checked)]="paymentByProd.key.checked"></mat-checkbox>
+                    </div>
+                    <b class="titleExpansionPanelHeader" fxHide.lt-md="true">{{selectedEmp.emprendimiento}}  |  {{paymentByProd.key.name}}</b>
+                    <b class="titleExpansionPanelHeader" fxHide.gt-sm="true">{{paymentByProd.key.name}}</b>
+                    <div class="amount">
+                      <b class="totalTitleExpansionPanelHeader">{{ paymentByProd.key.total | amountConvert:moneda:true }}</b>
+                    </div>
+                  </div>
+                </mat-panel-title>
+                <mat-icon class="expand-icon">arrow_drop_down</mat-icon>
+              </mat-expansion-panel-header>
+            <p style="padding: 0px 2px 0px 20px; margin-top: 0px;">
+              <app-table-fee
+                #refTableArs
+                [product]="paymentByProd.key"
+                [data]="paymentByProd.value"
+                [total]="total"
+                (eventData)="handleActionRow($event)"
+                (eventBtnMod)="reLoadpaymentsFilter($event)"
+              ></app-table-fee>
+            </p>
+          </mat-expansion-panel>
+        </div>
+      </ng-container>
+      <!--span *ngIf="moneda" [ngClass]="tooltip ? 'ngx-pagination-span' : 'ngx-pagination-span no-tooltip'">Mostrar Resultados</span-->
+    </ng-template>
+
+    
+    <div class="bottom-container" *ngIf="!mediaObserver.isActive('gt-sm')">
+      <div class="totalMobile" tourAnchor="stepTotalPayMobile">
+        <div>
+          <mat-label class="classLabel">Total: </mat-label>
+          <mat-input
+            *ngIf="codigoMoneda === 2"
+            class="totalAmount"
+          >{{ total | amountConvert:'2':true }}</mat-input>
+          <mat-input
+            *ngIf="codigoMoneda === 0"
+            class="totalAmount"
+          >{{ total | amountConvert:'0':true }}</mat-input>
+          <mat-label
+            *ngIf="codigoMoneda != 0 && codigoMoneda != 2"
+            class="totalAmount"
+          >{{ total | amountConvert:undefined:true }}</mat-label>
+        </div>
+        <button
+          mat-flat-button
+          [ngClass]="total === 0 ? 'payDidsable' : 'payEnabled'"
+          [disabled]="checkTotal() || isTourRunning"
+          (click)="openPay()"
+        >Pagar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ???? -->
+<div class="payments-container" *ngIf="openPop"></div>
+
+<!-- CONFIRMACIÓN DE PAGO -->
+<div *ngIf="isPaymentConfirmation">
+  <app-payment-confirmation
+    [paymentsSelected] = "paymentsByProductSelected"
+    [property]="selectedEmp"
+    [codigoMoneda]="moneda"
+    [tooltipHelp]="tooltipHelp"
+    [alreadyInformed]="successfulReport"
+    
+    (eventData)="conFig($event)"
+    (eventBtn)="conFigBtn($event)"
+  >
+  </app-payment-confirmation>
+</div>

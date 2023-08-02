@@ -1,0 +1,78 @@
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items:center">
+    <h2>{{title}}</h2>
+    <mat-icon mat-dialog-close class="closeDialogBnt">close</mat-icon>
+  </div>
+    
+    <div class="contForm">
+      <form [formGroup]="formGroup" class="formContainer" (ngSubmit)="send(formGroup)">
+
+        <div class="formCont">
+          <mat-form-field appearance="outline">
+            <mat-label>Medio</mat-label>
+            <mat-select formControlName="commChannel" >
+              <mat-option [value]="eComChannelType.Telefono">
+                Teléfono
+              </mat-option>
+              <mat-option [value]="eComChannelType.CorreoElectronico">
+                Email
+              </mat-option>
+            </mat-select>     
+          </mat-form-field>
+
+          <!-- NO COM-CHANNEL -->
+          <div *ngIf="!formGroup.value.commChannel">
+            <mat-form-field appearance="outline">
+              <mat-label>Valor</mat-label>
+              <input matInput disabled />
+            </mat-form-field>
+          </div>
+
+          <!-- TELEFONO -->
+          <div *ngIf="formGroup.value.commChannel == eComChannelType.Telefono" class="phoneInput">
+            <ngx-intl-tel-input
+              [preferredCountries]="[CountryISO.Argentina]"
+              [enablePlaceholder]="false"
+              [phoneValidation]="true"
+              [separateDialCode]="true"
+              name="phone"
+              formControlName="phoneInput"  
+            >
+            </ngx-intl-tel-input>
+          </div>
+
+          <!-- EMAIL -->
+          <div *ngIf="formGroup.value.commChannel == eComChannelType.CorreoElectronico">
+            <mat-form-field appearance="outline" [ngClass]="{'invalidInput': !validateEmail()}">
+              <input matInput formControlName="emailInput" type="email" name="email" email />
+            </mat-form-field>
+          </div>
+        </div>
+
+          
+        <div [ngSwitch]="formGroup.value.commChannel" class="errorMsgContainer">
+          <div *ngSwitchCase="eComChannelType.Telefono" class="adjustMsgMobile">
+            <mat-error *ngIf="formGroup.value.phoneInput && !formGroup.get('phoneInput')!.valid && (formGroup.get('phoneInput')!.touched || isEditing )">
+              El número de teléfono es inválido
+            </mat-error>
+          </div>
+          <div *ngSwitchCase="eComChannelType.CorreoElectronico">
+            <mat-error *ngIf="formGroup.value.emailInput.length > 0 && !formGroup.get('emailInput')!.valid && (formGroup.get('emailInput')!.touched  || isEditing )">
+              El email es inválido
+            </mat-error>
+          </div>
+        </div>
+
+       <div class="formCont" ngStyle.lt-md="margin-top: 1em;">
+          <textarea class="textArea" matInput formControlName="description"
+            placeholder="Oficina. De 9 a 15hs."></textarea>
+        </div>
+
+        <div class="formBtn">
+          <button mat-flat-button class="btnEnviar" type="submit" [disabled]="checkValidForm()"> Guardar </button>
+        </div>
+
+      </form>
+    </div>
+    <br>
+  </div>

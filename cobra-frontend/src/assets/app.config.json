@@ -1,0 +1,109 @@
+{
+  "comentariosAyuda": {
+    "ayuda-mediosDePago": {
+      "nota": "Es posible controlar qué medios de pago tienen acceso los clientes. Simplemente se quita/agrega el medio en el array",
+      "stringsAceptados": ["DEBIN", "CvuOperation", "ECHEQ"]
+    },
+    "ayuda-buAceptadosCVU": {
+      "nota": "Es posible controlar qué Bussiness Units tienen acceso al medio de pago CVU. Usar lista de CUITs en forma de string"
+    },
+    "ayuda-anuncios":{
+      "nota": "Se pueden agregar varios anuncios dentro del mismo array de sección. Los anunciones se mostrarán consecutivamente, cada uno al cerrar el anterior.",
+      "seccionesDisponibles": ["resumenDeCuenta", "pagosPendientes"],
+      "campos": {
+        "enabled": "Booleano indicando si se muestra o no el mensaje.",
+        "message": "Cadena de texto a mostrar en pantalla. Se admiten etiquetas HTML. De ser necesario usar <br /> para separar bloques de texto.",
+        "size": "Tamaño máximo del recuadro (considerar la cantidad de texto en el mensaje). 'bg': max-width 600px, 'md': max-width 450px, 'sm': max-width 300px",
+        "icon": "Ícono a mostrar en el recuadro (considerar la naturaleza del mensaje). Opciones: 'announcement', 'error', 'info' y cualquier otro que figure en https://fonts.google.com/icons?selected=Material+Icons"
+      }
+    },
+    "ayuda-banners": {
+      "nota": "Se pueden agregar varios banners dentro del mismo array de sección. Los banners se mostrarán uno debajo del otro.",
+      "seccionesDisponibles": ["pagosPendientes"],
+      "campos": {
+        "enabled": "Booleano indicando si se muestra o no el banner.",
+        "text": "Cadena de texto a mostrar en pantalla. No se admiten etiquetas HTML."
+      }
+    },
+    "ayuda-preguntasFrequentes":{
+      "nota": "Las FAQ son un único array que contiene objetos con 'question' y 'answer'. Sólo se permite texto plano, nada de etiquetas HTML." 
+    },
+    "ayuda-cartelCotizacion":{
+      "campos": {
+        "mostrar": "true / false",
+        "texto": "Cadena de texto a mostrar en tooltip (o nota al pie en mobile)"
+      }
+    }
+  },
+
+  "mediosDePago": ["DEBIN", "CvuOperation", "ECHEQ"],
+  "buAceptadosCVU": ["30587480359", "30715720902", "30658660892", "30709054038", "30716989093"],
+  "anuncios": {
+    "resumenDeCuenta": [
+      {
+        "enabled": true,
+        "message": "Todos los pagos en PESOS hechos por ventanilla a través del Banco Santander están sujetos al cobro de una comisión (más IVA).<br /><br /> Dicha comisión es íntegramente percibida por la entidad bancaria. El resto de los medios de pago no tienen costo extra alguno.",
+        "size": "lg",
+        "icon": "announcement"
+      }
+    ],
+    "pagosPendientes": [
+      {
+        "enabled": false,
+        "message": "Informamos que el Banco Galicia ha restaurado el servicio de DEBIN.<br /><br />Sugerimos validar previamente con su oficial los limites en su cuenta para dicho servicio.<br /><br />El método de pago alternativo dejara de aceptarse desde el 20-03.",
+        "size": "md",
+        "icon": "error"
+      }
+    ]
+  },
+  "banners":{
+    "pagosPendientes": [
+      {
+      "enabled": true,
+      "text": "Las facturas correspondientes al mes de septiembre estarán disponibles a la brevedad. Intente nuevamente en las próximas horas. Sepa disculpar los eventuales inconvenientes ocasionados."
+      }
+    ]
+  },
+  "clientAlert" : {
+    "message" : "Estimado cliente: Se informa que el tipo de cambio que se comunique corresponde al vigente a dicho momento,pudiendo variar con posterioridad. En caso se proceda a la cancelación de sumas en dólares estadounidenses mediante el pago de su equivalente en pesos, el tipo de cambio aplicable al pago será el que se encuentre vigente al momento en que se acrediten dichos fondos en la cuenta vendedora.",
+    "enabled" : true
+  },
+  "preguntasFrecuentes": [
+    {
+      "question": "¿Puedo adelantar cuotas de mi plan? ¿Tiene algún costo?",
+      "answer": "Sí, podés adelantar hasta 3 cuotas por pedido. El único requisito es que hagas el pedido 24hs antes de abonar las mismas desde la sección <a href='/#/advance-payments'>Pagos / Adelantar cuotas</a> y que tu cuenta esté al día. El pedido no tiene ningún costo."
+    },
+    {
+      "question": "¿A qué tipo de cambio cotizan mis pagos en ARS?",
+      "answer": "Sus pagos son recibidos al tipo de cambio DÓLAR MEP BILLETE resultante de la cotización del bono GD30. Podrás encontrar la misma en la parte superior del sitio o remitiendo un email a la casilla <a href='mailto:tipodecambio@consultatio.com.ar'>tipodecambio@consultatio.com.ar</a> ."
+    },
+    {
+      "question": "¿Puedo abonar por transferencia?",
+      "answer": "No, por el momento no contamos con este medio de pago."
+    },
+    {
+      "question": "¿A partir de qué fecha puedo pagar mi factura?",
+      "answer": "Las facturas pueden ser abonadas desde el tercer día hábil del mes. No es necesario esperar a la fecha del vencimiento."
+    },
+    {
+      "question": "¿Es necesario informar cada vez que se realiza un pago?",
+      "answer": "No. Como cada pago está asociado a un CUIT, ya lo recibimos con la indicación del titular."
+    },
+    {
+      "question": "¿Qué pasa si el vencimiento de mi cuota cae un dia feriado o no hábil?",
+      "answer": "El vencimiento se traslada al dia hábil inmediato posterior."
+    },
+    {
+      "question": "¿Cuál es el costo por hacer pagos desde una cuenta en el exterior?",
+      "answer": "Las comisiones por transferencias desde el exterior dependen de cada banco y no existen valores predeterminados para dichas operaciones. Por favor consulte con su entidad al respecto."
+    },
+    {
+      "question": "¿Cuánto tiempo tengo para aceptar el DEBIN en mi homebanking?",
+      "answer": "Desde que lo genera en nuestro portal, el DEBIN tiene 24hs de vigencia. Pasadas las mismas, el mismo se dará de baja y deberá reiniciar el proceso de pago."
+    }
+  ],
+  "cartelCotizacion": {
+    "mostrar": false,
+    "texto": "Cotización basada en el bono GD30"
+  }
+}

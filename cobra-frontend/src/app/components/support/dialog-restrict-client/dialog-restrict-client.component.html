@@ -1,0 +1,31 @@
+<div class="container bottom">
+  <div class="iconToolCancel">
+    <!-- <button type="button" mat-icon-button (click)="closePopUp()">
+      <mat-icon>close</mat-icon>
+    </button> -->
+  </div>
+      <div class="textHeader">
+        <h2>Modificar permisos de</h2>
+        <h3>{{data.razonSocial}}</h3>
+        <p *ngIf="!madeChanges" class="warning">No ha realizado ningún cambio</p>
+      </div>
+      <div class="optionsBody">
+        <div *ngIf="makingPetition" style="display: flex; justify-content: center; align-items: center;">
+          <mat-spinner></mat-spinner>
+        </div>
+        <mat-grid-list *ngIf="!makingPetition" cols="2" rowHeight="2em">
+          <mat-grid-tile class="optionesHeader">Acción</mat-grid-tile>
+          <mat-grid-tile class="optionesHeader">Restringir</mat-grid-tile>
+          <mat-grid-tile>Adelantar cuotas</mat-grid-tile>
+          <mat-grid-tile>
+            <mat-spinner *ngIf="isLoading" diameter=20></mat-spinner>
+            <mat-slide-toggle *ngIf="!isLoading" color="primary" [disabled]="disabledSliders" [(ngModel)]="advancePaymentSlider"></mat-slide-toggle>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      <div *ngIf="!makingPetition" class="actions">
+        <button mat-flat-button mat-dialog-close class="btnCancelar">Cancelar</button>
+        <button mat-flat-button *ngIf="!isLoading" class="btnConfirmar" (click)="saveChanges()">Confirmar</button>
+        <button mat-flat-button *ngIf="isLoading" disabled class="btnDisabled">Confirmar</button>
+      </div>
+  </div>

@@ -1,0 +1,115 @@
+<div  style="margin-right: 30px; padding-bottom: 5em;">
+
+    <!-- LOADING SPINNER -->
+    <div *ngIf="isLoading" class="loading-page-indicator-mobile">
+        <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+    </div>
+    
+    <div *ngIf="!isLoading">
+        <ng-container *ngFor="let data of arrayData">
+            <mat-expansion-panel class="clientPanel">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <b>{{data.product}}</b>
+                        <p class="nameTitle">{{data.name}}</p>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+    
+                <div class="availableActions">
+                    <mat-spinner *ngIf="data.isSaving else editingBlock" class="mat-spinner-center" [diameter]="20"></mat-spinner>
+                    <ng-template #editingBlock>
+                        <div *ngIf="data.isEditing || data.isEditingWorkStarted; else elseBlock" class="saveEditActions">
+                            <button *ngIf="data.newDataToSave" class="editBtn" mat-mini-fab (click)="save(data)">
+                                <mat-icon class="adjustSize" matTooltip="Guardar">save</mat-icon>
+                            </button>
+                            <button *ngIf="!data.newDataToSave" disabled mat-mini-fab>
+                                <mat-icon class="adjustSize" matTooltip="No hay cambios para guardar">save</mat-icon>
+                            </button>
+                            <button mat-mini-fab color="warn" (click)="cancel(data)">
+                                <mat-icon class="adjustSize" matTooltip="Cancelar">close</mat-icon>
+                            </button>
+                        </div>
+                        <ng-template #elseBlock>
+                            <button mat-mini-fab class="commsBtn" (click)="showCommunications(data)">
+                                <mat-icon class="adjustSize" matTooltip="Ver comunicaciones" svgIcon="chat"></mat-icon>
+                            </button>
+                            <button mat-mini-fab (click)="showOverduePayments(data)">
+                                <mat-icon class="adjustSize" matTooltip="Ver detalle" svgIcon="paper"></mat-icon>
+                            </button>
+                            <button *ngIf="data.canEdit" mat-mini-fab class="editBtn" (click)="edit(data)">
+                                <mat-icon class="adjustSize" matTooltip="Editar" svgIcon="edit"></mat-icon>
+                            </button>
+                            <button *ngIf="data.canEditWorkStarted" mat-mini-fab class="editBtn" (click)="editWorkStarted(data)">
+                                <mat-icon class="adjustSize" matTooltip="Editar inicio obra" svgIcon="edit"></mat-icon>
+                            </button>
+                        </ng-template>
+                    </ng-template>
+            
+                </div>
+                
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Proyecto</b></td>
+                            <td><span class="cellData">{{data.project}}</span></td>
+                        </tr>
+    
+                        <tr>
+                            <td><b>Gestión</b></td>
+                            <td>
+                                <mat-form-field class="inline-select" *ngIf="data.isEditing">
+                                    <mat-select [(ngModel)]="data.departmentEdit" [ngModelOptions]="{standalone: true}" (selectionChange)="canSaveRow(data)">
+                                        <mat-option *ngFor="let department of eDepartment | enumToArray" 
+                                                    [value]="eDepartment[department]" 
+                                                    [disabled]="(eDepartment[department] === data.department)">
+                                            {{department|camelCaseToSentenceCase}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <span *ngIf="!data.isEditing" class="cellData">{{data.departmentDesc}}</span>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td><b>Estado</b></td>
+                            <td><span class="cellData">{{data.balanceDesc}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Boleto U$S</b></td>
+                            <td><span class="cellData">{{data.salesInvoiceAmountUSD | amountConvert:undefined:true}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Cuotas Vencidas</b></td>
+                            <td><span class="cellData">{{data.overduePaymentsCount}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Deuda US$</b></td>
+                            <td><span class="cellData">{{data.overduePaymentsAmountUSD | amountConvert:undefined:true}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Cuotas Pagadas</b></td>
+                            <td><span class="cellData">{{data.paidPaymentsCount}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Pagado U$S</b></td>
+                            <td><span class="cellData">{{data.paidPaymentsAmountUSD | amountConvert:undefined:true}}</span></td>
+                        </tr>
+    
+                        <tr>
+                            <td class="nobar"><b>Publica Deuda</b></td>
+                            <td class="nobar">
+                                <mat-form-field class="inline-select" *ngIf="(data.isEditing && ((data.balance == eBalance.Mora) || (data.balance == eBalance.AlDia && data.publishDebt == 'N')))">
+                                    <mat-select [(ngModel)]="data.publishDebtEdit" [ngModelOptions]="{standalone: true}" (selectionChange)="canSaveRow(data)">
+                                        <mat-option value="Y">Si</mat-option>
+                                        <mat-option value="N">No</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <span class="cellData" *ngIf="!(data.isEditing && ((data.balance == eBalance.Mora) || (data.balance == eBalance.AlDia && data.publishDebt == 'N')))">{{data.publishDebtDesc}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-expansion-panel>
+        </ng-container>
+    </div>
+</div>

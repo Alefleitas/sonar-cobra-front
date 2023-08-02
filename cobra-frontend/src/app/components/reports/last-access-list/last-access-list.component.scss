@@ -1,0 +1,78 @@
+@import "../../../../themes/cobra-theme.scss";
+.component {
+  margin-left: 30px;
+  margin-top: 29px;
+}
+.lblFiles {
+  margin-right: 15px;
+  color: $color-drawer;
+}
+
+.no-results {
+  text-align: center;
+}
+
+.btnExport {
+  background-color: #f3f3f3;
+  border: 1px solid #c3c3c3;
+  box-shadow: none;
+  width: 60px;
+  height: 40px;
+  margin-right: 20px;
+  margin-top: 15px;
+  color: #307fe2;
+}
+
+.btnExportDisable {
+  background-color: #f3f3f3;
+  border: 1px solid #c3c3c3;
+  box-shadow: none;
+  width: 60px;
+  height: 40px;
+  margin-right: 20px;
+  margin-top: 15px;
+  color: #c3c3c3;
+}
+
+:host ::ng-deep .ngx-table[id="table"] th {
+  color: #fff !important;
+  font-size: 14px !important;
+  font-family: "Graphik-Regular" !important;
+  font-weight: normal;
+  background-color: #3080e3 !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+  text-align: center;
+}
+
+:host ::ng-deep .ngx-table th:first-child {
+  border-radius: 15px 0px 0px 0px;
+}
+
+:host ::ng-deep .ngx-table[id="table"] tr {
+  color: #002f55 !important;
+  background-color: #ffffff !important;
+  font-family: "Graphik-Regular" !important;
+  font-weight: normal;
+  border-top: 10px solid #f3f3f3 !important;
+}
+
+:host ::ng-deep .ngx-table[id="table"] td {
+  text-align: center;
+  border-right: 0px;
+  padding: 15px 0px 15px 0px;
+}
+
+::placeholder {
+  color: #002f55;
+  font-size: 12px;
+}
+
+:host ::ng-deep .mat-form-field-outline-start {
+  border-radius: 3px 0 0 3px !important;
+  min-width: 3px !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 3px 3px 0 !important;
+}

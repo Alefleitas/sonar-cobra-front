@@ -1,0 +1,149 @@
+<div class="container">
+
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <h2>Solicitudes de Adelanto de Cuotas</h2>
+
+  <div class="actionsContainer">
+    <div style="display: flex;">
+      <!-- FILTRO DE CUITS -->
+      <mat-form-field appearance="outline" class="large" style="padding-right: 20px">
+        <mat-label>Cuit</mat-label>
+        <mat-select
+          (selectionChange)="selectOrdersByCuit($event.value, true)"
+          [disabled]="isLoading"
+        >
+          <mat-select-filter
+            [placeholder]="'Filtrar'"
+            [array]="cuits"
+            (filteredReturn)="filteredCuits = $event"
+            [noResultsMessage]="'No se encontró el cuit'"
+          >
+          </mat-select-filter>
+          <mat-option [value]="'Todos'" style="width: inherit">Todos</mat-option>
+          <mat-option *ngFor="let c of filteredCuits" [value]="c">
+            {{ c }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- SELECCION - FECHA DESDE -->
+      <mat-form-field appearance="outline" class="large" style="padding-right: 20px">
+        <mat-label>Fecha Solicitud Desde</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startDatePicker"
+          [max]="maxDate"
+          [(ngModel)]="dateDesde"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- SELECCION - FECHA HASTA -->
+      <mat-form-field appearance="outline" class="large" style="padding-right: 20px;">
+        <mat-label>Fecha Solicitud Hasta</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endDatePicker"
+          [value]="dateHasta"
+          [max]="maxDate"
+          [min]="dateDesde"
+          [(ngModel)]="dateHasta"
+          (dateChange)="adjustDate()"
+          autocomplete="off"
+          [disabled]="isLoading"
+        />
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker" class="datePickerFilter"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- LIMPIAR FILTRO DE FECHAS -->
+      <div style="align-self: flex-end;" #tooltip="matTooltip" matTooltip="Quitar filtros de fecha">
+        <button mat-mini-fab class="cleanBtn" (click)="removeDateFilter();" [disabled]="!filteredByDate">
+          <mat-icon>cleaning_services</mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+      <div style="display: flex; align-items: center;">
+        <!-- MENSAJE DE ERROR -->
+        <div >
+          <span class="msjValidacionFechas" *ngIf="fechasVencimientoGroup.invalid"> Verifique las fechas de las solicitudes ingresadas</span>
+      </div>
+      <!-- BOTÓN INFORMAR -->
+      <button
+        class="inform-button"
+        [disabled]="isLoading || validateOrders()"
+        mat-raised-button
+        (click)="openConfirmOrdersDialog()"
+      >
+        Actualizar Estados
+      </button>
+    </div>
+  </div>
+
+  <ng-container>
+    <div class="column col-12" style="position: relative; margin-top: 60px;">
+      <ngx-table
+        id="ordersTable"
+        [data]="filteredOrders"
+        [configuration]="ordersConfig"
+        [columns]="advanceFeeColumns"
+        [noResultsTemplate]="noResults"
+      >
+      </ngx-table>
+      <span class="ngx-pagination-span">Mostrar Resultados</span>
+    </div>
+
+    <ng-template #noResults>
+      <td [attr.colspan]="advanceFeeColumns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+      </td>
+    </ng-template>
+
+    <ng-template #cuotasSolicitadas let-row>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <span *ngFor="let cuota of row.cuotasSolicitadas">{{cuota.vencimiento | date:'dd/MM/YYYY'}} - {{getCurrencyType(cuota.moneda)}} {{ cuota.importe | amountConvert: undefined:true }}</span>
+      </div>
+    </ng-template>
+
+    <ng-template #status let-row>
+      <div>{{ parseStatus(row.status) }}</div>
+    </ng-template>
+
+    <ng-template #createdOn let-row>
+      <div>{{ row.createdOn | date:'dd/MM/YYYY' }}</div>
+    </ng-template>
+
+    <ng-template #aprobar let-row>
+      <div class="checkBoxsColumn" ngClass.lt-md="checkBoxsColumnMobile">
+       <div>
+        Aprobar
+         <mat-checkbox class="aprobarCheckbox"
+           [checked]="row.updatedStatus == eAdvanceFeeStatus.Aprobado"
+           (change)="changeStatus(row, eAdvanceFeeStatus.Aprobado)"
+           [disabled]="isLoading || row.status == eAdvanceFeeStatus.Aprobado"
+         ></mat-checkbox>
+        </div>
+
+        <div>
+          Rechazar
+         <mat-checkbox class="rechazarCheckbox"
+           [checked]="row.updatedStatus == eAdvanceFeeStatus.Rechazado"
+           (change)="changeStatus(row, eAdvanceFeeStatus.Rechazado)"
+           [disabled]="isLoading || row.status == eAdvanceFeeStatus.Rechazado"
+         ></mat-checkbox>
+       </div>
+     </div>
+    </ng-template>
+
+  </ng-container>
+
+</div>

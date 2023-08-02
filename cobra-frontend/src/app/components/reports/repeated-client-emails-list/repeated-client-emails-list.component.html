@@ -1,0 +1,36 @@
+<div class="component">
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <h2>Clientes emails duplicados</h2>
+
+  <div style="display: inline-flex; width: 100%; justify-content: space-between;">
+
+    <mat-form-field appearance="outline">
+      <input type="text" (input)="onChange($event.target.value)" matInput placeholder="Buscar..." autocomplete="off">
+      <button matSuffix mat-icon-button aria-label="Clear">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+  </div>
+
+  <div class="columns">
+    <ng-container>
+
+      <div class="column col-12" style="padding: 20px 20px 20px 0px;">
+        <ngx-table #table [columns]="columns" [configuration]="configurationRepeatedDebsDetails"
+          [data]="repeatedClientEmails" [noResultsTemplate]="noResultsTemplate">
+        </ngx-table>
+      </div>
+
+    </ng-container>
+    <ng-template #noResultsTemplate>
+      <td [attr.colspan]="columns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+      </td>
+    </ng-template>
+  </div>
+
+
+</div>

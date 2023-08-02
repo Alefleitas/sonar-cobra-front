@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="header">
+        <div class="close-guide">
+            <span>Cerrar</span>
+            <button (click)="handleClose()" mat-icon-button>
+                <mat-icon [inline]="true" [disableRipple]="true">highlight_off</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="content" *ngIf="instructions">
+        <h4>Instructivo</h4>
+        <h2>{{instructions.title}}</h2>
+        <div class="steps">
+            <div class="step" *ngFor="let step of instructions.steps">
+                <p class="step-title">{{step.title}}</p>
+                <p class="step-desc">{{step.desc}}</p>
+            </div>
+        </div>
+    </div>
+</div>

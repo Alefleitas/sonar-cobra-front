@@ -1,0 +1,103 @@
+@import "../../../../../themes/cobra-colors.scss";
+
+.loading-page-indicator-mobile{
+    position: fixed;
+    top: 50%;
+    right: 40%;
+}
+
+.clientPanel{
+    margin-top: 15px;
+}
+
+.nameTitle{
+    text-align: right;
+    margin: 0px;
+}
+
+.inline-select {
+    width: 120px;
+}
+
+.availableActions, .saveEditActions{
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+}
+.availableActions{
+    padding-bottom: 15px;
+}
+.saveEditActions{
+    width: 50%;
+}
+
+.editBtn{
+    background-color: yellowgreen;
+}
+.commsBtn{
+    background-color: $color-drawer;
+}
+
+:host ::ng-deep .mat-expansion-panel-header{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+:host ::ng-deep mat-panel-title{
+    justify-content: space-between;
+}
+
+.cellData{
+    margin: 0px;
+    font-weight: lighter;
+}
+
+:host ::ng-deep .mat-form-field-infix{
+    background-color: white;
+    padding: 0px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+:host ::ng-deep .mat-select-value{
+    font-size: 12px !important;
+}
+
+:host ::ng-deep .mat-form-field-underline{
+    position: initial;
+}
+
+:host ::ng-deep mat-icon.adjustSize{
+    height: 22px;
+}
+
+@media screen and (max-width: 960px){
+    
+    :host ::ng-deep .mat-expansion-panel-body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    table {
+        display: flex;
+        justify-content: center;
+        color: $color-drawer !important;
+        background-color: #f3f3f3 !important;
+        width: 75%;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+    
+    td {
+        background-color: $color-gray-light;
+        border-right: 0px solid;
+        padding: 10px 13px;
+        font-weight: bold;
+        border-bottom: 2px solid white;
+    }
+    td.nobar{
+        border-bottom-width: 0px;
+    }
+}

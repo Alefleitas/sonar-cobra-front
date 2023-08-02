@@ -1,0 +1,59 @@
+<div class="container">
+  <h2 ngStyle.lt-md="text-transform: uppercase;">Contacto</h2>
+  <div class="subtitle">Envianos tu consulta</div>
+
+  <div class="contForm">
+    <!-- LOADING SPINNER -->
+    <div *ngIf="sendingMessage" class="loading-sending" ngStyle.lt-md="padding-top: 40%;">
+      <mat-spinner fxHide.lt-md="true" mode="indeterminate"></mat-spinner>
+      <mat-spinner fxHide.gt-sm="true" mode="indeterminate" diameter="70"></mat-spinner>
+    </div>
+
+
+    <!-- FORMULARIO -->
+    <form *ngIf="!sendingMessage" [formGroup]="formGroup" (ngSubmit)="send(formGroup)">
+
+
+      <div class="formCont">
+        <input class="fielsInput" type="text" matInput formControlName="name" placeholder="Nombre">
+        <input class="fielsInput" type="text" matInput formControlName="email" placeholder="Correo electrónico">
+      </div>
+
+      <div class="formCont">
+        <input class="fielsInput" type="number" matInput formControlName="phone" placeholder="Teléfono">
+        <div style="position: relative;" ngStyle.-lt-md="padding-bottom: 15px;" [ngClass]="{'affairLoading': !affairsLoaded || !affairs.length}">
+          <mat-form-field class="producto fielSelect" [class.spinner]="!affairsLoaded" [ngClass.lt-md]="{'fielSelect': false,'fielSelect-mobile': true}" appearance="outline">
+            <mat-select [formControlName]="'affair'" [disabled]="!affairsLoaded || !affairs.length" placeholder="Producto">
+              <mat-option *ngFor="let type of affairs" [value]="type">
+                {{type.emprendimiento}} | {{type.productCode}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="formCont">
+        <textarea class="textArea" ngStyle.lt-md="padding-top:10px;" matInput formControlName="message"
+          placeholder="Hola, quisiera consultar por..."></textarea>
+      </div>
+
+      <input #fileInput hidden="true" type="file" onclick="this.value=null" multiple
+        (change)="handleFileInput($event.target.files)">
+      
+        <div class="formBtn">
+          <div class="fielsBtn">
+            <button type="button" mat-mini-fab class="btnAdjuntar" (click)="fileInput.click()">
+              <mat-icon>attachment</mat-icon>
+
+            </button> &nbsp; <span class="attachmentSpan" *ngIf="this.filesToUpload.length == 0">Adjuntar archivos</span>
+            <span class="attachmentSpan" *ngIf="this.filesToUpload.length == 1">Un archivo seleccionado</span>
+            <span class="attachmentSpan" *ngIf="this.filesToUpload.length > 1">{{this.filesToUpload.length}} archivos seleccionados</span>
+          </div>
+          <div class="fielsBtn right-align">
+            <button mat-flat-button class="btnEnviar" type="submit" [disabled]="formGroup.invalid" 
+            [ngClass]="{'enviarHover': !formGroup.invalid, 'enviarDisabled': formGroup.invalid}"> Enviar </button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="container bigFont">
+    <div class="confirmContainer">
+        <button type="button" mat-icon-button (click)="closeDialog()">
+            <mat-icon class="iconToolCancel">close</mat-icon>
+        </button>
+
+        <div class="bodyContainer">
+            <div class="title">Verifique los pagos a informar</div>
+
+            <div class="debinViewport">
+                <div *ngFor="let debin of data.groupedDebins | keyvalue">
+                    <div class="dataContainer">
+                        <div class="cuitHeader">{{ debin.key }}</div>
+                        <div class="debinData" style="font-weight: bold;"><span>Monto</span><span>Fecha de recibo</span></div>
+                        <div class="debinData" *ngFor="let data of debin.value">
+                           <span>{{getCurrencyType(data.currency)}} {{ data.amount | amountConvert: undefined:true }}</span>
+                           <span>{{data.fechaRecibo | date:'dd/MM/YYYY'}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="acciones">
+                <button mat-flat-button class="btnCancelar" (click)="closeDialog();">Cancelar</button>
+                <button mat-flat-button class="btnConfirmar" (click)="closeDialog('send');">Informar</button>
+            </div>  
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="container">
+
+  <h2 class="title" ngClass.lt-md="title-mobile">Alta de Cuenta</h2>
+
+  <form [formGroup]="formInfoAccountBank">
+    <div class="form-container">
+
+      <div class="input-row-container">
+        <!-- CUIT -->
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label >CUIT</mat-label>
+            <input matInput *ngIf="!isValidAccount && !cargaDeArchivo"
+            maxlength="22" type="text" formControlName="cuit"
+            mask="00-00000000-0" placeholder="XX-XXXXXXXX-X"/>
+    
+            <input matInput  *ngIf="isValidAccount || cargaDeArchivo" 
+            maxlength="22" type="text" formControlName="cuit"
+            mask="00-00000000-0" placeholder="XX-XXXXXXXX-X" readonly="readonly"/>
+          </mat-form-field>
+        </div>
+
+        <!-- CBU -->
+        <div class="mobile-separation">
+          <mat-form-field appearance="outline">
+            <mat-label>CBU</mat-label>
+            <input matInput *ngIf="!isValidAccount && !cargaDeArchivo"
+            type="text" (keyup)="validateBiMoneda($event)" formControlName="cbu"/>
+            
+            <input matInput *ngIf="isValidAccount || cargaDeArchivo"
+            formControlName="cbu" readonly="readonly"/>
+          </mat-form-field>
+        </div>
+      </div>
+
+        <div class="input-row-container" ngStyle.gt-md="margin-top: -1em;">
+          <!-- MONEDA -->
+          <div class="bimoneda mobile-separation no-padding adjustOnMobile">
+            <mat-label *ngIf="!isShown">Su cuenta es Bimoneda</mat-label>
+            <mat-form-field class="moneda" [ngClass.lt-md]="{'moneda': false}" appearance="outline" *ngIf="isShown">
+              <mat-select formControlName="currency" placeholder="Moneda"
+              [disabled]="isValidAccount || cargaDeArchivo">
+                <mat-option [value]="0">ARS</mat-option>
+                <mat-option [value]="2">USD</mat-option>
+              </mat-select>
+            </mat-form-field>      
+          </div>
+
+          <!-- RELACIÓN -->
+          <div class="mobile-separation no-padding" ngClass.lt-md="relaciones">
+            <mat-form-field appearance="outline">
+              <mat-label>Relación</mat-label>
+              <mat-select [(value)]="selectDeRelaciones"
+                [disabled]='!cargaDeRelaciones' placeholder="Selecione una opción">
+                <mat-option *ngFor="let relation of relations" [value]="relation.relat"
+                  (click)="validarRelacionYArchivo()">
+                  {{relation.relat}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- VALIDAR -->
+            <button mat-flat-button class="btn btnMargin" 
+            [ngClass]="formInfoAccountBank.invalid || isValidAccount || cargaDeArchivo || isFormLoading ? 'disabledValidationButton': 'validationButton'"
+            [disabled]="formInfoAccountBank.invalid || isValidAccount || cargaDeArchivo || isFormLoading"
+            (click)="validateCbu()">Validar</button>
+          </div>
+        </div>
+
+        <!-- VALIDACION -->
+        <div  class="validation-result">
+          <div><mat-icon [ngClass]="isValidAccount ? 'iconConfir':'iconConfirError'">{{iconValidation}}</mat-icon></div>
+          <div>
+            <span [ngClass]="{'spConfirError': !isValidAccount}" style="white-space: nowrap;">{{validationResult}}</span><br/>
+            <span *ngIf="validationDni" [ngClass]="{'spConfirError': !isValidAccount}">{{validationDni}}</span><br/>
+            <span *ngIf="cargaDeArchivo" [ngClass]="{'spConfirError': !isValidAccount}">SELECCIONE: Tipo de relación</span>
+          </div>
+        </div>
+
+      <!-- ACCIONES -->
+      <div *ngIf="isFormLoading" class="isFormLoading">
+        <mat-spinner fxHide.lt-md="true" mode="indeterminate"></mat-spinner>
+        <mat-spinner fxHide.gt-sm="true" mode="indeterminate" diameter="70"></mat-spinner>
+    
+      </div>
+
+      <div *ngIf="!isFormLoading" class="actions-container">
+        <a (click)="clickEvtCbu($event)" class="lblTerms"><u>Términos y condiciones del débito directo</u></a>
+        <div class="buttons-container">
+          <button mat-flat-button class="bigBtn cancelButton" (click)="cancelAccoun('cancel')">Cancelar</button>
+          <button mat-flat-button class="bigBtn" [ngClass]="!isValidAccount ? 'disabledButton': 'createAccountButton'" [disabled]="!isValidAccount"
+          (click)="createNewAccount()">Confirmar Alta</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

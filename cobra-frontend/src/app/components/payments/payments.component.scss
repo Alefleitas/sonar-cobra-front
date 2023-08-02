@@ -1,0 +1,611 @@
+@import "../../../themes/cobra-theme.scss";
+
+.tourBtn{
+  position: relative; 
+  top: -2px;
+  color: $color-drawer;
+}
+
+.payments-container {
+  margin-left: 30px;
+}
+
+:host ::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+  align-items: normal;
+}
+
+:host ::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $color-button !important;
+}
+
+:host ::ng-deep .fiels .mat-form-field-label-wrapper .mat-form-field-label{
+  margin-top: 0px;
+}
+
+:host ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: $color-button;
+}
+:host ::ng-deep .mat-checkbox-disabled:not(.mat-checkbox-checked) .mat-checkbox-frame {
+  border-color: #b0b0b0 !important;
+}
+:host ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $color-drawer !important;
+}
+:host ::ng-deep .mat-checkbox .mat-checkbox-checkmark {
+  display: none;
+}
+
+.classLabel {
+  color: $color-button;
+  font-size: 22px;
+  font-family: "Graphik-Medium";
+  color: #939393;
+}
+.mat-flat-button {
+  .mat-primary {
+    background-color: $color-button !important;
+    color: white;
+  }
+  border-radius: 30px;
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 20px;
+}
+
+.lblTotal {
+  margin-left: 2em;
+}
+.fielsMoney {
+  width: 7em;
+}
+
+/*
+::ng-deep.mat-select-panel{
+  transform-origin: 50% 27px 2px;
+  font-size: 16px;
+  opacity: 1;
+  min-width: calc(100% + 25.5px) !important;
+  transform: scaleY(1);
+  margin-top: 35px !important;
+  box-shadow: 0px 0px 0px !important;
+  border-style: solid;
+  border-color: $color-gray;
+  border-width: 0px 2.5px 2px 2px;
+  background-color:$color-white;
+  margin-left: -1px;
+  position: relative !important;
+}
+*/
+
+/* .mat-form-field {
+  font-size: 12px !important;
+  width: 102px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+} */
+
+.fiels {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+:host ::ng-deep mat-form-field.large {
+  .mat-form-field-wrapper {
+    width: 160px !important;
+  }
+}
+
+:host ::ng-deep mat-form-field.fiels {
+  .mat-form-field-wrapper {
+    width: 160px !important;
+  }
+}
+
+.totalAmount {
+  font-weight: bold;
+  font-family: "Graphik-Medium";
+  color: #002f55;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+div {
+  display: block;
+}
+.loading-page-indicator {
+  display: flex;
+  justify-content: center;
+  padding-top: 10em;
+  margin-left: -30px;
+}
+.loading-page-indicator-mobile{
+  position: fixed;
+  top: 50%;
+  right: 40%;
+}
+
+.payDidsable {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: $color-button;
+  color: $color-white;
+  width: 7em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.payEnabled {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: #307fe2;
+  color: white;
+  width: 7em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.payEnabled:hover {
+  background-color: $color-drawer;
+}
+
+.no-payments-available {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  color: $color-drawer !important;
+  font-weight: bold;
+  margin-top: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: #3080e3;
+}
+
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 25px;
+  top: 226px;
+  font-weight: bold;
+  font-family: "Graphik-Light";
+}
+
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 90px;
+  top: 230px;
+  font-family: "Graphik-Light";
+}
+
+:host::ng-deep th {
+  border-bottom: 10px solid $color-gray-light !important;
+  background-color: $color-button !important;
+}
+
+:host::ng-deep td {
+  border-bottom: 10px solid $color-gray-light !important;
+  border-right: 0px solid;
+}
+
+:host::ng-deep .ngx-table th:first-child {
+  border-radius: 0px;
+}
+
+:host::ng-deep .ngx-table th:last-child {
+  border-radius: 0px;
+}
+
+// .tablet-container{
+//   width: 600px;
+// }
+
+.expansionPanel {
+  margin-bottom: 20px;
+  margin-right: 30px;
+  margin-left: auto;
+  margin-top: 25px;
+}
+
+.mat-form-field-wrapper {
+  width: 160px !important;
+}
+
+::ng-deep.mat-expansion-panel-header span.mat-expansion-indicator {
+  margin-left: 10%;
+}
+
+::ng-deep.mat-expansion-panel-header.mat-expanded span.mat-expansion-indicator {
+  margin-top: 3%;
+  margin-left: 10%;
+  margin-bottom: 8%;
+}
+
+::ng-deep .mat-checkbox-inner-container {
+  height: 16px !important;
+}
+
+.containerMainCheckbox {
+  height: 100%;
+  width: 10%;
+  text-align: center;
+  border-right: 3px solid #f3f3f3 !important;
+  position: relative;
+  top: 15%;
+}
+
+.titleExpansionPanelHeader {
+  margin-left: 2em;
+  position: relative;
+  top: 35%;
+  font-family: "Graphik-Medium" !important;
+  font-size: 14px !important;
+  color: #002f55 !important;
+  min-width: max-content;
+}
+
+.titleExpandedHeader {
+  font-family: "Graphik-Medium" !important;
+  font-size: 14px !important;
+  color: #002f55 !important;
+}
+.quotationExpandedHeader{
+  @extend .titleExpandedHeader;
+  font-family: "Graphik-Light" !important;
+}
+
+
+.totalTitleExpansionPanelHeader {
+  margin-left: 30px;
+  position: relative;
+  top: 35%;
+  font-family: "Graphik-Medium" !important;
+  font-size: 15px !important;
+  color: #002f55 !important;
+  min-width: max-content;
+}
+
+.tooltipHelp, .bannerInfo{
+  background-color: $color-button;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+
+}
+
+.iconHelp, .bannerInfoIcon {
+  color: white;
+  font-size: 35px;
+  padding-top: -1px;
+  display: inline;
+  margin-left: 15px;
+  vertical-align: middle;
+  margin-right: 15px;
+  margin-top: -10px;
+}
+
+.tooltipSpa, .bannerInfoText {
+  color: white;
+  line-height: 1.5em;
+  margin-left: 1em;
+  margin-right: 1em;
+  line-height: 1.5em;
+  font-size: 14px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  a {
+    color: orange;
+  }
+}
+.tootip-container{
+  padding-top: 1em;
+  padding-bottom: 1em;
+  display: flex;
+  align-items: center;
+  .tooltipSpa{
+    padding: 0px;
+  }
+}
+.tooltip-container-mobile{
+  .tooltipSpa{
+    margin-left: 1em;
+  }  
+}
+// .iconTool {
+//   color: $color-error !important;
+//   font-size: 27px;
+//   margin-right: 14px;
+//   margin-left: 10px;
+//   display: inline;
+//   vertical-align: middle;
+// }
+.iconToolCancel, .bannerInfoIconCancel {
+  color: white !important;
+  cursor: pointer;
+  font-size: 20px;
+  align-self: normal;
+  margin-top: 0.5em;
+  padding-right: 0.5em;
+  margin-left: auto;
+}
+
+.data-desktop{
+  display: flex;
+  width: 100%;
+  margin-right: 30px;
+  align-items: center;
+  justify-content: flex-end;
+  .data-container{
+    display: flex;
+    align-items: center;
+  }
+}
+
+.form {
+  display: inline-flex;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.expansionPanelheader {
+  padding: 0px 46px 0px 0px;
+  font-family: "Graphik-Medium";
+}
+
+.panelTitleExpandend {
+  width: 95%;
+  position: relative;
+  top: 25%;
+  left: 3%;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.panelTitleNoExpandend {
+  display: inline-flex;
+  width: 100%;
+  padding-bottom: 8px;
+}
+
+.expand-icon {
+  color: $color-button;
+  font-size: 25px;
+}
+
+.mat-expanded .mat-expansion-panel-header .expand-icon {
+  transform: rotate(180deg);
+}
+
+.razon-social{
+  font-family: Graphik-Medium; 
+  font-size: 14px; 
+  color: #002f55;
+}
+.amount{
+  width: 100%; 
+  text-align: right;
+}
+
+@media (max-width: 960px) {
+
+  :host ::ng-deep mat-form-field.adjustFilterTour{
+    padding-bottom: 10px;
+  }
+
+  mat-spinner svg{
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .payments-container {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .amount{
+    width: 100%; 
+    text-align: right;
+    position: relative;
+    top: -0.1em;
+  }
+
+  .form {
+    display: grid;
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .fiels {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+
+  :host ::ng-deep mat-form-field.large {
+    .mat-form-field-wrapper {
+      width: 100% !important;
+    }
+  }
+
+  :host ::ng-deep mat-form-field.fiels {
+    .mat-form-field-wrapper {
+      width: 100% !important;
+    }
+  }
+
+  :host ::ng-deep .payDidsable {
+    border-radius: 0px;
+    background-color: $color-button;
+    color: $color-white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
+  :host ::ng-deep .payEnabled {
+    border-radius: 0px;
+    background-color: #307fe2;
+    color: white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
+  .expansionPanel {
+    margin-bottom: 20px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 15px;
+  }
+
+  .expansionPanelheader {
+    padding: 0px 12px 0px 0px;
+    height: 3em;
+  }
+
+  :host ::ng-deep mat-expansion-panel-header > span {
+    height: 100%;
+  }
+
+  .panelTitleExpandend {
+    width: 95%;
+    position: relative;
+    top: 1em;
+    left: 1.5em;
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .panelTitleNoExpandend {
+    display: inline-flex;
+    width: 100%;
+    padding-bottom: 0px;
+  }
+
+  .containerMainCheckbox {
+    height: 100%;
+    width: 80px;
+    text-align: center;
+    border-right: 2px solid #f3f3f3 !important;
+    top: 27%;
+  }
+
+  .titleExpansionPanelHeader {
+    margin-left: 1em;
+    font-size: 13px !important;
+    color: #002f55 !important;
+    position: relative;
+    top: 1.25em;
+  }
+
+  .totalTitleExpansionPanelHeader {
+    margin-left: 30px;
+    position: relative;
+    top: 35%;
+    font-size: 13px !important;
+    color: #002f55 !important;
+    min-width: max-content;
+  }
+
+  .expand-icon {
+    color: #3080e3;
+    font-size: 25px;
+    margin-top: 12px;
+  }
+
+  .classLabel {
+    color: $color-button;
+    font-size: 16px;
+    font-family: "Graphik-Medium";
+    color: #939393;
+  }
+
+  .custom-bold {
+    font-size: 16px;
+    font-family: 'Graphik-Medium'; 
+    margin-left: 0px;
+    color: #002f55;
+    text-transform: uppercase;
+  }
+
+  .iconToolCancel, .bannerInfoIconCancel {
+    color: white !important;
+    cursor: pointer;
+    font-size: 20px;
+    align-self: auto;
+    margin-top: 0.5em;
+    padding-right: 1em;
+    margin-left: 0px;
+  }
+
+}
+
+.bottom-container{
+  margin-top: 45px; 
+  padding-bottom: 100px;
+}
+.totalMobile{
+  padding: 15px;
+  padding-top: 20px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (min-width: 500px) and (max-width: 960px){
+  .form{
+    display: grid;
+    justify-content: center;
+  }
+
+  :host ::ng-deep mat-form-field.large {
+    .mat-form-field-wrapper {
+      width: 400px !important;
+    }
+  }
+
+  :host ::ng-deep mat-form-field.fiels .mat-form-field-wrapper {
+      width: 400px !important;
+    }
+
+  .payDidsable, .payEnabled{
+    max-width: 400px;
+  }
+
+  .bottom-container{
+    margin-top: 25px; 
+    padding-bottom: 50px;
+  }
+
+}
+
+
+@media screen and (min-width: 700px) and (max-width: 960px){
+    .expansionPanel, .empMobile{
+      max-width: 650px;
+      margin-left: calc(50% - 330px);
+    }
+  }

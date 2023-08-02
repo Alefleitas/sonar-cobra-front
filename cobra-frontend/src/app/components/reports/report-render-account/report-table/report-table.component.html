@@ -1,0 +1,30 @@
+<div class="columns">
+  <ng-container>
+    <div class="column col-12" style="padding: 30px 20px 20px 0px">
+      <ngx-table
+        #tableReport
+        [data]="receivedData"
+        [configuration]="configuration"
+        [columns]="columns"
+        [noResultsTemplate]="noResultsTemplate"
+      >
+      </ngx-table>
+      <span class="ngx-pagination-span">Mostrar Resultados</span>
+    </div>
+    <ng-template #noResultsTemplate>
+      <td [attr.colspan]="columns.length" class="no-results">
+        Sin resultados
+      </td>
+    </ng-template>
+    <ng-template #detallesPago let-row>
+      <div *ngIf="row.medioDePago !== 'DEBIN' && row.hasPaymentDetail" style="position: relative;">
+        <div class="detailContainer" matTooltip="Ver detalles de pago" (click)="openPaymentDetailModal(row)">
+          <mat-icon>visibility</mat-icon>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template #importe let-row>
+      <div>{{ row.amount | amountConvert:undefined:true }}</div>
+    </ng-template>    
+  </ng-container>
+</div>

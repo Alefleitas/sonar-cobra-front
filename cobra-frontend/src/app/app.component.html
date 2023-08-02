@@ -1,0 +1,18 @@
+<div *ngIf="isLoading" class="loading-indicator">
+  <div class="divSvg">
+    <mat-icon class="svgIcon" svgIcon="consultatioBlanco"></mat-icon>
+  </div>
+</div>
+<div *ngIf="!isLoading" class="main-container">
+  <div toastContainer></div>
+  <app-nav-bar style="height: 100%;"></app-nav-bar>
+  <!--<div class="routerOutletContainer">
+    <router-outlet></router-outlet>
+  </div>-->
+  <footer class="footer" fxHide.lt-md="true">
+    <span class="leftSide"> Consultatio Real Estate </span>
+    <span class="rightSide"> &copy; Consultatio {{quotationAccess ? '' : 'Sistema COBRA'}} - Todos los derechos reservados</span>
+  </footer>
+</div>
+
+<app-tour-help></app-tour-help>

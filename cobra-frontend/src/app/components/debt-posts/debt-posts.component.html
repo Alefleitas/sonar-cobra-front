@@ -1,0 +1,64 @@
+<div class="payments-container">
+    <div *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div>
+        <h2 class="custom-bold">
+            Publicaciones de Deuda
+        </h2>
+        <form>
+            <mat-form-field style="padding-right: 35px;" appearance="outline">
+                <mat-select placeholder="Cuit" (selectionChange)="filterPropertiesByCuit($event.value)">
+                    <mat-select-filter
+                        [placeholder]="'Filtrar'"
+                        [array]="cuits"
+                        (filteredReturn)="filteredCuits =$event"
+                        [noResultsMessage]="'No se encontró el cuit'"
+                    ></mat-select-filter>
+                    <mat-option *ngFor="let c of filteredCuits" [value]="c">
+                        {{ c }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="large" style="padding-right: 35px;">
+              <mat-select [(value)]="product" placeholder="Producto">
+                <mat-select-filter
+                    [placeholder]="'Filtrar'"
+                    [array]="filteredProperties"
+                    [displayMember]="'mixedEmpAndCode'"
+                    (filteredReturn)="productFilteredProperties =$event"
+                    [noResultsMessage]="'No se encontró la propiedad'">
+                </mat-select-filter>
+                <mat-option *ngFor="let op of productFilteredProperties" [value]="op"
+                  (click)="filterPaymentsByFFileName(op)">
+                  {{ op.mixedEmpAndCode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="fiels">
+                <mat-select [disabled]="!product || isLoading" [(value)]="fechaFiltro" placeholder="Fecha del Archivo">
+                    <mat-option *ngFor="let f of fechasFiltro" [value]="f.timeStamp" (click)="filterPaymentsByDate(f.timeStamp)">{{f.fec}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+        <div>
+            <ng-container>
+                <div class="column col-12" style="padding: 20px 20px 20px 0px; margin-top: 40px;">
+                    <ngx-table [id]="'debtposts-table'"
+                        [data]="paymentsDS"
+                        [configuration]="configurationPayment"
+                        [columns]="columns"
+                    >
+                    </ngx-table>
+                    <span class="ngx-pagination-span">Mostrar Resultados</span>
+                </div>
+                <ng-template #fechaPrimerVenc let-row>
+                    <div>{{ moment(row.fechaPrimerVenc).toDate() | date: 'dd/MM/yyyy' }}</div>
+                </ng-template>
+                <ng-template #importePrimerVenc let-row>
+                    <div>{{ row.importePrimerVenc | amountConvert : row.codigoMoneda }}</div>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+</div>

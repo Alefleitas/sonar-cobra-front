@@ -1,0 +1,62 @@
+<div class="component">
+    <div *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <h2>Rechazos Santander</h2>
+
+    <div>
+
+        <div style="display: inline-block">
+            <mat-form-field class="fiels" appearance="outline">
+                <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="dateDesde"
+                    placeholder="Fecha Desde" (dateChange)="filterDebtRejectionsByDate()" (click)="picker.open()"
+                    autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="picker" style="color: #1f3151;"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field style="padding-left: 40px; padding-right: 40px;" class="fiels" appearance="outline">
+                <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="dateHasta"
+                    placeholder="Fecha Hasta" (dateChange)="filterDebtRejectionsByDate()" (click)="picker1.open()"
+                    autocomplete="off"> 
+                <mat-datepicker-toggle matSuffix [for]="picker1" style="color: #1f3151;">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker1 ngDefaultControl (selectedChanged)="filterDebtRejectionsByDate()">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="columns">
+            <ng-container>
+                <div class="column col-12" style="padding: 50px 20px 20px 0px;">
+                    <ngx-table #table [configuration]="debtRejectionConfiguration" [data]="filteredPublishDebtRejection"
+                        [detailsTemplate]="detailsTemplate" [columns]="columnsDebtRejection"
+                        [noResultsTemplate]="noResultsTemplate">
+                    </ngx-table>
+                    <ng-template #moneda let-row>
+                        <div *ngIf="row.moneda == '0'">ARS</div>
+                        <div *ngIf="row.moneda == '2'">USD</div>
+                    </ng-template>
+                    <ng-template #action let-row let-rowIndex='rowIndex'>
+                        <mat-icon (click)="onRowClickEvent($event, rowIndex)" matTooltip="Ver errores"
+                            style="color: #307fe2;">add_circle
+                        </mat-icon>
+                    </ng-template>
+                    <ng-template #noResultsTemplate>
+                        <td [attr.colspan]="columnsDebtRejection.length" class="no-results">
+                            {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                        </td>
+                    </ng-template>
+                    <ng-template #detailsTemplate let-row>
+                        <div class="contNestedTable">
+                            <ngx-table #details class="details" [id]="'details-table'"
+                                [configuration]="debtRejectionErrorsConfiguration" [data]="row.errors"
+                                [columns]="columnsDebtRejectionErrors">
+                            </ngx-table>
+                        </div>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </div>
+
+    </div>
+
+</div>

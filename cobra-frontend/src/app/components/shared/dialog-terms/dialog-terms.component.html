@@ -1,0 +1,21 @@
+<div class="container">
+  <!-- Título -->
+  <h1 class="title" mat-dialog-title>{{data.title}}</h1>
+
+  <!-- // Subtitulo y contenido de ventana -->
+  <div *ngIf="!data.type" 
+    class="bigFont" ngClass.lt-md="mediumFont" ngClass.lt-sm="smallFont"
+    style="text-align: justify;"
+    (scroll)="scrolled($event)"
+    mat-dialog-content 
+    [innerHTML]="data.message">
+  </div>
+  
+  <!-- Botones -->
+  <div mat-dialog-actions>
+    <button *ngIf="data.btn===1" mat-flat-button [mat-dialog-close]="0" class="btn">Volver</button>
+    <button *ngIf="data.btn===2" mat-flat-button [mat-dialog-close]="0" class="btn">Cancelar</button>
+    <button *ngIf="data.btn===2" mat-flat-button [mat-dialog-close]="1" [ngClass]="(!disableBtn) ? 'btnOk': 'btnDisabled'"
+      [disabled]="disableBtn">Aceptar</button>
+  </div>
+</div>

@@ -1,0 +1,262 @@
+<mat-dialog-content class="dialogContainer" [ngClass]="{'noScroll': isLoading}">
+  <mat-dialog-actions align="end" class="closeBtn">
+    <mat-icon mat-dialog-close class="closeDialogBnt">close</mat-icon>
+  </mat-dialog-actions>  
+  
+  <div *ngIf="isLoading">
+      <mat-spinner class="centerSpinner"></mat-spinner>
+  </div>
+  
+  <div *ngIf="!isLoading">
+    
+    <!-- CONTACTOS -->
+    <mat-card>
+      <mat-card-header class="primary">
+        <mat-card-title class="cardTitleMobile">
+          <span style="padding-right: 2em;">
+            Datos de contacto conocidos
+          </span>        
+          <button *ngIf="canEdit" class="add-button" mat-mini-fab (click)="createNewContact()">
+            <mat-icon class="addIcon" matTooltip="Nuevo contacto">add</mat-icon>
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <!-- TABLA CONTACTOS - VERSIÓN MOBILE -->
+        <div fxHide.gt-sm="true">
+
+          <!-- DATOS NO MODIFICABLES -->
+          <ng-container *ngFor="let contact of clientContactDetails">
+            <mat-expansion-panel class="clientPanel">
+                <mat-expansion-panel-header style="text-align: center;">
+                    <mat-panel-title class="adjustTitleContainer">
+                      <div class="adjustTitle">
+                        <div *ngIf="contact.emailAddress && contact.emailAddress.length > 0; else elseMail">
+                          <b>{{eComChannelType[eComChannelType.CorreoElectronico]}}</b> <br> {{"(" + contact.emailAddress + ")"}}
+                        </div>
+                        <ng-template #elseMail><td>-</td></ng-template>
+                        <div>
+                          <b>CUIL</b><br>{{checkEmpty(contact.documentNumber)}}
+                        </div>
+                      </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                  <tbody>
+                    <tr><td><b>CP</b></td><td><span class="cellData">{{ checkEmpty(contact.cp) }}</span></td></tr>
+                    <tr><td><b>Ciudad</b></td><td><span class="cellData">{{ checkEmpty(contact.city) }}</span></td></tr>
+                    <tr><td><b>Estado</b></td><td><span class="cellData">{{ checkEmpty(contact.state) }}</span></td></tr>
+                    <tr><td><b>Address 1</b></td><td><span class="cellData">{{ checkEmpty(contact.addressLine1) }}</span></td></tr>
+                    <tr><td><b>Address 2</b></td><td><span class="cellData">{{ checkEmpty(contact.addressLine2) }}</span></td></tr>
+                    <tr><td><b>Address 3</b></td><td><span class="cellData">{{ checkEmpty(contact.addressLine3) }}</span></td></tr>
+                  </tbody>
+                </table>
+            </mat-expansion-panel>
+          </ng-container>
+
+          <!-- DATOS MODIFICABLES -->
+          <div class="contactContainer">
+            <ng-container *ngFor="let contact of contactDetails">
+              <mat-card class="contactCard">
+                <div class="headerContainer">
+                  <mat-card-header class="primary contactHeader">
+                    <mat-card-title class="adjustTitle">
+                      <div class="contactTitle">
+                        <b>{{eComChannelType[contact.comChannel]}}</b> {{"(" + contact.value + ")"}}
+                      </div>
+                    </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div class="contactDescription">
+                      <span>{{contact.description}}</span>
+                    </div>
+                  </mat-card-content>
+                </div>
+                <div *ngIf="canEdit" class="actionsContainer">
+                  <button mat-mini-fab class="deleteBtn" (click)="removeContact(contact.id)">
+                    <mat-icon class="delete-icon">delete</mat-icon>
+                  </button>
+                  <button mat-mini-fab class="editBtn" (click)="editContact(contact)">
+                    <mat-icon class="edit-icon">create</mat-icon>
+                  </button>
+                </div>
+              </mat-card>
+          </ng-container>
+          </div>
+
+        </div>
+
+        <!-- TABLA CONTACTOS - VERSIÓN DESKTOP -->
+        <div fxHide.lt-md="true">
+          <table *ngIf="clientContactDetails.length + contactDetails.length > 0" style="font-family: 'Graphik-Light';"> 
+            <thead >
+                <tr >
+                    <th>Acciones</th>
+                    <th>Medio</th>
+                    <th>Descripcion</th>
+                    <th>CUIL</th>
+                    <th>CP</th>
+                    <th>Ciudad</th>
+                    <th>Estado</th>
+                    <th>Address 1</th>
+                    <th>Address 2</th>
+                    <th>Address 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- DATOS NO MODIFICABLES -->
+                <tr *ngFor="let contact of clientContactDetails">
+                  <td>No disponible</td>
+  
+                  <td *ngIf="contact.emailAddress && contact.emailAddress.length > 0; else elseMail">
+                    <b>{{eComChannelType[eComChannelType.CorreoElectronico]}}</b> <br> {{"(" + contact.emailAddress + ")"}}
+                  </td>
+                  <ng-template #elseMail><td>-</td></ng-template>
+  
+                  <td>-</td>
+                  <td>{{ checkEmpty(contact.documentNumber) }}</td>
+                  <td>{{ checkEmpty(contact.cp) }}</td>
+                  <td>{{ checkEmpty(contact.city) }}</td>
+                  <td>{{ checkEmpty(contact.state) }}</td>
+                  <td>{{ checkEmpty(contact.addressLine1) }}</td>
+                  <td>{{ checkEmpty(contact.addressLine2) }}</td>
+                  <td>{{ checkEmpty(contact.addressLine3) }}</td>
+                </tr>
+  
+                <!-- DATOS MODIFICABLES -->
+                <tr *ngFor="let contact of contactDetails" [removable]="canEdit" (removed)="removeContact(contact.id)">
+                    <td class="rowBtnsContainer" *ngIf="canEdit; else elseCantEdit">
+                      <mat-icon class="delete-icon" (click)="removeContact(contact.id)">delete</mat-icon>
+                      <mat-icon class="edit-icon" (click)="editContact(contact)">create</mat-icon>
+                    </td>
+                    <ng-template #elseCantEdit><td>No disponible</td></ng-template>
+  
+                    <td>
+                      <b>{{eComChannelType[contact.comChannel]}}</b> <br> {{"(" + contact.value + ")"}}
+                    </td>
+                    <td>{{contact.description}}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+          </table> 
+        </div>
+        <div *ngIf="clientContactDetails.length + contactDetails.length === 0">
+          <br>
+          <div class="no-content">No se encontraron datos de contacto</div>
+          <br>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <br>
+
+    <!-- COMUNICACIONES -->
+    <mat-card>
+      <mat-card-header class="primary">
+        <mat-card-title class="cardTitleMobile">
+          <span style="padding-right: 2em;">
+            Comunicaciones con cliente ({{data.product}}) {{data.name}}
+          </span>
+          <button *ngIf="canEdit" class="add-button" mat-mini-fab (click)="createNewCommunication()">
+            <mat-icon class="addIcon" matTooltip="Nuevo comunicación">add</mat-icon>
+          </button>
+
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <!-- TABLA COMUNICACIONES - VERSIÓN MOBILE -->
+        <div fxHide.gt-sm="true">
+          <ng-container *ngFor="let comm of communications; first as isFirst; index as i">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header style="text-align: center;">
+                  <mat-panel-title class="adjustTitleContainer">
+                    <div class="adjustTitle">
+                      <div>
+                        <b>{{eComChannelType[comm.communicationChannel]}}</b> <br> {{comm.contactDetail? "(" + comm.contactDetail.value + ")": ''}}
+                      </div>
+                      <div>
+                        <b>Fecha</b> <br> {{comm.date | date: 'dd/MM/yyyy'}}
+                      </div>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <table>
+                  <tbody>
+                    <tr><td><b>Resultado</b></td><td><span class="cellData">{{eCommunicationResult[comm.communicationResult] | camelCaseToSentenceCase}}</span></td></tr>
+                    <tr><td><b>Tipo</b></td><td><span class="cellData">{{comm.incoming?"Entrante":"Saliente"}}</span></td></tr>
+                    <tr><td><b>Descripción</b></td><td><span class="cellData">{{comm.description}}</span></td></tr>
+                    <tr><td><b>Usuario</b></td><td><span class="cellData">{{comm.ssoUser.razonSocial}}</span></td></tr>
+                    <tr>
+                      <td><b>Acciones</b></td>
+                      <td>
+                        <div class="rowBtnsContainer">
+                          <button mat-mini-fab class="deleteBtn" (click)="deleteCommunication(comm.id, i)">
+                            <mat-icon class="delete-icon">delete</mat-icon>
+                          </button>
+                          <button mat-mini-fab class="editBtn" (click)="editCommunication(comm, i)">
+                            <mat-icon class="edit-icon">create</mat-icon>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </mat-expansion-panel>
+          </ng-container>
+
+        </div>
+
+        <!-- TABLA COMUNICACIONES - VERSIÓN DESKTOP -->
+        <div fxHide.lt-md="true">
+          <table *ngIf="communications.length > 0" style="font-family: 'Graphik-Light';">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Medio</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Resultado</th>
+                    <th>Usuario</th>
+                    <!-- <th>Roles</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let comm of communications; first as isFirst; index as i" [expanded]="isFirst">
+                  <td class="rowBtnsContainer">
+                    <mat-icon class="delete-icon" (click)="deleteCommunication(comm.id, i)">delete</mat-icon>
+                    <mat-icon class="edit-icon" (click)="editCommunication(comm, i)">create</mat-icon>
+                  </td>
+
+                  <td>
+                    <b>{{eComChannelType[comm.communicationChannel]}}</b> <br> {{comm.contactDetail? "(" + comm.contactDetail.value + ")": ''}}
+                  </td>
+                  <td>{{comm.description}}</td>
+                  <td>{{comm.date | date: 'dd/MM/yyyy'}}</td>
+                  <td>{{comm.incoming?"Entrante":"Saliente"}}</td>
+                  <td>{{eCommunicationResult[comm.communicationResult] | camelCaseToSentenceCase}}</td>
+                  <td>{{comm.ssoUser.razonSocial}}</td>
+                  <!-- <td>{{comm.ssoUser.roles}}</td> -->
+                </tr>
+            </tbody>
+          </table>
+          <div *ngIf="communications.length === 0">
+            <br>
+            <div class="no-content">No hay comunicaciones registradas con el cliente {{data.name}}.</div>
+            <br> 
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</mat-dialog-content>

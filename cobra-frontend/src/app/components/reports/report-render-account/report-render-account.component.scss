@@ -1,0 +1,184 @@
+@import "../../../../themes/cobra-theme.scss";
+
+.component {
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+.loading-page-indicator {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+:host ::ng-deep .mat-tab-label .mat-tab-label-content {
+  color: $color-drawer;
+  font-family: "Graphik-Medium";
+}
+
+:host::ng-deep mat-tab-group {
+  margin-top: 20px;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: $color-button;
+}
+:host ::ng-deep .mat-tab-header {
+  border-bottom: 0px;
+}
+
+:host ::ng-deep .ngx-table {
+  color: $color-drawer !important;
+  background-color: #f3f3f3 !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table th {
+  color: white !important;
+  font-size: 14px !important;
+  border-bottom: 10px solid $color-gray-light !important;
+  background-color: $color-button !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+}
+
+:host ::ng-deep .ngx-table tr {
+  background-color: white !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep tr {
+  border-bottom: 2px solid #e7e9ed;
+}
+
+:host ::ng-deep .ngx-table td {
+  border-bottom: 10px solid $color-gray-light !important;
+  border-right: 0px solid;
+  padding: 1em 0px;
+}
+
+::placeholder {
+  color: $color-drawer;
+  font-size: 12px;
+}
+
+:host ::ng-deep .mat-form-field-outline-start {
+  border-radius: 3px 0 0 3px !important;
+  min-width: 3px !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 3px 3px 0 !important;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: $color-button;
+}
+
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 25px;
+  top: -5px;
+  font-weight: bold;
+  font-family: "Graphik-Light";
+}
+
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 80px;
+  top: 0px;
+  font-family: "Graphik-Light";
+}
+
+.btnFilter{
+  background-color: $color-drawer;
+}
+
+.btnSelectedFilter{
+  background-color: $color-warning;
+}
+
+.datePickerFilter {
+  color: $color-drawer;
+  position: relative;
+  bottom: -3px;
+}
+
+:host ::ng-deep .ngx-table__table-loader-wrapper{
+  margin-top: 0px;
+}
+
+.btnExport {
+  background-color: $color-button;
+  border: 1px solid #c3c3c3;
+  box-shadow: none;
+  width: 60px;
+  height: 40px;
+  color: #f3f3f3;
+}
+
+.btnReset{
+  background-color: $color-button;
+  color: #f3f3f3;
+  margin-right: 2em;
+}
+
+.btnExportDisable {
+  @extend .btnExport;
+  background-color: #f3f3f3;
+  color: #c3c3c3;
+}
+
+mat-card {
+  margin-bottom: 5px;
+  padding: 0px;
+}
+
+.totales {
+  width: 98%;
+  margin: -20px 20px 0px 0px;
+  color: darkslategray;
+  padding: 0px;
+
+  span {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+  
+  .cantidad {
+    border-left: 2px solid indianred;
+    background-color: lightgrey;
+    color: $color-drawer;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .saldo {
+    border-left: 2px solid $color-drawer;
+    background-color: $color-drawer;
+    color: #fafafa;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cantidadContainer, .saldoContainer{
+    width: 70%;
+    display: flex;
+  }
+  
+  .titleCard, .cantidadItem, .saldoItem{
+    padding: 16px;
+  }
+
+  .cantidadItem, .saldoItem{
+    width: 25%;
+    text-align: center;
+  }
+
+  .cantidadItem{
+    border-left: 1px solid $color-drawer;
+  }
+  .saldoItem{
+    border-left: 1px solid lightgray;
+  }
+}

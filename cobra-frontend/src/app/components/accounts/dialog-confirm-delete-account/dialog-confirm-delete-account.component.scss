@@ -1,0 +1,106 @@
+@import "../../../../themes/cobra-theme.scss";
+
+// ::ng-deep .cdk-overlay-pane {
+//     max-width: 1000px !important;
+//     width: auto !important;
+//     height: auto !important;
+//   }
+
+::ng-deep .mat-dialog-container {
+    // width: auto !important;
+    // height: auto !important;
+    padding: 0px;
+  }
+
+// Font-size responsive
+.bigFont{
+  font-size: 20px;
+}
+.mediumFont{
+  font-size: 17px !important; 
+}
+.smallFont{
+  font-size: 15px !important;
+}
+
+//
+// Estilos de componente
+
+.container {
+  width: auto !important;
+  font-family: 'Graphik-Light';
+  font-size: 20px;
+  color: $color-primary;
+}
+.tooltipContainer {
+  border: 1.5px solid #3080e3;
+  text-align: end;
+
+  .iconToolCancel {
+    background-color: #ffffff !important;
+    color: $color-button !important;
+  }
+}
+
+.tooltip-text {
+  padding: 0px 1em 1em;
+  text-align: center;
+  color: $color-primary;
+  mat-icon {
+    margin-top: 0px !important;
+  }
+  .buttonUs {
+    background-color: #ffffff;
+  }
+  .messageIcon {
+    font-size: 35px;
+    margin-bottom: 1em;
+    @media screen and (max-width: 959px) {
+      font-size: 30px !important;
+    }  
+    @media screen and (max-width: 599px) {
+      font-size: 25px !important;
+    }  
+  }
+  p {
+    margin:0;
+  }
+  .tooltipMessage{
+    color: #34495e;
+  }
+}
+
+
+
+  .btnConfirmar{
+    border-radius: 30px;
+    margin-left: 10px;
+    background-color: #307FE2;
+    color: white;
+    width: 10em;
+    margin-bottom: 4px;
+    margin-right: 20px;
+    @media screen and (max-width: 599px) {
+      width: 7em !important;
+      font-size: 13px !important;
+    }  
+  }
+  
+  .btnConfirmar:hover{
+    background-color: $color-drawer;
+  }
+  
+
+  .btnCancelar{
+    border-radius: 30px;
+    margin-left: 10px;
+    background-color: #d4d4d4;
+    color: rgb(0, 0, 0);
+    width: 10em;
+    margin-bottom: 4px;
+    margin-right: 20px;
+    @media screen and (max-width: 599px) {
+      width: 7em !important;
+      font-size: 13px !important;
+    }  
+  }

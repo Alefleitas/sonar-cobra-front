@@ -1,0 +1,438 @@
+@import "../../../../themes/cobra-theme.scss";
+
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: $color-button;
+}
+
+:host ::ng-deep .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background{
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep .mat-checkbox-checked .mat-checkbox-background{
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $color-drawer !important;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-checkmark {
+  display: none;
+}
+
+:host ::ng-deep .btnRefresh {
+  .mat-button-focus-overlay{
+    width: 40px;
+  }
+  .mat-button-ripple{
+  width: 40px;
+  }
+}
+
+:host ::ng-deep .btnModificate {
+  .mat-button-focus-overlay{
+    width: 40px;
+  }
+  .mat-button-ripple{
+  width: 40px;
+  }
+}
+  
+.exampleTour{
+    border: 1.5px solid #3080e3;
+    background-color: rgba(48,128, 227,0.2);
+    padding: 1em;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+.exampleTitle{
+    font-family: "Graphik-Medium";
+    font-size: 16px;
+}
+
+.razon-social{
+    font-family: Graphik-Medium; 
+    font-size: 14px; 
+    color: #002f55;
+  }
+
+  .expand-icon {
+    color: $color-button;
+    font-size: 25px;
+  }
+  
+  .expansionPanelheader {
+    padding: 0px 46px 0px 0px;
+    font-family: "Graphik-Medium";
+  }
+
+  .no-padding {
+    padding: 20px;
+    padding-left: 0px;
+    margin-left: 0px;
+  }
+
+  .btnModificate {
+    text-decoration: underline $color-button;
+    color: $color-button;
+    line-height: 14px;
+    text-align: center;
+    margin-left: 5px;
+    padding-left: 10px;
+    min-width: 40px !important;
+    position: absolute;
+  }
+  .iconEdit{
+    color: #307FE2;
+    width: 20px;
+    height: 20px;
+  }
+
+:host ::ng-deep .mat-expansion-panel-header:active{
+    background-color: transparent;
+}
+
+:host ::ng-deep .mat-expansion-panel-header-title, .mat-expansion-panel-header-description{
+    align-items: normal;
+}
+  
+::ng-deep.mat-expansion-panel-header span.mat-expansion-indicator {
+    margin-left: 10%;
+  }
+  
+  ::ng-deep.mat-expansion-panel-header.mat-expanded span.mat-expansion-indicator {
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-bottom: 8%;
+  }
+  
+.expansionPanel {
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-top: 25px;
+}
+
+.panelTitleNoExpandend {
+    display: inline-flex;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+  
+
+.panelTitleExpandend {
+    width: 95%;
+    position: relative;
+    top: 25%;
+    left: 3%;
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .titleExpandedHeader {
+    font-family: "Graphik-Medium" !important;
+    font-size: 14px !important;
+    color: #002f55 !important;
+  }
+  .quotationExpandedHeader{
+    @extend .titleExpandedHeader;
+    font-family: "Graphik-Light" !important;
+  }  
+
+  .containerMainCheckbox {
+    height: 100%;
+    width: 10%;
+    text-align: center;
+    border-right: 3px solid #f3f3f3 !important;
+    position: relative;
+    top: 15%;
+  }
+
+  .containerAction{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .titleExpansionPanelHeader {
+    margin-left: 2em;
+    position: relative;
+    top: 35%;
+    font-family: "Graphik-Medium" !important;
+    font-size: 14px !important;
+    color: #002f55 !important;
+    min-width: max-content;
+  }
+
+  .amount{
+    width: 100%; 
+    text-align: right;
+  }
+
+  .totalTitleExpansionPanelHeader {
+    margin-left: 30px;
+    position: relative;
+    top: 35%;
+    font-family: "Graphik-Medium" !important;
+    font-size: 15px !important;
+    color: #002f55 !important;
+    min-width: max-content;
+  }
+  .impor {
+    margin-left: 88px;
+  }
+  .fielsInput {
+    margin-right: 10px;
+    padding: 5px;
+    z-index: 3;
+    height: 20px;
+    background: #ffffff;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 5px 5px 5px 5px;
+    width: 75px; 
+  }
+  .btnRefresh {
+    text-decoration: underline $color-button;
+    color: $color-button;
+    text-align: left;
+    padding-left: 7px;
+    min-width: 40px !important;
+    position: absolute;
+    line-height: 14px;
+  }
+  .confirmMsg{
+    color: $color-third;
+  }
+
+
+  :host ::ng-deep.ngx-table[id="fee-table-tour"] th {
+    color: #454545 !important;
+    background-color: #f3f3f3 !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    height: 10px !important;
+    font-family: "Graphik-Light" !important;
+    font-size: 15px !important;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #f3f3f3 !important;
+    border-bottom-width: 2px !important;
+    border-bottom-style: solid !important;
+    border-bottom-color: rgb(255, 255, 255) !important;
+  }
+  
+  :host ::ng-deep.ngx-table[id="fee-table-tour"] tr {
+    color: #002f55 !important;
+    background-color: #f3f3f3 !important;
+  }
+  
+  :host ::ng-deep.ngx-table[id="fee-table-tour"] td {
+    border-bottom: 0px !important;
+  }
+  
+  :host ::ng-deep.ngx-table[id="fee-table-tour"] th .ngx-table__header-title {
+    font-family: "Graphik-Light" !important;
+    font-size: 12px !important;
+  }
+
+  .col-12 {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 14px;
+  }
+
+  :host ::ng-deep tbody{
+    text-align: center;
+  }
+
+  @media screen and (min-width: 650px){
+    .adjustDesktop{
+      width: 50%
+    }
+  }
+
+  @media screen and (max-width: 400px){
+    .btnModificate{
+      margin-left: 0px;
+      margin-top: -5px;
+    }
+  }
+
+  @media screen and (max-width: 430px){
+    .adjustFecha, .adjustCell{
+      display: flex;
+      justify-content: initial !important;
+    }  
+
+    .containerMsg{
+      height: 100%;
+      width: 100%;
+    }  
+  }
+@media screen and (max-width: 650px) {
+  .adjustDesktop{
+    width: 100%;
+    padding-left: 7px;
+  }
+
+  .adjustEdit{
+    margin-top: 10px;
+  }
+
+  .adjustFecha{
+    display: flex;
+    justify-content: center;
+  }
+  :host ::ng-deep table {
+      display: block;
+    }
+    :host ::ng-deep  thead {
+      display: none;
+    }
+    :host ::ng-deep  tbody {
+      display: table;
+      width: -webkit-fill-available;
+    }
+    :host ::ng-deep  tr {
+      display: table-row-group;
+      border-bottom: 20px solid #ffffff !important;
+    }
+    :host ::ng-deep  tr:nth-child(odd) {
+      background-color: #f9f9f9; 
+    }
+  
+    :host ::ng-deep .ngx-table[id="fee-table-tour"] td {
+      display: table-row;
+      text-align: left;
+      border-bottom: 2px solid #ffffff !important;
+      width: 50%;
+    }
+  
+    :host ::ng-deep  td:before,
+    td > span {
+      display: table-cell;
+      padding: 7px 13px; /* optional */
+    }
+    :host ::ng-deep  td:before {
+      content: attr(class);
+      width: 50%;
+      font-weight: 600; 
+      text-align: left;
+      padding-left: 25px;
+      color: #939393;
+      font-family: "Graphik-Light", "Graphik-Medium";
+      font-size: 12px !important;
+    }
+  
+  .fielsInput {
+      margin-left: 0px;
+      padding: 5px 0px 5px 5px;
+      z-index: 3;
+      background: #ffffff;
+      box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+      border-radius: 5px 5px 5px 5px;
+      width: 75px; 
+      margin-right: 5px; 
+      margin-top: 0px; 
+      height: 20px;
+      margin-bottom: 3px;
+    }    
+      
+  :host ::ng-deep .btnRefresh {
+    text-decoration: underline $color-button;
+    color: $color-button;
+    text-align: left;
+    padding: 0px !important;
+    min-width: 30px !important;
+  }
+}
+
+@media screen and (max-width: 960px) {
+    .exampleTour{
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-bottom: 0;
+    }
+    .expansionPanel {
+        margin-bottom: 20px;
+        margin-right: 0px;
+        margin-left: 0px;
+        margin-top: 15px;
+    }
+
+    :host ::ng-deep mat-expansion-panel-header > span {
+        height: 100%;
+    }
+
+    .amount{
+        width: 100%; 
+        text-align: right;
+        position: relative;
+        top: -0.1em;
+      }
+    
+    .panelTitleExpandend {
+        width: 95%;
+        position: relative;
+        top: 1em;
+        left: 1.5em;
+        padding-bottom: 0px;
+        display: flex;
+        justify-content: space-between;
+      }
+    
+    .expand-icon{ 
+        color: #3080e3;
+        font-size: 25px;
+        margin-top: 12px;
+    }
+    
+    .panelTitleNoExpandend {
+        display: inline-flex;
+        width: 100%;
+        padding-bottom: 0px;
+    }
+    
+    .containerMainCheckbox {
+        width: 80px;
+        border-right: 2px solid #f3f3f3 !important;
+        position: initial;
+        mat-checkbox{
+          position: relative;
+          top: 25%;
+        }
+      }
+    
+    .titleExpansionPanelHeader {
+        margin-left: 1em;
+        font-size: 13px !important;
+        color: #002f55 !important;
+        position: relative;
+        top: 1.25em;
+    }
+          
+    .totalTitleExpansionPanelHeader {
+        margin-left: 0px;
+        position: relative;
+        top: 35%;
+        font-size: 13px !important;
+        color: #002f55 !important;
+        min-width: max-content;
+      }
+
+      .expansionPanelheader {
+        padding: 0px 12px 0px 0px;
+        height: 3em;
+      }
+    
+}
+
+@media screen and (min-width: 700px) and (max-width: 960px){
+    .expansionPanel, .empMobile{
+      max-width: 650px;
+      margin-left: calc(50% - 330px);
+    }
+  }

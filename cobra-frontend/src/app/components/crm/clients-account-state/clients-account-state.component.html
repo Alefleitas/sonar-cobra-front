@@ -1,0 +1,169 @@
+<!-- LOADING BAR -->
+<div *ngIf="isLoading" fxHide.lt-md="true" class="loading-page-indicator">
+    <mat-progress-bar class="fixed-bar" mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="component">
+
+    <div ngClass.lt-md="sectionTitle">
+        <h2>Gestión de clientes</h2>
+        <button [disabled]="isLoading" [class.spinner]="isExporting" fxHide.gt-sm="true" *ngIf="filteredAccountStatesDS.length > 0" class="btnExport" mat-raised-button (click)="getAllForReport()">Exportar</button>
+    </div>
+
+    <div class="container">
+        <form class="formContainer">
+            <!-- BÚSQUEDA -->
+            <mat-form-field class="searchContainer" appearance="outline" disabled="isLoading">
+                <input type="text" matInput  #searchInput placeholder="Buscar..." [disabled]="isLoading">
+                <button matSuffix mat-icon-button aria-label="Clear" (keydown.enter)="search(searchInput.value)" (click)="search(searchInput.value)" [disabled]="isLoading">
+                    <mat-icon style="position: relative;top: 3px;">search</mat-icon>
+                </button>
+            </mat-form-field>
+            <div class="filtersContainer">
+                <!-- PROYECTO -->
+                <mat-form-field class="filterContainer" appearance="outline">
+                    <mat-label>Proyecto</mat-label>
+                    <mat-select 
+                        [(ngModel)]="filters.project" 
+                        [ngModelOptions]="{standalone: true}"
+                        (selectionChange)="resetPagination()" 
+                        [disabled]="isLoading"
+                        [value]="(project$ | async)">
+        
+                        <mat-option *ngFor="let project of projects" [value]="project">
+                            {{project}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- DEPARTAMENTO -->
+                <mat-form-field class="filterContainer" appearance="outline">
+                    <mat-label>Gestión</mat-label>
+                    <mat-select 
+                        [(ngModel)]="filters.department" 
+                        [ngModelOptions]="{standalone: true}"
+                        (selectionChange)="resetPagination()" 
+                        [disabled]="isLoading"
+                        [value]="(department$ | async)">
+        
+                        <mat-option [value]="-1">Todos</mat-option>
+                        <mat-option *ngFor="let department of eDepartment | enumToArray" [value]="eDepartment[department]">
+                            {{department|camelCaseToSentenceCase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- BALANCE -->
+                <mat-form-field class="filterContainer" appearance="outline">
+                    <mat-label>Estado</mat-label>
+                    <mat-select 
+                        [(ngModel)]="filters.balance" 
+                        [ngModelOptions]="{standalone: true}"
+                        (selectionChange)="resetPagination()" 
+                        [disabled]="isLoading"
+                        [value]="(balance$ | async)">
+                        
+                        <mat-option [value]="-1">Todos</mat-option>
+                        <mat-option *ngFor="let balance of eBalance | enumToArray" [value]="eBalance[balance]">
+                            {{balance|camelCaseToSentenceCase}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="exportExcelContainer">
+                    <button [disabled]="isLoading" [class.spinner]="isExporting" fxHide.lt-md="true" *ngIf="filteredAccountStatesDS.length > 0" class="btnExport" mat-raised-button (click)="getAllForReport()">Exportar a Excel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div style="position: relative;">
+        <div class="column col-12 tabla" ngStyle.gt-sm="padding-right: 20px;">
+            <ngx-table id="accountBalanceTable" [data]="filteredAccountStatesDS" #table [configuration]="configurationAccountsState" [pagination]="pagination"
+            (event)="eventEmitted($event)"
+                [columns]="columns" [noResultsTemplate]="noResultsTemplate">
+            </ngx-table>
+            <span class="ngx-pagination-span">Mostrar Resultados</span>
+        </div>
+    </div>
+    <ng-template #actions let-row>
+        <mat-spinner *ngIf="row.isSaving else editingBlock" class="mat-spinner-center" [diameter]="20"></mat-spinner>
+        <ng-template #editingBlock>
+            <div *ngIf="row.isEditing || row.isEditingWorkStarted; else elseBlock">
+                <button *ngIf="row.newDataToSave" mat-icon-button (click)="save(row)">
+                    <mat-icon matTooltip="Guardar" style="height: 20px; color: yellowgreen">save</mat-icon>
+                </button>
+                <button *ngIf="!row.newDataToSave" mat-icon-button>
+                    <mat-icon matTooltip="No hay cambios para guardar" style="height: 20px">save</mat-icon>
+                </button>
+                <button mat-icon-button (click)="cancel(row)">
+                    <mat-icon matTooltip="Cancelar" color="warn" style="height: 20px;">cancel</mat-icon>
+                </button>
+            </div>
+            <ng-template #elseBlock>
+                <button mat-icon-button (click)="showCommunications(row)">
+                    <mat-icon class="svgIcon" matTooltip="Ver comunicaciones" color="primary" svgIcon="chat"></mat-icon>
+                </button>
+                <button mat-icon-button (click)="showOverduePayments(row)">
+                    <mat-icon class="svgIcon" matTooltip="Ver detalle" svgIcon="paper" color="accent" style="height: 20px;"></mat-icon>
+                </button>
+                <button *ngIf="row.canEdit" mat-icon-button (click)="edit(row)">
+                    <mat-icon class="svgIcon" matTooltip="Editar" svgIcon="edit" style="height: 20px; color: yellowgreen"></mat-icon>
+                </button>
+                <button *ngIf="row.canEditWorkStarted" mat-icon-button (click)="editWorkStarted(row)">
+                    <mat-icon class="svgIcon" matTooltip="Editar inicio obra" svgIcon="edit" style="height: 20px; color: yellowgreen"></mat-icon>
+                </button>
+            </ng-template>
+        </ng-template>
+    </ng-template>
+    <ng-template #departmentTemplate let-row>
+        <mat-form-field class="inline-select" *ngIf="(row.isEditing) else elseBlock">
+            <mat-select [(ngModel)]="row.departmentEdit" [ngModelOptions]="{standalone: true}" (selectionChange)="canSaveRow(row)">
+                <mat-option *ngFor="let department of eDepartment | enumToArray" 
+                            [value]="eDepartment[department]" 
+                            [disabled]="(eDepartment[department] === row.department)">
+                    {{department|camelCaseToSentenceCase}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-template #elseBlock>{{row.departmentDesc}}</ng-template>
+    </ng-template>
+    <ng-template #publishDebtTemplate let-row>
+        <mat-form-field class="inline-select" *ngIf="(row.isEditing && ((row.balance == eBalance.Mora) || (row.balance == eBalance.AlDia && row.publishDebt == 'N'))) else elseBlock">
+            <mat-select [(ngModel)]="row.publishDebtEdit" [ngModelOptions]="{standalone: true}" (selectionChange)="canSaveRow(row)">
+                <mat-option value="Y">Si</mat-option>
+                <mat-option value="N">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-template #elseBlock>{{row.publishDebtDesc}}</ng-template>
+    </ng-template>
+    <ng-template #salesInvoiceAmountUSD let-row>
+        <span>
+            {{row.salesInvoiceAmountUSD | amountConvert:undefined:true}}
+        </span>
+    </ng-template>
+    <ng-template #paidPaymentsAmountUSD let-row>
+        <span>
+            {{row.paidPaymentsAmountUSD | amountConvert:undefined:true}}
+        </span>
+    </ng-template>
+    <ng-template #overduePaymentsAmountUSD let-row>
+        <span>
+            {{row.overduePaymentsAmountUSD | amountConvert:undefined:true}}
+        </span>
+    </ng-template>
+    <ng-template #noResultsTemplate>
+        <td *ngIf="!isLoading" [attr.colspan]="columns.length" class="no-results">
+            No hay información disponible para el filtro seleccionado
+        </td>
+    </ng-template>
+
+    <!-- VERSION MOBILE DE GESTION DE CLIENTES -->
+    <div fxHide.gt-sm="true">
+        <app-clients-panel-table 
+        [isLoading]="isLoading"
+        [arrayData]="filteredAccountStatesDS"
+        (parentCancel)="cancel($event)"
+        (parentSave)="save($event)"
+        (parentShowCommunications)="showCommunications($event)"
+        (parentShowOverduePayments)="showOverduePayments($event)"></app-clients-panel-table>
+    </div>
+
+</div>

@@ -1,0 +1,49 @@
+<div *ngIf="!dialogCont" class="container">
+  <h2>Adhesión al débito automático</h2>
+  <div class="label-input">
+    <div class="labeput">
+      <div class="divuno">
+        <mat-label class="classLabelHea">Nº cliente</mat-label>
+      </div>
+      <div class="divdos">
+        <mat-label  class="classLabel"> {{data.client}}</mat-label>
+      </div>
+    </div>
+    <div class="labeput">
+      <div class="divuno">
+        <mat-label class="classLabelHea">Titular</mat-label>
+      </div>
+      <div class="divdos">
+        <mat-label class="classLabel"> {{data.name}} </mat-label>
+      </div>
+    </div>
+    <div class="labeput">
+      <div class="divuno">
+        <mat-label class="classLabelHea">Emprendimiento</mat-label>
+      </div>
+      <div *ngIf="data.entrepreneurship" class="divdos">
+        <mat-label class="classLabel"> {{data.entrepreneurship}} </mat-label>
+      </div>
+    </div>
+  </div>
+  <div class="divCuentaSeleBut">
+    <mat-label class="classLabel">Cuenta</mat-label>
+    <mat-form-field class="select" appearance="outline">
+      <mat-select name="food" [(value)]="selectCuenta" [disabled]="disabledCuenta" (selectionChange)="selectCBU($event.value)">
+        <mat-option [value]="0">
+          Seleccionar CBU...
+        </mat-option>
+        <mat-option *ngFor="let account of accounts" [value]="account">
+          {{account.cbu}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-checkbox [ngModel]="checkedTerm" (click)="clickEvt($event)">Acepto terminos y condiciones</mat-checkbox>
+    <div style="margin-top: 35px;">
+      <button mat-flat-button class="button" (click)="cancel()">Cancelar</button>
+      <button mat-flat-button [ngClass]="!disabledButtonPagar() ? 'buttonOk': 'button'" (click)="accept()" [disabled]="disabledButtonPagar()"> Adherir </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+  <!-- LOADING BAR -->
+<div *ngIf="isLoading" class="loading-page-indicator" ngStyle.lt-md="margin-left: 0px; margin-top: -20px;">
+  <mat-progress-bar class="fixed-bar" mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="component">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between" ngStyle.lt-md="margin-top: -10px;">
+    <div class="section-header header-mobile">
+      <h2 ngClass.lt-md="sectionTitle">Adelanto de cuotas</h2>
+      <div *ngIf="!isLoading && userAllowedToLock" class="btnLock-container">
+        <button [disabled]="lockBtnLoading" (click)="setLockAdvancePayments()" mat-raised-button color="warn">
+          <div class="btnLock">
+            <span>{{lockAdvancePayments ? 'DESBLOQUEAR' : 'BLOQUEAR'}} ADELANTO DE CUOTAS</span>
+            <mat-spinner *ngIf="lockBtnLoading" diameter="18"></mat-spinner>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARTEL - AVISO DE ERROR DE SERVIDOR -->
+  <div *ngIf="showNothing">
+    <div class="msgContainer bigFont" ngClass.lt-sm="smallFont" ngClass.lt-md="mediumFont">
+      <div class="tooltip" [ngClass.lt-md]="{'tooltip-mobile':true}">
+        <div class="tooltip-text">
+            <mat-icon>warning</mat-icon>
+          <p>
+            Error de servidor: no se puede visualizar la sección
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARTEL - AVISO DE SECCIÓN DESHABILITADA -->
+  <div *ngIf="!this.isLoading && !showNothing && checkLock()">
+    <div class="msgContainer bigFont" ngClass.lt-sm="smallFont" ngClass.lt-md="mediumFont">
+      <div class="tooltip" [ngClass.lt-md]="{'tooltip-mobile':true}">
+        <div class="tooltip-text">
+            <mat-icon>info</mat-icon>
+          <p>
+            La opción de adelantar cuotas se encuentra temporalmente deshabilitada<br /><br />Disculpe las molestias
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form class="form" >
+    <!-- CUIT -->
+    <mat-form-field class="formField" appearance="outline">
+      <mat-select [(value)]="selectedCuit" placeholder="Cuit" [disabled]="filteredCuits.length === 0 || isLoading">
+        <mat-select-filter [placeholder]="'Filtrar'" [array]="cuits" (filteredReturn)="filteredCuits =$event"
+          [noResultsMessage]="'No se encontró el cuit'"></mat-select-filter>
+        <mat-option *ngFor="let c of filteredCuits" [value]="c" (click)="filterCuentasByCuit(selectedCuit)">
+          {{ c }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- PRODUCTO -->
+    <mat-form-field class="formField" appearance="outline">
+      <mat-select [(value)]="selectedProperty" placeholder="Producto" [disabled]="filteredProperties.length === 0  || isLoading">
+        <mat-select-filter [placeholder]="'Filtrar'" [array]="properties" [displayMember]="'mixedEmpAndCode'"
+          (filteredReturn)="filteredProperties =$event" [noResultsMessage]="'No se encontró la propiedad'">
+        </mat-select-filter>
+        <mat-option
+          *ngFor="let cc of filteredProperties"
+          [value]="cc.mixedEmpAndCode"
+          (click)="getPaymentsSummary(cc.mixedEmpAndCode)"
+        >
+          {{ cc.mixedEmpAndCode }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- TOTAL - DESKTOP -->
+    <div class="total-desktop" fxHide.lt-md="true">
+      <div style="text-align: end;">
+        <mat-label class="classLabel">Total: </mat-label>
+        <mat-input class="totalAmount" style="white-space: nowrap;">{{ total | amountConvert:codigoMoneda:true }}</mat-input>
+      </div>
+        <button mat-flat-button [ngClass]="total === 0 || isLoading? 'payDisable' : 'payEnabled'" [disabled]="checkTotal() || disableButtons"
+          (click)="openConfirmDialog()">Confirmar
+        </button>
+    </div>
+  </form>
+
+  <div class="columns">
+    <ng-container>
+      <div class="column col-12 tableContainer" >
+        <ngx-table
+          #table
+          [data]="summarys"
+          [columns]="columnsBalance"
+          [configuration]="configurationBalance"
+          [noResultsTemplate]="noResultsTemplateBalance"
+        >
+        </ngx-table>
+      </div>
+      <ng-template #amount let-row>
+        <div>{{ row.capital | amountConvert: undefined:true }}</div>
+      </ng-template>
+
+      <ng-template #action let-row let-rowIndex="rowIndex">
+        <div>
+        <div *ngIf="row.status === eAdvanceFeeStatus.NoSolicitado || (row.status === eAdvanceFeeStatus.Rechazado && !paymentAlreadyRequested)">
+          <mat-checkbox *ngIf="!disableButtons && !paymentAlreadyRequested" #ref [checked]="row.check" (click)="changeValue(rowIndex, $event);">
+          </mat-checkbox>
+          <mat-checkbox *ngIf="disableButtons || paymentAlreadyRequested" disabled [checked]="row.check"></mat-checkbox>
+        </div>
+        <div>
+        <p *ngIf="row.status === eAdvanceFeeStatus.Rechazado" class="solicitudRechazada">{{formateDate(row.createdOn)}}
+          <span fxHide.lt-sm="true">-</span>
+          <br fxHide.gt-xs="true" />
+          Solicitud cancelada</p>
+        <p *ngIf="row.status === eAdvanceFeeStatus.Pendiente" class="solicitudPendiente">{{formateDate(row.createdOn)}}
+            <span fxHide.lt-sm="true">-</span>
+            <br fxHide.gt-xs="true" />
+            Solicitud en proceso</p>
+        <p *ngIf="row.status === eAdvanceFeeStatus.Aprobado" class="solicitudAprobada">{{formateDate(row.createdOn)}}
+            <span fxHide.lt-sm="true">-</span>
+            <br fxHide.gt-xs="true" />
+            Solicitud aprobada</p>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #noResultsTemplateBalance>
+        <td *ngIf="!missingPayments && selectedProperty" [attr.colspan]="columnsBalance.length" fxHide.lt-sm="true" >
+          {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+        </td>
+        <p *ngIf="!missingPayments && selectedProperty" fxHide.gt-xs="true" class="no-result-mobile">
+          {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+        </p>
+
+        <td *ngIf="missingPayments" [attr.colspan]="columnsBalance.length" class="restrictedPayments" fxHide.lt-sm="true">
+          No puede adelantar cuotas
+        </td>
+        <p *ngIf="missingPayments" class="no-result-mobile restrictedPayments" fxHide.gt-xs="true">
+          No puede adelantar cuotas
+        </p>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <!-- TOTAL - MOBILE -->
+  <div class="bottom-container" fxHide.gt-sm="true">
+    <div>
+      <mat-label class="classLabel">Total: </mat-label>
+      <mat-input class="totalAmount">{{ total | amountConvert:codigoMoneda:true }}</mat-input>
+    </div>
+    <button
+        mat-flat-button
+        [ngClass]="total === 0 || isLoading? 'payDisable' : 'payEnabled'"
+        [disabled]="checkTotal() || disableButtons"
+        (click)="openConfirmDialog()"
+        >Confirmar
+    </button>
+  </div>
+
+</div>

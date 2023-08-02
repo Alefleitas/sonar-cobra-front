@@ -1,0 +1,36 @@
+<ng-container>
+    <div class="column col-12 tabla">
+        <ngx-table 
+        [id]="'details-table'" 
+        [data]="data"
+        [configuration]="configNestedDetail" 
+        [columns]="columnsNestedDetails">
+        </ngx-table>
+    </div>
+
+    <ng-template #receipt let-row>
+        <div *ngIf="row.applicationType === 'COBRO'">
+            <mat-spinner class="mat-spinner-center" [diameter]="20" *ngIf="row.isLoading"></mat-spinner>
+            <mat-icon *ngIf="!row.isLoading" matTooltip="Descargar recibo" (click)="downloadReceipt(row)">get_app</mat-icon>
+        </div>
+    </ng-template>   
+
+    <ng-template #docNumber let-row>
+    <div *ngIf="row.applicationType === 'COBRO'">
+        <span>{{row.docNumber}}</span>
+    </div>
+    </ng-template>
+        
+    <ng-template #invoiceApplicationDetail let-row>
+        <div *ngIf="row.trxId">
+            <mat-spinner class="mat-spinner-center" [diameter]="20" *ngIf="row.isInvoiceLoading"></mat-spinner>
+            <mat-icon *ngIf="!row.isInvoiceLoading" matTooltip="Descargar factura" (click)="downloadInvoice(row)">get_app</mat-icon>
+        </div>
+    </ng-template>
+        
+    <ng-template #applicationTrxNumber let-row>
+        <div *ngIf="row.trxId">
+            <span>{{row.trxNumber}}</span>
+        </div>
+    </ng-template>
+</ng-container>

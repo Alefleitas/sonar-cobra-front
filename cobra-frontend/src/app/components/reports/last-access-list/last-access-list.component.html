@@ -1,0 +1,42 @@
+<div class="component">
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <h2>Login usuarios</h2>
+
+    <div style="display: inline-flex; width: 100%; justify-content: space-between;">
+
+      <mat-form-field appearance="outline">
+        <input type="text" (input)="onChange($event.target.value)" matInput placeholder="Buscar..." autocomplete="off">
+        <button matSuffix mat-icon-button aria-label="Clear" >
+          <mat-icon>search</mat-icon>
+      </button>
+      </mat-form-field>
+
+      <button [disabled]="accessDS?.length == 0" mat-raised-button (click)="exportToExcel()" 
+      [ngClass]="accessDS?.length == 0 ? 'btnExportDisable' : 'btnExport' ">
+        <mat-icon matTooltip=" Exportar excel" >get_app
+        </mat-icon>
+      </button>
+
+    </div>
+
+    <div class="columns">
+      <ng-container>
+
+        <div class="column col-12" style="padding: 20px 20px 20px 0px;">
+          <ngx-table #table [columns]="columns" [configuration]="configurationLastAccess" [data]="accessDS"
+            [noResultsTemplate]="noResultsTemplate">
+          </ngx-table>
+
+          <ng-template #noResultsTemplate>
+            <td [attr.colspan]="columns.length" class="no-results">
+              {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+            </td>
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #lastLoginColumn let-row>
+      {{row.lastLogin | date: 'dd/MM/yyyy - HH:mm:ss'}}
+    </ng-template>

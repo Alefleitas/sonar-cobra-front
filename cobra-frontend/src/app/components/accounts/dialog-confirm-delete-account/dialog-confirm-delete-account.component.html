@@ -1,0 +1,17 @@
+<div class="container" ngClass.lt-sm="smallFont" ngClass.lt-md="mediumFont">
+    <div class="tooltipContainer">
+      <button type="button" mat-icon-button (click)="closePopUp()">
+        <mat-icon class="iconToolCancel">close</mat-icon>
+      </button>
+      <div class="tooltip-text">
+        <mat-icon class="messageIcon">delete_outline</mat-icon>
+        <p>
+          <span class="tooltipMessage">¿Estás seguro que querés eliminar la cuenta {{account.cbu}}?</span><br /><br />
+        </p>
+        <div style="text-align: center;">
+            <button mat-flat-button class="btnCancelar" (click)="closePopUp();">Cancelar</button>
+            <button mat-flat-button class="btnConfirmar" (click)="deleteAccount();">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>

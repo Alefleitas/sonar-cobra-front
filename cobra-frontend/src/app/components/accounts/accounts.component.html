@@ -1,0 +1,64 @@
+<div *ngIf="isLoading" class="loading-page-indicator" ngStyle.lt-md="margin-left: 0px; margin-top: -20px;">
+    <mat-progress-bar class="fixed-bar" mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div class="component">
+    <h2 ngClass.lt-md="sectionTitle">Mis cuentas</h2>
+
+    <!-- FORMULARIO -->
+    <form class="formContainer">
+        <mat-form-field class="search" appearance="outline">
+            <input matInput type="text" placeholder="Buscar..." (input)="filter($event.target.value)">
+            <button matSuffix mat-icon-button aria-label="Clear" class="searchIcon">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+        <div class="btnContainer">
+            <button mat-flat-button (click)="openDialogAddAccount()"  class="btnAddAccount">+ Nuevo CBU</button>
+        </div>
+    </form>
+
+    <!-- TABLA -->
+    <ng-container>
+        <div class="column col-12" style="margin-right: 30px;">
+            <ngx-table
+                #table
+                [data]="accounts"
+                [configuration]="configurationAccounts"
+                [columns]="columns"
+                [noResultsTemplate]="noResultsTemplate">
+            </ngx-table>
+        </div>
+
+        <!-- MONEDA -->
+        <ng-template #currency let-row let-rowIndex="rowIndex">
+            <div *ngIf="!row.cbu.startsWith('072'); else bimoneda">
+                <div *ngIf="row.currency === 2">
+                    USD
+                </div>
+                <div *ngIf="row.currency === 0">
+                    ARS
+                </div>
+            </div>
+            <ng-template #bimoneda>
+                BIMONEDA    
+            </ng-template>
+        </ng-template>
+
+        <!-- DELETE ICON -->
+        <ng-template #deleteAccount let-row>
+            <button mat-icon-button  (click)='openDialogDeleteAccount(row)'>
+                <mat-icon aria-hidden="false" class="dltIcon">delete_outline</mat-icon>
+            </button>
+        </ng-template>
+
+        <!-- NO RESULTS -->
+        <ng-template #noResultsTemplate>
+            <td [attr.colspan]="columns.length" class="no-results" fxHide.lt-sm="true" >
+                No se encontraron cuentas bancarias registradas
+            </td>
+            <p fxHide.gt-xs="true" class="no-result-mobile">No se encontraron cuentas bancarias registradas</p>
+        </ng-template>
+    </ng-container>
+
+</div>

@@ -1,0 +1,89 @@
+@import "../../../../../themes/cobra-theme.scss";
+
+.actionsContainer{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+:host ::ng-deep .cdk-overlay-pane {
+    max-width: 1000px !important;
+    width: auto !important;
+    height: auto !important;
+  }
+  
+  .container {
+    width: 440px;
+    margin-bottom: 1em;
+    font-family: 'Graphik-Light';
+    font-size: 20px;
+    color: $color-primary;
+    .tooltipContainer {
+      .tooltip-text {
+        margin-top: 0px;
+        margin-left: 80px;
+        margin-right: 80px;
+        mat-icon {
+          color: #3080e3;
+        }
+        .buttonUs {
+          background-color: #ffffff;
+          margin-bottom: 20px;
+        }
+        text-align: center;
+        color: $color-primary;
+        p {
+          margin:0;
+        }
+        .iconTool {
+          color: $color-button;
+          @include md-icon-size(22px);
+        }
+      }
+    }
+  }
+  
+  .tooltipMessage{
+    text-align: center;
+    color: #34495e;
+    font-size: 20px;
+  }
+
+  .tooltipAdvertencia {
+    text-align:center;
+    color: rgb(253, 72, 0);
+    font-size: 15px;
+  }
+
+
+  .btnConfirmar{
+    border-radius: 30px;
+    background-color: #307FE2;
+    color: white;
+    width: 7em;
+  }
+  
+  .btnConfirmar:hover{
+    background-color: $color-drawer;
+  }
+  
+  .btnCancelar{
+    border-radius: 30px;
+    background-color: #d4d4d4;
+    color: rgb(0, 0, 0);
+    width: 7em;
+  }
+
+  .actionsContainer{
+    text-align: center;
+  }
+
+  @media screen and (max-width: 500px){
+    .container{
+      width: 300px;
+    }
+    .container .tooltipContainer .tooltip-text{
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+  }

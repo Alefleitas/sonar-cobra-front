@@ -1,0 +1,84 @@
+@import "../../../themes/cobra-colors.scss";
+
+:host ::ng-deep .mat-card-header{
+    background-color: $color-drawer !important;
+}
+    :host ::ng-deep .mat-card-title{
+    background-color: $color-drawer !important;
+    margin: 0px !important;
+    padding: 12px;
+}
+    :host ::ng-deep .mat-card{
+    padding:0px !important;
+    margin:16px !important;
+}
+
+.column-60 {
+    float: left;
+    width: 60%;
+}
+.column-40 {
+    float: left;
+    width: 39%;
+}
+
+.column-40 span {
+    font-size: 13.5px;
+}
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.field{
+    width:100%;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix{
+    top: 2px !important;
+}
+
+:host ::ng-deep .mat-form-field-wrapper{
+    width:100%;
+}
+
+.button{
+    border-color: $color-button;
+    border-width: 0.80px;
+    background: $color-button;
+    border-style: solid;
+    color:white;
+    border-radius: 30px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    margin:0 auto;
+    display:block;
+  }
+
+.content{
+    padding: 10px;
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+    //closes otuline gap
+    border-top-color: currentColor !important;
+}
+
+:host ::ng-deep.mat-form-field-label{
+    font-size: 15px;
+}
+
+:host ::ng-deep.mat-select-value{
+    font-size: 15px;
+}
+
+.btnEnviar{
+    border-radius: 30px;
+    background-color: #3080e3;
+    color: white;
+    width: 7em;
+    margin:0 auto;
+    display:block;
+  }

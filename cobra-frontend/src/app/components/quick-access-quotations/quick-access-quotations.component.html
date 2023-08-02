@@ -1,0 +1,132 @@
+<div class="component">
+
+    <div class="headerContainer" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="header">
+            <h2 fxHide.xs="true">Watchlist</h2>
+            <span fxHide.gt-xs="true" class="mobileText" style="font-size: 16px; margin-top: 10px;">Watchlist</span>
+
+            <div fxHide.xs="true">
+                <ng-container *ngTemplateOutlet="templateAlertas"></ng-container>
+            </div>
+        </div>
+
+        <div *ngIf="!connectionOK() && !disconnection()" style="font-weight: bold;">Conectando...</div>
+        <div *ngIf="connectionOK() && !disconnection() && !displayQuotations()" style="font-weight: bold;">Conectado. Esperando datos...</div>
+        <div *ngIf="connectionOK() && !disconnection() && displayQuotations()" style="display: flex; align-items: center;">
+            <div  [ngClass]="{'highlight': highlight()}" style="color: #7e7e7e; font-weight: bold;">Última actualización: <span>{{displayDate() | date:'HH:mm:ss' }}</span></div>
+            <i *ngIf="highlight()" fxHide.xs="true" class="gg-bell highlightIcon"></i>
+        </div>
+
+    </div>
+    
+    <div fxHide.gt-xs="true">
+        <ng-container *ngTemplateOutlet="templateAlertas"></ng-container>
+    </div>
+    
+    <!--  -->
+    <!-- DESKTOP -->
+    <!--  -->
+    <div fxHide.xs="true" >
+        <table mat-table [dataSource]="displayQuotations()" style="width: 100%;">
+    
+            <ng-container matColumnDef="titulo">
+                <th mat-header-cell *matHeaderCellDef> Indicadores </th>
+                <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef class="rightText">{{!displayDate() ? "[fecha]" : displayDate() | date:'dd/MM/YYYY'}}</th>
+                <td mat-cell *matCellDef="let element" class="rightText"> 
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div *ngIf="!element.tooltip"></div>
+                        <div *ngIf="element.tooltip" style="padding-left: 1em;">
+                            <mat-icon [matTooltip]="element.tooltip.mensaje" matTooltipPosition="above" [matTooltipClass]="getTooltipClase(element.tooltip.tipo)" [style]="checkTipoTooltip(element.tooltip.tipo, 'style')">
+                                {{checkTipoTooltip(element.tooltip.tipo, 'icon')}}
+                            </mat-icon>
+                        </div>
+                        <div style="font-weight: bold;">
+                            {{ element.valor | amountConvert:null:true }}{{element.tipo == 2 || element.tipo == 3 ? '%' : ''}}
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="variacionDiaria">
+                <th mat-header-cell *matHeaderCellDef class="rightText"> Variación diaria </th>
+                <td mat-cell *matCellDef="let element" class="rightText" [ngClass]="determineColor(element, eTipoVariacion.DIARIA)"> 
+                    {{ showVariation(element, eTipoVariacion.DIARIA) }}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="variacionMensual">
+                <th mat-header-cell *matHeaderCellDef class="rightText"> Variación mensual </th>
+                <td mat-cell *matCellDef="let element" class="rightText" [ngClass]="determineColor(element, eTipoVariacion.MENSUAL)">
+                    {{ showVariation(element, eTipoVariacion.MENSUAL) }}
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="variacionAnual">
+                <th mat-header-cell *matHeaderCellDef class="rightText"> YTD </th>
+                <td mat-cell *matCellDef="let element" class="rightText" [ngClass]="determineColor(element, eTipoVariacion.ANUAL)"> 
+                    {{ showVariation(element, eTipoVariacion.ANUAL) }}
+                </td>
+            </ng-container>
+    
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+  
+    <!--  -->
+    <!-- MOBILE -->
+    <!--  -->
+    <div fxHide.gt-xs="true" style="width: 100%;">
+        <div *ngFor="let element of displayQuotations()" class="mobileCard">
+
+            <div class="mobileRow">
+                <span class="mobileText">Indicadores</span>
+                <span class="mobileText" style="font-family: 'Graphik-Medium';">{{element.titulo}}</span>
+            </div>
+            <div class="mobileRow">
+                <span class="mobileText">{{!displayDate() ? "[fecha]" : displayDate() | date:'dd/MM/YYYY'}}</span>
+                <span class="tooltip-amount">
+                    <div *ngIf="element.tooltip" class="adjustTooltipIcon">
+                        <mat-icon [matTooltip]="element.tooltip.mensaje" matTooltipPosition="below" [matTooltipClass]="getTooltipClaseMobile(element.tooltip.tipo)" [style]="checkTipoTooltip(element.tooltip.tipo, 'style')">
+                            {{checkTipoTooltip(element.tooltip.tipo, 'icon')}}
+                        </mat-icon>
+                    </div>
+                    <div class="mobileText">
+                        {{ element.valor | amountConvert:null:true }}{{element.tipo == 2 || element.tipo == 3 ? '%' : ''}}
+                    </div>
+                </span>
+            </div>
+            <div class="mobileRow">
+                <span class="mobileText">Variación diaria</span>
+                <span [ngClass]="determineColor(element, eTipoVariacion.DIARIA)" style="font-size: 14px">{{ showVariation(element, eTipoVariacion.DIARIA) }}</span>
+            </div>
+            <div class="mobileRow">
+                <span class="mobileText">Variación mensual</span>
+                <span [ngClass]="determineColor(element, eTipoVariacion.MENSUAL)" style="font-size: 14px">{{ showVariation(element, eTipoVariacion.MENSUAL) }}</span>
+            </div>
+            <div class="mobileRow">
+                <span class="mobileText">YTD</span>
+                <span [ngClass]="determineColor(element, eTipoVariacion.ANUAL)" style="font-size: 14px">{{ showVariation(element, eTipoVariacion.ANUAL) }}</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #templateAlertas>
+    <div *ngIf="verAlertaDesconexion && (isConnectionFailed() || disconnection())" class="connectionFailed">
+        <mat-icon class="icon">error</mat-icon>
+        <span>Se perdió conexión con el servidor</span>
+        <mat-icon class="close" (click)="closeAlert('desconexion')">close</mat-icon>
+    </div>
+
+    <div *ngIf="connectionOK() && !disconnection() && verAlertaDesactualizacion && displayOutdatedTime" class="displayOutdated">
+        <mat-icon class="icon">error</mat-icon>
+        <span>Alerta: datos desactualizados (obtenidos {{displayOutdatedTime}} aproximadamente)</span>
+        <mat-icon class="close" (click)="closeAlert('desactualizacion')">close</mat-icon>
+    </div>
+</ng-template>

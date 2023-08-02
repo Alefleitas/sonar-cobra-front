@@ -1,0 +1,15 @@
+@import "../../../../../themes/cobra-theme.scss";
+
+.detailContainer{
+    position: absolute;
+    top: -10px;
+    left: 35%;
+    cursor: pointer;
+
+    mat-icon{
+        color: $color-third;
+        position: relative;
+        top: -7px;
+        padding: 5px;
+    }
+}

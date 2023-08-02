@@ -1,0 +1,135 @@
+@import '../../../themes/cobra-theme.scss';
+
+.container {
+  margin-left: 30px;
+  margin-top: 22px;
+}
+
+.inform-button {
+  background-color: $color-button;
+  color: white;
+}
+
+.dateSelectorTitle {
+  position: absolute;
+  top: -30px;
+  left: 31%;
+  font-family: 'Graphik-Light';
+  font-weight: bold;
+}
+
+.actionsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.msjValidacionFechas{
+  color: $color-error;
+  font-weight: bold;
+  margin-right: 2em;
+}
+
+:host::ng-deep mat-form-field.large {
+  .mat-form-field-wrapper {
+    width: 150px !important;
+  }
+}
+
+:host::ng-deep mat-form-field.small {
+  .mat-form-field-wrapper {
+    width: 170px !important;
+  }
+}
+
+:host ::ng-deep mat-form-field .mat-form-field-wrapper{
+  width: 150px;
+  padding-bottom: 0px;
+}
+
+:host ::ng-deep .datePicker .mat-form-field-flex{
+  padding-top: 0px;
+  max-height: 30px;
+}
+:host ::ng-deep .datePicker .mat-form-field-infix{
+  top: -5px;
+}
+
+:host ::ng-deep .mat-form-field-underline{
+  bottom: 0px;;
+}
+
+.datePickerFilter {
+  color: $color-drawer;
+  position: relative;
+  bottom: -3px;
+}
+
+.cleanBtn{
+  background-color: $color-button;
+}
+
+:host ::ng-deep .ngx-table {
+  color: $color-drawer !important;
+  background-color: #f3f3f3 !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table tr {
+  background-color: white !important;
+  border-bottom: 2px solid #e7e9ed;
+  text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table tr td:nth-child(7){
+  padding: 0px;
+}
+
+:host ::ng-deep .ngx-table th {
+  color:white !important;
+  font-size: 14px !important;
+  border-bottom: 10px solid $color-gray-light !important;
+  background-color: $color-button !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+}
+
+:host::ng-deep .ngx-table[id=paymentReportsTable] td {
+  border-bottom: 10px solid $color-gray-light !important;
+  border-right: 0px solid;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: #3080e3;
+}
+
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 0px;
+  top: -35px;
+  font-weight: bold;
+  font-family: 'Graphik-Light';
+  background-color: white;
+}
+
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 60px;
+  top: -30px;
+  font-family: 'Graphik-Light';
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: $color-button;
+}
+
+:host ::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-checkmark {
+  display: none;
+}
+
+:host ::ng-deep .ngx-table__table-loader-wrapper{
+  margin: 0px;
+}

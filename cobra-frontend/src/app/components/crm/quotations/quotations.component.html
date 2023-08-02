@@ -1,0 +1,156 @@
+<div class="component">
+  <div *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <h2>Cotizaciones</h2>
+  <div>
+    <mat-form-field style="width: 15%; padding-right: 68px;" appearance="outline">
+      <mat-label>Tipo de Cotización</mat-label>
+      <mat-select [(ngModel)]="selectedQuotation" [ngModelOptions]="{standalone: true}"
+        (selectionChange)="selectQuotation($event.value)">
+        <mat-option [value]="'Seleccionar...'">Seleccionar...</mat-option>
+        <mat-option *ngFor="let quotation of quotations" [value]="quotation.code">
+          {{ quotation.code | camelCaseToSentenceCase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="!multipleRateTypes">
+      <div *ngIf="lastQuotation?.valor" style="margin-bottom: 20px;">
+        <h3>Última carga:</h3>
+        <span *ngFor="let key of lastQuotationKeys" style="margin: 10px; display: inline-block;">
+          <b>{{key | quotationPipe}}</b>: {{['especie', 'description'].includes(key) ? lastQuotation[key] :
+          lastQuotation[key] | quotationPipe}}
+        </span>
+      </div>
+      <div *ngIf="!isLoading && selectedQuotation && !lastQuotation?.valor" style="margin-bottom: 20px;">
+        <h3>Última carga:</h3>
+        <span style="margin: 10px; display: inline-block;">No hay cotización cargada de {{selectedQuotation}}</span>
+      </div>
+      <div *ngIf="currentQuotation?.valor" style="margin-bottom: 20px;">
+        <h3>Valor vigente actualmente:</h3>
+        <span *ngFor="let key of currentQuotationKeys" style="margin: 10px; display: inline-block;">
+          <b>{{key | quotationPipe}}</b>: {{['especie', 'description'].includes(key) ? currentQuotation[key] :
+          currentQuotation[key] | quotationPipe}}
+        </span>
+      </div>
+      <div *ngIf="!isLoading && selectedQuotation && !currentQuotation?.valor" style="margin-bottom: 20px;">
+        <h3>Valor vigente actualmente:</h3>
+        <span style="margin: 10px; display: inline-block;">No hay cotización vigente de {{selectedQuotation}}</span>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider></mat-divider>
+
+  <div style="display: inline-flex; width: 100%; justify-content: space-between">
+
+    <div style="display: flex; flex-direction: column;">
+      <form [formGroup]="dynamicFormGroup" (ngSubmit)="onSubmit()"
+        *ngIf="dynamicFormGroup && canAccessCreateQuotation()">
+        <div class="form-fields">
+          <div *ngFor="let field of dynamicFields">
+            <div [ngSwitch]="field.type">
+              <div *ngSwitchCase="'text'">
+                <mat-form-field>
+                  <mat-label>{{field.key | camelCaseToSentenceCase}}</mat-label>
+                  <input matInput formControlName="{{field.key}}">
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'multiselect'">
+                <mat-form-field>
+                  <mat-label>{{field.key | camelCaseToSentenceCase}}</mat-label>
+                  <mat-select [formControlName]="field.key">
+                    <mat-option *ngFor="let rt of (field.value || rateTypes)" [value]="rt">{{rt}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'number'">
+                <mat-form-field>
+                  <mat-label>{{field.key | camelCaseToSentenceCase}}</mat-label>
+                  <input matInput type="number" formControlName="{{field.key}}">
+                </mat-form-field>
+              </div>
+              <div *ngSwitchCase="'date'">
+                <mat-form-field class="fieldDate">
+                  <mat-label>Fecha Efectividad Desde</mat-label>
+                  <input matInput [matDatepicker]="picker" formControlName="{{field.key}}">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="formSpinner">
+            <button *ngIf="!(isLoading)" class="btnLoad" mat-flat-button
+              [disabled]="isLoading || dynamicFormGroup.invalid" type="submit">
+              Cargar
+            </button>
+            <mat-spinner *ngIf="isLoading" diameter=20></mat-spinner>
+          </div>
+        </div>
+      </form>
+
+
+      <div *ngIf="selectedQuotation === 'DolarMEP'" id="configuracionBonos">
+        <mat-divider></mat-divider>
+        <h3>Configuración de Bonos para Dolar MEP</h3>
+
+        <mat-spinner *ngIf="isLoadingBonos" diameter=40 style="margin-left: auto; margin-right: auto;"></mat-spinner>
+        <div *ngIf="!isLoadingBonos">
+          <mat-form-field appearance="fill">
+            <mat-label>Bonos</mat-label>
+            <mat-select [formControl]="bonosSeleccionados" multiple>
+              <mat-option *ngFor="let bono of listaBonos" [value]="bono">
+                <div style="display: flex; justify-content: space-between;"><span>{{bono.title}}</span> <span>{{" $
+                    "}}{{bono.value}}</span></div>
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="bonosSeleccionados.value?.length >= 2">Al seleccionar múltiples bonos se calculará el
+              promedio: <span style="font-weight: bold;">{{calcularPromedioBonos()}}</span></mat-hint>
+          </mat-form-field>
+          <button class="btnLoad" style="margin-left: 2em;" mat-flat-button [disabled]="checkBonosSeleccionados()"
+            (click)="publishBonos()">
+            Cargar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="column col-12" style=" width: 800px; margin-top: 10px;"
+      [hidden]="!dynamicFormGroup || !canAccessCreateQuotation()">
+      <h3>Histórico de cotización para {{ selectedQuotation | camelCaseToSentenceCase }}</h3>
+      <ngx-table #table [data]="allHistoryQuotations" [configuration]="configuration" [columns]="columns"
+        [noResultsTemplate]="noResultsTemplate">
+      </ngx-table>
+      <ng-template #uploadDate let-row>
+        {{row.uploadDate | quotationPipe}}
+      </ng-template>
+      <ng-template #dateQuotationFrom let-row>
+        {{row.effectiveDateFrom | quotationPipe}}
+      </ng-template>
+      <ng-template #dateQuotationTo let-row>
+        {{row.effectiveDateTo | quotationPipe}}
+      </ng-template>
+      <ng-template #rateType let-row>
+        {{row.rateType | quotationPipe}}
+      </ng-template>
+      <ng-template #species let-row>
+        <div *ngIf="row.especie !== undefined; else elseBlock">
+          {{row.especie}}
+        </div>
+        <ng-template #elseBlock>
+          <b> - </b>
+        </ng-template>
+      </ng-template>
+      <ng-template #noResultsTemplate>
+        <td [attr.colspan]="columns.length" class="no-results" style="padding-top: 10px; padding-bottom: 10px;">
+          No hay información disponible.
+        </td>
+      </ng-template>
+
+      <button class="btnExport" mat-raised-button (click)="exportToExcel(allHistoryQuotations)">Exportar a
+        Excel</button>
+
+    </div>
+  </div>
+</div>

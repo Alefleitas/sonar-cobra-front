@@ -1,0 +1,80 @@
+
+@import "../../../../../themes/cobra-theme.scss";
+
+::ng-deep .mat-dialog-container {
+    border-radius: 0px;
+}
+
+.container {
+    width: auto !important;
+    font-family: 'Graphik-Light';
+    color: $color-primary;
+    padding: 10px !important;
+    border: 1.5px solid #3080e3;
+}
+
+.headerStyle{
+    font-size: 20px;
+}
+
+.spinnerContainer{
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+}
+
+.tableContainer {
+    text-align: end;
+
+    .iconToolCancel {
+        background-color: #ffffff !important;
+        color: $color-button !important;
+    }
+}
+
+.headerContainer{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-left: 1em;
+    padding-right: 0.5em;
+    font-weight: bold;
+}
+
+.exitBtn{
+    border: 1px solid $color-gray-light;
+}
+
+.no-results{
+    padding-top: 10px !important; 
+    padding-bottom: 10px !important;
+    text-align: center !important;
+}
+
+:host ::ng-deep .ngx-table {
+    text-align: center !important;
+}
+:host ::ng-deep .ngx-table th {
+    color:white !important;
+    font-size: 14px !important;
+    background-color: $color-button !important;
+    border-bottom: 10px solid $color-gray-light !important;
+    border-radius: 0px !important;
+}
+:host::ng-deep .ngx-table td {
+    border-bottom: 5px solid $color-gray-light !important;
+    border-right: 0px solid;
+}
+
+:host::ng-deep .ngx-table tbody tr {
+    border-left: 3px solid $color-gray-light;
+    border-right: 3px solid $color-gray-light;
+}
+
+// PAGINACIÓN
+:host ::ng-deep .ngx-pagination-wrapper{
+    position: relative;
+}
+:host::ng-deep ul.ngx-pagination .current {
+    background-color: #3080e3;
+}

@@ -1,0 +1,210 @@
+@import "../../../../themes/cobra-theme.scss";
+
+.container {
+  width: 500px;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+h2{
+  margin-bottom: 15px;
+}
+
+.textArea{
+  font-family: "Graphik-Light";
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  z-index: 3;
+  height: 110px;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 5px 5px;
+  color: #002f55;
+}
+
+.formCont{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formError{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  margin-left: 10px;
+  flex-direction: column;
+  color: $color-error;
+  font-size: 14px !important;
+}
+
+.formBtn{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contForm{
+  margin-right: 30px
+}
+
+.btnEnviar{
+  border-radius: 30px;
+  background-color: #3080e3;
+  color: white;
+  width: 7em;
+  margin-top: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cenText{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  width: 50%;
+  margin: -7% 0 0 -25%;
+  color:$color-gray-custom;
+  font-size: 14px;
+}
+
+
+:host ::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $color-button !important;
+}
+
+:host ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: $color-button !important;
+}
+
+::ng-deep.mat-calendar-body-selected{
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep.mat-datepicker-toggle-active{
+  color: $color-button
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+  //closes otuline gap
+  border-top-color: currentColor !important;
+}
+
+:host ::ng-deep.mat-form-field-label{
+  font-size: 15px;
+}
+
+:host ::ng-deep.mat-select-value{
+  font-size: 15px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix{
+  top: 1px !important;
+}
+
+:host ::ng-deep .mat-form-field-label-wrapper{
+  top: -10px;
+}
+
+:host ::ng-deep .mat-form-field-invalid .mat-form-field-outline-thick {
+  color: $color-error !important;
+} 
+
+.textAreaError{
+  border: 2px solid $color-error;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix{
+  top: 0.45em;
+}
+
+.closeDialogBnt{
+  margin-right: 20px;
+  border: 1px solid darkgrey;
+  padding: 5px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 960px){
+  :host ::ng-deep .mat-form-field-underline{
+    position: initial;
+  }
+
+  :host ::ng-deep .mat-form-field-subscript-wrapper{
+    position: initial;
+  }
+  
+  :host ::ng-deep .mat-datepicker-content{
+    background-color: red;
+  }
+}
+
+@media screen and (max-width: 650px){
+
+  h2{
+    margin-bottom: 10px;
+  }
+
+  .formCont{
+    flex-direction: column;
+  }
+
+  :host ::ng-deep .mat-dialog-container{
+    width: 265px;
+  }
+
+  :host ::ng-deep .mat-form-field-wrapper{
+    margin-top: 10px;
+    width: 218px;
+  }
+
+  .container{
+    width: 265px;
+    margin-left: 20px;
+  }
+  .contForm{
+    margin-right: 20px;
+  }
+
+  .formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .textArea{
+    width: 85%;
+  }
+
+  .formBtn{
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  .adjustFormMobile{
+    margin-bottom: 1em;
+  }
+
+  label{
+    margin-left: 15px;
+  }
+
+}

@@ -1,0 +1,80 @@
+@import "../../../themes/cobra-colors.scss";
+
+:host ::ng-deep .mat-card-header{
+  background-color: $color-drawer !important;
+}
+:host ::ng-deep .mat-card-title{
+  background-color: $color-drawer !important;
+  margin: 0px !important;
+  padding: 12px;
+}
+:host ::ng-deep .mat-card{
+  padding:0px !important;
+  margin:16px !important;
+}
+
+:host ::ng-deep .mat-card-content{
+  padding-bottom:1px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel{
+  margin-bottom:5px !important;
+}
+
+:host ::ng-deep .mat-expansion-panel-header{
+  height:60px !important;
+}
+
+.cenText{
+  padding: 30px;
+  text-align: center;
+}
+
+.btn-container {
+  width: 100%;
+  display: inline-flex;
+}
+
+.btn {
+  border-radius: 30px;
+  background-color: #3080e3;
+  color: white;
+  //width: 10em;
+  margin:0 auto;
+  display:block;
+}
+
+.enable {
+  background-color: limegreen;
+}
+
+.disable {
+  background-color: indianred;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+.template-disabled {
+  font-style: italic;
+  color: gray;
+}

@@ -1,0 +1,183 @@
+<div style="height: 100%;">
+  <mat-toolbar class="head" ngClass.lt-md="head-resp">
+
+    <!-- LOGO CONSULTATIO -->
+    <div style="width: 100%;">
+      <mat-icon class="svgIcon" [ngClass.lt-md]="{'svgIcon': false, 'svgIcon-resp': true}" svgIcon="consultatioBlanco"></mat-icon>
+      <span class="dot" [ngClass]="{'hideLogo': checkQuotationsScreen()}" fxHide.lt-md="true"></span>
+      <mat-icon class="svgIcon scndIcon" svgIcon="nordeltaBlanco" [ngClass]="{'hideLogo': checkQuotationsScreen()}" fxHide.lt-md="true"></mat-icon>
+    </div>
+
+    <div class="head-button" style="display: inline-flex;" [ngClass]="{'head-button-margin': !checkQuotationsScreen()}" fxHide.lt-md="true">
+      
+      <!-- COTIZACIONES -->
+      <div class="quotationContainer">
+        <label class="timeHeader" [ngClass]="{'timeWithBorder': !checkQuotationsScreen()}">{{time}} </label>
+        <a *ngIf="(usdExchangeRate$ | async) != (uvaExchangeRate$ | async)" class="tcUsd" #tooltip="matTooltip"
+          [matTooltip]="cartelCotizacion.mostrar ? cartelCotizacion.texto : null" href="https://new.bymadata.com.ar/#/public-bonds/"
+          target="_blank" rel="noopener">
+          TC USD <span class="tcValue">{{ usdExchangeRate$ | async }}</span>
+        </a>
+        <a *ngIf="uvaExchangeRate$ | async as uva" class="tcUva" href="http://www.bcra.gov.ar/" target="_blank"
+          rel="noopener">
+          TC UVA <span class="tcValue">{{ uva }}</span>
+        </a>
+        <a *ngIf="cacExchangeRate$ | async as cac" class="tcCac"
+          href="https://www.camarco.org.ar/indicadores/indicadores-de-costos/" target="_blank" rel="noopener">
+          TC CAC <span class="tcValue">{{ cac }}</span>
+        </a>
+      </div>
+
+      <div *ngIf="!checkQuotationsScreen()" style="display: flex; justify-content: flex-end; align-items: center;">
+        <!-- DATOS USUARIO -->
+        <label *ngIf="(isHandset$ | async) === false" style="color: lightgrey">Centro de Gestión</label>
+        <label>{{ currentUser?.userEmail }}</label>
+        <div *ngIf="currentUser">
+          <button *ngIf="currentUser?.supportUserId" mat-mini-fab class="buttonUs" #tooltip="matTooltip"
+            matTooltip="Usuario de soporte: {{currentUser?.supportUserName}}" matTooltipPosition="below"
+            [matMenuTriggerFor]="menu">
+            <mat-icon>people_alt</mat-icon>
+          </button>
+          <button *ngIf="!currentUser?.supportUserId" mat-mini-fab [matMenuTriggerFor]="menu" class="buttonUs">
+            <mat-icon>person_outline</mat-icon>
+          </button>
+        </div>
+        <!-- MENU USUARIO DESKTOP-->
+        <mat-menu #menu="matMenu" class="userMenu adjustMenu" xPosition="before" style="width: 160px;">
+          <ng-container *ngFor="let menuUsuarioItem of menuUsuario">
+            <button *ngIf="menuUsuarioItem.title === 'Volver a mi usuario' ? currentUser?.supportUserId : shouldShowMenu(menuUsuarioItem)" 
+              mat-menu-item class="menuText" [routerLink]="menuUsuarioItem.link"
+              [routerLinkActive]="['is-active']" class="signOff" (click)="menuUsuarioItem.title === 'Volver a mi usuario' ? loginWithSourceToken() : handleMenuUsuario(menuUsuarioItem,null)">
+              <span class="signOffButton">{{menuUsuarioItem.title}}</span>
+            </button>
+          </ng-container>
+        </mat-menu>
+      </div>
+
+    </div>
+
+    <!-- BOTON MENU MOBILE -->
+    <div *ngIf="currentUser" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()" class="buttonMenu">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    </div>
+
+  </mat-toolbar>
+
+  <!-- MENU SISTEMA DESKTOP -->
+  <mat-toolbar class="menu hideIfEmpty" fxHide.lt-md="true">
+
+    <ng-container *ngFor="let menuItem of menuSistema">
+
+      <ng-container *ngIf="menuItem.submenus.length === 0 && !menuItem.link.includes('quotations-table')">
+        <div *ngIf="shouldShowMenu(menuItem)" routerLinkActive="menuOpen"
+          [ngClass]="determineMenuBtnContainer(menuItem)"
+          [routerLinkActiveOptions]="{exact: true}">
+          <button mat-button 
+            class="menuItem"
+            [class]="menuItem.class"
+            [routerLink]="menuItem.link" >
+            <mat-icon *ngIf="menuItem.icon" class="menuIcon">{{menuItem.icon}}</mat-icon>
+            <span>{{menuItem.title}}</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="menuItem.submenus.length > 0">
+        <div class="menuContainer" *ngIf="shouldShowMenuWithSubmenu(menuItem)" routerLinkActive="menuOpen"
+          [routerLinkActiveOptions]="{exact: true}">
+          <button mat-button  
+            class="menuItem" 
+            [class]="menuItem.class" 
+            [ngClass]="{'menuOpen': t.menuOpen}"
+            #t="matMenuTrigger" 
+            [matMenuTriggerFor]="subMenu">
+            <span>{{menuItem.title}}</span>
+            <mat-icon class="selecIcon">{{t.menuOpen ? 'arrow_drop_up':'arrow_drop_down'}}</mat-icon>
+          </button>
+          <mat-menu #subMenu="matMenu" class="adjustMenu" xPosition="after">
+            <ng-container *ngFor="let submenuItem of menuItem.submenus">
+              <button *ngIf="shouldShowMenu(submenuItem)" mat-menu-item class="menuText" [routerLink]="submenuItem.link"
+                [class]="submenuItem.class">
+                <span>{{submenuItem.title}}</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </mat-toolbar>
+
+  <!-- MENU SISTEMA MOBILE -->
+  <mat-sidenav-container fxFlexFill >
+    <mat-sidenav color="primary" #sidenav mode="over" opened="false" fixedInViewport="true" style="overflow-x: hidden; max-width: 400px;">
+      <!-- HEADER -->
+      <div class="sidenav-menu-header">
+        <div style="position: relative; top: 35%; display: inline-flex; width: 100%;">
+          <button *ngIf="!currentUser?.supportUserId" mat-mini-fab class="sidenav-menu-header-icon-profile" disableRipple="true" style="box-shadow: none;">
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          <label class="sidenav-menu-header-label">{{ currentUser?.firstname }}</label>
+          <mat-icon class="iconClosed sidenav-menu-header-icon-close" (click)="sidenav.toggle()">close</mat-icon>
+        </div>
+      </div>
+
+      <div fxLayout="column" class="sidenav-menu-container">
+        <div *ngFor="let menuItem of menuSistema">
+
+          <div *ngIf="menuItem.submenus.length === 0 && shouldShowMenu(menuItem)" class="optionContainer">
+            <a mat-button class="sidenav-menu" [routerLink]="menuItem.link" routerLinkActive="selected" (click)="sidenav.toggle()">
+              <span class="menuOption">{{menuItem.title}}</span>
+            </a>
+          </div>
+
+          <mat-expansion-panel *ngIf="menuItem.submenus.length > 0 && shouldShowMenuWithSubmenu(menuItem)" class="mat-elevation-z0" hideToggle="true">
+            <mat-expansion-panel-header class="nav-head" [expandedHeight]="'48px'">
+              <mat-panel-title>
+                <span class="sidenav-menu" [ngClass]="{'submenuSelected': submenuSelected === menuItem.title }">{{menuItem.title}}</span>
+              </mat-panel-title>
+              <mat-icon class="expand-icon">arrow_drop_down</mat-icon>
+            </mat-expansion-panel-header>
+
+            <div class="nav-section">
+              <div *ngFor="let submenuItem of menuItem.submenus" class="sidenav-submenu-container">
+                <a *ngIf="shouldShowMenu(submenuItem)" mat-button class="sidenav-submenu" [routerLink]="submenuItem.link" routerLinkActive="selected"
+                  (click)="sidenav.toggle()">
+                  <span class="subMenuOption">{{submenuItem.title}}</span>
+                </a>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+
+      <!-- MENU USER MOBILE -->
+      <div class="sidenav-menu-footer" fxLayout="column">
+        <div *ngFor="let menuUsuarioItem of menuUsuario">
+          <div class="optionContainer" *ngIf="menuUsuarioItem.title === 'Volver a mi usuario' ? currentUser?.supportUserId : shouldShowMenu(menuUsuarioItem)" >
+            <a class="sidenav-menu" mat-button 
+               [routerLink]="menuUsuarioItem.link" 
+               routerLinkActive="selected"
+               (click)="menuUsuarioItem.title === 'Volver a mi usuario' ? loginWithSourceToken() : handleMenuUsuario(menuUsuarioItem,sidenav)">
+              <span class="Container menuOption">
+                <mat-icon class="sidenav-menu-footer-icon">{{menuUsuarioItem.icon}}</mat-icon>
+                {{menuUsuarioItem.title}}
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-caption" >
+        <span> Centro de Gestión </span>
+      </div>
+    </mat-sidenav>
+
+    <!-- CONTENIDO -->
+    <div class="content" [ngClass.lt-md]="{'content': false, 'mobile-content': true}">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
+  
+</div>

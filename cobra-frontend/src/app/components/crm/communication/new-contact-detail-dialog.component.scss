@@ -1,0 +1,229 @@
+@import "../../../../themes/cobra-theme.scss";
+.container {
+  width: 500px;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+h2{
+  margin-bottom: 15px;
+}
+
+.textArea{
+  font-family: "Graphik-Light";
+  font-size: 12px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  z-index: 3;
+  height: 110px;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 5px 5px 5px;
+  color: #002f55;
+}
+
+.formCont{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.formBtn{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contForm{
+  margin-right: 30px
+}
+
+.btnEnviar{
+  border-radius: 30px;
+  background-color: #3080e3;
+  color: white;
+  width: 7em;
+  margin-top: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cenText{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  width: 50%;
+  margin: -7% 0 0 -25%;
+  color:$color-gray-custom;
+  font-size: 14px;
+}
+
+:host ::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $color-button !important;
+}
+
+:host ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: $color-button !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-gap {
+  //closes otuline gap
+  border-top-color: currentColor !important;
+}
+
+:host ::ng-deep.mat-form-field-label{
+  font-size: 15px;
+}
+
+:host ::ng-deep.mat-select-value{
+  font-size: 15px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix{
+  top: 1px !important;
+}
+
+:host ::ng-deep .mat-form-field-label-wrapper{
+  top: -10px;
+}
+
+:host ::ng-deep .invalidInput .mat-form-field-outline{
+  color: red !important;
+}
+
+:host ::ng-deep .phoneInput #phone{
+  width: 208px;
+  height: 36px;
+  border: 1px solid #C5C5C5 !important;
+  border-radius: 3px;
+  padding-left: 90px;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: 'Graphik-Light';
+  font-size: 16px;
+}
+
+:host ::ng-deep ngx-intl-tel-input.ng-invalid #phone{
+  outline: none !important;
+  border: 2px solid red !important;
+}
+
+:host ::ng-deep .phoneInput #phone:focus{
+  border: 2px solid $color-button !important;
+}
+:host ::ng-deep .phoneInput #phone:active{
+  border: 2px solid $color-button !important;
+}
+
+:host ::ng-deep .dropdown-toggle{
+  width: 80px !important;
+}
+
+:host ::ng-deep li.country:hover { 
+	background-color: rgba(0, 0, 0, 0.05); 
+}
+
+:host ::ng-deep .iti__flag-container .dropdown-menu.show{
+  width: 230px;
+  font-size: 13px;
+}
+
+.closeDialogBnt{
+  margin-right: 20px;
+  border: 1px solid darkgrey;
+  padding: 5px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.errorMsgContainer{
+  text-align: right;
+  font-size: 14px;
+  position: relative;
+  top: -10px;
+}
+
+@media screen and (max-width: 960px){
+  .phoneInput{
+    position: relative;
+    top: 11px;
+  }
+}
+
+@media screen and (max-width: 650px){
+
+  .phoneInput{
+    top: 15px;
+    margin-top: 10px;
+  }
+
+  :host ::ng-deep .phoneInput #phone{
+    width: 218px;
+  }
+
+  .errorMsgContainer{
+    top: 15px;
+    margin-bottom: 7px;
+  }
+
+  .adjustMsgMobile{
+    position: relative;
+    top: 10px;
+    margin-bottom: 5px;
+  }
+
+  h2{
+    margin-bottom: 10px;
+  }
+
+  .formCont{
+    flex-direction: column;
+  }
+
+  :host ::ng-deep .mat-dialog-container{
+    width: 265px;
+  }
+
+  :host ::ng-deep .mat-form-field-wrapper{
+    margin-top: 10px;
+    width: 218px;
+  }
+
+  .container{
+    width: 265px;
+    margin-left: 20px;
+  }
+  .contForm{
+    margin-right: 20px;
+  }
+
+  .formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .textArea{
+    width: 85%;
+  }
+
+  .formBtn{
+    width: 100%;
+    margin-right: 20px;
+  }
+
+}

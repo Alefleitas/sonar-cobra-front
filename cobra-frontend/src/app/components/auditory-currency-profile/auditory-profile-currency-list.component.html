@@ -1,0 +1,33 @@
+<div>
+  <div style="display: inline">
+    <label class="lblFiles">Búsqueda general</label>
+    <mat-form-field style="width: 152px; padding-right: 68px;" appearance="outline">
+      <input type="text" (input)="onChange($event.target.value)" matInput>
+    </mat-form-field>
+  </div>
+
+  <div class="columns">
+    <ng-container>
+
+      <div class="column col-12" style="padding: 50px 20px 20px 0px;">
+        <ngx-table
+          #table
+          [columns]="columns"
+          [configuration]="configurationAuditoryProfileCurrency"
+          [data]="auditoryCurrencyProfile"
+          [noResultsTemplate]="noResultsTemplate">
+        </ngx-table>
+        <span class="ngx-pagination-span">Mostrar Resultados</span>
+
+      </div>
+
+    </ng-container>
+    <ng-template #noResultsTemplate>
+      <td [attr.colspan]="columns.length" class="no-results">
+        {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+      </td>
+    </ng-template>
+  </div>
+
+
+</div>

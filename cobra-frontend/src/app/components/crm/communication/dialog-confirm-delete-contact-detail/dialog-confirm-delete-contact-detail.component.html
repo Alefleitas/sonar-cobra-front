@@ -1,0 +1,25 @@
+<div class="container bottom">
+    <div class="tooltipContainer">
+      <br>
+      <div class="tooltip-text">
+        <button mat-mini-fab class="buttonUs" disabled>
+          <mat-icon >delete_outline</mat-icon>
+        </button>
+        <p> 
+          <span class="tooltipMessage" *ngIf="!isCommunication">
+            ¿Estás seguro de eliminar el contacto?<br>
+          </span>
+          <span class="tooltipAdvertencia" *ngIf="!isCommunication">
+            ¡Se modificarán las comunicaciones que posean al contacto!
+          </span>
+          <span class="tooltipMessage" *ngIf="isCommunication">¿Estás seguro de eliminar la comunicacion?</span>
+          <br /><br />
+        </p>
+        <div class="actionsContainer">
+            <button mat-flat-button class="btnCancelar" (click)="closePopUp();">Cancelar</button>
+            <button *ngIf="!isCommunication" mat-flat-button class="btnConfirmar" (click)="deleteContactDetail();">Confirmar</button>
+            <button *ngIf="isCommunication" mat-flat-button class="btnConfirmar" (click)="deleteCommunication();">Confirmar</button>
+        </div> 
+      </div>
+    </div>
+</div>

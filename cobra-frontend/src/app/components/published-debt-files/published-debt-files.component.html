@@ -1,0 +1,63 @@
+<div class="component">
+    <div *ngIf="isLoading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <h2>Publicaciones de deuda</h2>
+
+    <mat-tab-group (selectedTabChange)="_onTabChanged($event);">
+        <mat-tab label="Publicaciones">
+            <div class="columns tab">
+                <div style="display: inline">
+                    <label class="lblFiles">Búsqueda general</label>
+                    <mat-form-field style="width: 152px; padding-right: 68px;" appearance="outline">
+                      <input type="text" (input)="filterOk($event.target.value)" matInput>
+                    </mat-form-field>
+                  </div>
+                <ng-container>
+                    <div class="column col-12" style="margin-top: 20px;">
+                        <ngx-table #tableOk [data]="publishedDebtFilesOk" [configuration]="configuration"
+                            [columns]="columnsOk" [noResultsTemplate]="noResultsTemplateOk">
+                        </ngx-table>
+                        <span class="ngx-pagination-span">Mostrar Resultados</span>
+                    </div>
+                    <ng-template #createdOn let-row>
+                        {{row.createdOn | date: 'dd/MM/yyyy'}}
+                    </ng-template>
+                    <ng-template #noResultsTemplateOk>
+                        <td [attr.colspan]="columnsOk.length" class="no-results">
+                            {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                        </td>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </mat-tab>
+        <mat-tab label="Publicaciones con Error">
+            <div class="columns tab">
+                <div style="display: inline">
+                    <label class="lblFiles">Búsqueda general</label>
+                    <mat-form-field style="width: 152px; padding-right: 68px;" appearance="outline">
+                      <input type="text" (input)="filterError($event.target.value)" matInput>
+                    </mat-form-field>
+                  </div>
+                <ng-container>
+                    <div class="column col-12" style="margin-top: 20px;">
+                        <ngx-table #tableError [data]="publishedDebtFilesError" [configuration]="configuration"
+                            [columns]="columnsError" [noResultsTemplate]="noResultsTemplateError">
+                        </ngx-table>
+                        <span class="ngx-pagination-span">Mostrar Resultados</span>
+                    </div>
+                    <ng-template #errorDescription let-row>
+                        {{row.error[0].Description}}
+                    </ng-template>
+                    <ng-template #noResultsTemplateError>
+                        <td [attr.colspan]="columnsError.length" class="no-results">
+                            {{isLoading ? 'Cargando...' : 'Sin resultados'}}
+                        </td>
+                    </ng-template>
+                </ng-container>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="tableContainer">
+        <div class="headerContainer">
+            <div class="headerStyle">
+                Detalles de Pago: {{receivedPaymentMethod.cuitCliente}}  |  {{receivedPaymentMethod.medioDePago}}  |  {{receivedPaymentMethod.status}}
+            </div>
+            <button type="button" class="exitBtn" mat-icon-button (click)="closePopUp()">
+              <mat-icon class="iconToolCancel">close</mat-icon>
+            </button>
+        </div>
+
+        <div *ngIf="isLoading" class="spinnerContainer">
+            <mat-spinner></mat-spinner>
+        </div>
+        
+        <div *ngIf="!isLoading">
+            <div class="columns">
+                <ng-container>
+                  <div class="column col-12" style="padding: 20px; padding-bottom: 0px;">
+                    <ngx-table
+                      #tableDetails
+                      [data]="paymentDetails"
+                      [configuration]="configuration"
+                      [columns]="columns"
+                      [noResultsTemplate]="noResultsTemplate"
+                    >
+                    </ngx-table>
+                  </div>
+                  <ng-template #noResultsTemplate>
+                    <td [attr.colspan]="columns.length" class="no-results">
+                      Sin resultados
+                    </td>
+                  </ng-template>
+                </ng-container>
+            </div>
+        </div>
+    </div>  
+</div>
+
+<ng-template #date let-row>
+  <div>{{row.creditingDate | date:'dd/MM/YYYY'}}</div>
+</ng-template>
+<ng-template #instrument let-row>
+  <div>{{row.instrument.replace("_", " ")}}</div>
+</ng-template>
+<ng-template #importe let-row>
+    <div>{{ row.amount | amountConvert:undefined:true }}</div>
+</ng-template>

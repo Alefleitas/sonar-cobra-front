@@ -1,0 +1,442 @@
+@import "../../../themes/cobra-theme.scss";
+
+// Font-size responsive
+.bigFont{
+  font-size: 20px;
+}
+.mediumFont{
+  font-size: 17px !important;
+}
+.smallFont{
+  font-size: 15px !important;
+}
+
+.component {
+  margin-left: 30px;
+  padding-top: 20px;
+}
+
+.sectionTitle{
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
+.no-result-mobile{
+  width: 100%;
+  text-align: center !important;
+  color: $color-button;
+  font-family: 'Graphik-Light';
+  position: relative;
+  bottom: -10px;
+  font-weight: bold;
+  border-bottom: 20px solid #ffffff !important;
+}
+
+.loading-page-indicator {
+  margin: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-family: "Graphik-Medium";
+  margin-left: 0px;
+  color: #002f55;
+  margin-top: 40px;
+}
+
+.form {
+  display: inline-flex;
+  width: 100%;
+}
+
+.formField {
+  margin-right: 20px;
+}
+
+.classLabel {
+  color: $color-button;
+  font-size: 22px;
+  font-family: "Graphik-Medium";
+  color: #939393;
+}
+
+.tableContainer {
+  padding: 30px 20px 20px 0px;
+}
+
+.mat-flat-button {
+  .mat-primary {
+    background-color: $color-button !important;
+    color: white;
+  }
+  border-radius: 30px;
+}
+
+.totalAmount {
+  font-weight: bold;
+  font-family: "Graphik-Medium";
+  color: #002f55;
+  padding: 5px;
+  border-radius: 20px;
+}
+
+.payDisable {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: $color-button;
+  color: $color-white;
+  width: 10em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.payEnabled {
+  border-radius: 30px;
+  margin-left: 10px;
+  background-color: #307fe2;
+  color: white;
+  width: 10em;
+  margin-bottom: 4px;
+  margin-right: 20px;
+}
+
+.payEnabled:hover {
+  background-color: $color-drawer;
+}
+
+:host ::ng-deep .ngx-table[id="table"] th {
+  color: #fff !important;
+  font-size: 14px !important;
+  font-family: "Graphik-Regular" !important;
+  font-weight: normal;
+  background-color: #3080e3 !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+  text-align: center;
+}
+
+:host ::ng-deep .ngx-table th:first-child {
+  border-radius: 5px 0px 0px 0px;
+}
+
+:host ::ng-deep .ngx-table th:last-child {
+  border-radius: 0px 5px 0px 0px;
+  width: 100px;
+}
+
+:host ::ng-deep .ngx-table[id="table"] tr {
+  color: #002f55 !important;
+  background-color: #ffffff !important;
+  font-family: "Graphik-Light" !important;
+  font-size: 14px;
+  border-bottom: 7px solid #f3f3f3;
+}
+
+:host ::ng-deep .ngx-table[id="table"] td {
+  text-align: center;
+  border-right: 0px;
+  padding: 15px 0px 15px 0px;
+}
+
+:host ::ng-deep .mat-checkbox .mat-checkbox-checkmark {
+  display: none;
+}
+
+:host ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #3080e3 !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-start {
+  border-radius: 3px 0 0 3px !important;
+  min-width: 3px !important;
+}
+
+:host ::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 3px 3px 0 !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  width: 260px;
+}
+
+::placeholder {
+  color: #002f55;
+  font-size: 12px;
+}
+
+:host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  top: 0px !important;
+}
+
+.solicitudPendiente {
+  color: $color-warning;
+  font-weight: bold;
+  margin:0px;
+}
+
+.solicitudAprobada {
+  color: $color-success;
+  font-weight: bold;
+  margin:0px;
+}
+
+.solicitudRechazada {
+  color: $color-error;
+  font-weight: bold;
+  margin:0px;
+}
+
+.restrictedPayments {
+  color: $color-error;
+}
+
+.section-header{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.msgContainer {
+  padding: 30px 0;
+  font-family: 'Graphik-Light';
+  font-size: 20px;
+  color: $color-primary;
+  display: flex;
+  justify-content: center;
+  .tooltip {
+    background-color: white;
+    width: 40%;
+    border: 1.5px solid $color-button;
+    padding: 10px;
+    text-align: end;
+    .iconToolCancel {
+      color: $color-button;
+    }
+    .tooltip-text {
+      text-align: center;
+      padding-bottom: 0.5em;
+      color: $color-primary;
+      p {
+        margin:0;
+      }
+      .iconTool {
+        color: $color-button;
+        @include md-icon-size(22px);
+      }
+    }
+  }
+}
+:host ::ng-deep .tooltip-text mat-icon {
+  /*change color of label*/
+  color: #3080e3 !important;
+  transform: scale(1.5);
+  margin-top:0.5em;
+  margin-bottom:0.5em;
+  cursor: default !important;
+}
+.tooltip-mobile {
+  width: 70% !important;
+  max-width: 400px !important;
+}
+
+.btnLock{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  mat-spinner{
+    margin-left: 15px;
+  }
+}
+.btnLock-container{
+  margin-right: 20px;
+  align-self:center;
+}
+
+.total-desktop{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+}
+
+@media screen and (max-width: 960px){
+  .component{
+    padding-top: 20px;
+  }
+}
+@media (max-width: 599px) {
+
+  .btnLock-container{
+    align-self: normal;
+  }
+  .header-mobile{
+    flex-direction: column;
+  }
+  .header-mobile > div{
+    padding-top: 1em;
+  }
+
+  .component {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .title {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .form {
+    display: grid;
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .formField {
+    margin-right: 0px;
+  }
+
+  :host ::ng-deep mat-form-field.formField {
+    .mat-form-field-wrapper {
+      width: 100% !important;
+    }
+  }
+
+  :host ::ng-deep table {
+    display: block;
+  }
+  :host ::ng-deep  thead {
+    display: none;
+  }
+  :host ::ng-deep  tbody {
+    display: table;
+    width: -webkit-fill-available;
+  }
+  :host ::ng-deep  tr {
+    display: table-row-group;
+  }
+  :host ::ng-deep  tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  :host ::ng-deep .ngx-table td {
+    display: table-row;
+    text-align: left;
+    border-bottom: 2px solid #f3f3f3  !important;
+    width: 50%;
+    height: 40px;
+  }
+
+  :host ::ng-deep  td:before,
+  td > span {
+    display: table-cell;
+    padding: 13px 13px;
+  }
+  :host ::ng-deep  td:before {
+    content: attr(class);
+    text-align: left;
+    padding-left: 25px;
+    color: #002f55;
+    font-size: 12px !important;
+    font-family: 'Graphik-Medium';
+    .ng-star-inserted{
+      font-weight: bold !important;
+    }
+  }
+
+  .tableContainer {
+    padding-top: 30px;
+    padding-right: 0px;
+  }
+
+  :host ::ng-deep .ngx-table[id="table"] tr {
+    border-bottom: 12px solid #f3f3f3;
+  }
+
+  .fixed-bar{
+    position: fixed;
+  }
+
+}
+
+@media screen and (max-width: 599px) {
+  .solicitudPendiente, .solicitudAprobada, .solicitudRechazada{
+    position: relative;
+    top: -5px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 960px){
+
+  .form{
+    display: grid;
+    justify-content: center;
+  }
+
+  :host ::ng-deep mat-form-field {
+    .mat-form-field-wrapper {
+      width: 400px !important;
+    }
+  }
+
+  .formField{
+    width: 400px;
+  }
+
+  .bottom-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button{
+      width: 400px !important;
+    }
+  }
+}
+
+@media screen and (min-width: 599px) and (max-width: 960px) {
+
+  .loading-page-indicator{
+    margin-top: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+  }
+}
+
+@media screen and (max-width: 960px) {
+
+  .bottom-container{
+    padding-bottom: 100px;
+  }
+
+  .classLabel {
+    color: $color-button;
+    font-size: 16px;
+    font-family: "Graphik-Medium";
+    color: #939393;
+  }
+
+  :host ::ng-deep button {
+    border-radius: 0px !important;
+  }
+
+  :host ::ng-deep .payDisable {
+    background-color: $color-button;
+    color: $color-white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+
+  :host ::ng-deep .payEnabled {
+    background-color: #307fe2;
+    color: white;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+  }
+}

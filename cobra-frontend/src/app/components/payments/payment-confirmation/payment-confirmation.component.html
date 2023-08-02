@@ -1,0 +1,173 @@
+<div *ngIf="isLoading" class="loading-indica" [ngClass.lt-md]="{'loading-indica-mobile': true, 'loading-indica': false}">
+  <mat-spinner fxHide.lt-md="true" mode="indeterminate"></mat-spinner>
+  <mat-spinner fxHide.gt-sm="true" mode="indeterminate" diameter="70"></mat-spinner>
+</div>
+
+<div class="component" *ngIf="!isLoading">
+  
+  <!-- MENSAJES BANNER -->
+  <div *ngIf="tooltipHelp && !hideBanners" class="tooltipHelp">
+    <div class="tootip-container" ngClass.lt-md="tooltip-container-mobile">
+      <mat-icon class="iconHelp">help_outline</mat-icon>
+      <span class="tooltipSpa">Si querés saber más sobre los pagos y las opciones disponibles en esta plataforma consultá <a href="/#/frequent-questions">Preguntas frecuentes</a>.</span>
+    </div>
+    <mat-icon (click)="hideTooltipHelp()" class="iconToolCancel">close</mat-icon>
+  </div>
+
+  <!-- ADVERTENCIA -->
+  <div *ngIf="tooltip && (showDEBIN || showCVU || showECHEQ)  && !hideBanners" class="tooltipWarning">
+    <div class="tootip-warning-container" ngClass.lt-md="tooltip-container-mobile">
+      <mat-icon class="iconWarning">error</mat-icon>
+      <span *ngIf="showDEBIN" class="tooltipSpa">No olvide confirmar los pagos realizados desde su Homebanking</span>
+      <span *ngIf="showCVU || showECHEQ" class="tooltipSpa">Por favor sólo informar los pagos una vez realizados desde su HomeBanking</span>
+    </div>
+    <mat-icon (click)="hideTooltip()" class="iconToolCancel">close</mat-icon>
+  </div>
+
+  <div class="title" style="display: flex; justify-content: space-between; align-items: center;">
+    <h2 class="custom-bold">Medios de pago</h2>
+    <div *ngIf="!isLoading" style="text-align: end;">
+      <span>Ayuda</span>
+      <button mat-icon-button (click)="runTour()">
+        <mat-icon class="tourBtn">help</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- MEDIOS DE PAGO -->
+  <div class="divCuentaSeleBut">
+    <mat-form-field class="select" appearance="outline" [ngClass]="checkTourStyle()" tourAnchor="stepSelectMedioPago">
+      <mat-label>Medios de Pago</mat-label>
+      <mat-select [(value)]="medioPago" [required]="true" (selectionChange)="changeMedioPago()" [disabled]="isTourRunning">
+        <mat-option *ngFor="let medioDePago of availableMediosPagos" [value]="medioDePago">{{medioDePago === 'CvuOperation' ? 'CVU' : medioDePago}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p *ngIf="showCVU && checkDolarPayment() && !isTourRunning" class="alertMsgSelect">Por el momento, con CVU sólo se pueden hacer pagos en pesos</p>
+    <p *ngIf="!(showDEBIN || showCVU || showECHEQ) && !isTourRunning" class="alertMsgSelect">Completar este campo obligatorio</p>
+
+  </div>
+
+  <!-- DEBIN - CBU -->
+  <div *ngIf="showDEBIN || isTourRunning" class="divCuentaSeleBut cuentaContainer" [ngClass]="checkTourStyle()" tourAnchor="stepCBU">
+    <mat-form-field class="select" appearance="outline"  [class.spinner]="disableCBU" [disable]="disableCBU">
+      <mat-select [(value)]="selectCuenta" [disabled]="disabledCuenta || isTourRunning" placeholder="Cuenta">
+        <mat-option *ngFor="let account of accounts" [value]="account.cbu">
+          {{account.cbu}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button (click)="!isTourRunning ? addAccount() : null" [disabled]="disabledCuenta" class="CBU-button">+ Nuevo CBU</button>
+  </div>
+
+  <p *ngIf="(showCVU || showECHEQ) && !(showCVU && checkDolarPayment()) && moreThanOneProduct() && !isTourRunning" class="alertMsg">Recuerde que sólo puede informar un único producto a la vez</p>
+
+    <div *ngIf="isTourRunning">
+      <app-payments-confirmation-tour></app-payments-confirmation-tour>
+    </div>
+
+    <div *ngIf="!isTourRunning">
+      <div *ngFor="let prodPayments of paymentsSelected | keyvalue" class="tablet-container payments-labels">
+        <div style="margin-top: 2em;" class="tablet-content">
+          <div class="paymentsContainer">
+            <div fxHide.gt-sm="true" class="product-header">
+              <b class="razon-propiedad" style="font-size: 14px;"> {{property.emprendimiento}} - {{prodPayments.key.name}}</b>
+              <div *ngIf="showCVU && !CVUNotFound && !checkDolarPayment()" style="font-size: 14px;" class="CVU-value">
+                <p>CVU - </p><div *ngIf="CVU">
+                  <span> {{CVU}} </span> 
+                  <button mat-icon-button class="copyCVY-icon" color="primary" (click)="copyCVU()" matTooltip="Copiar"><mat-icon>content_copy</mat-icon></button>          
+                </div>
+                <mat-spinner *ngIf="!CVU" [diameter]=20></mat-spinner>
+              </div>
+              <p *ngIf="showCVU && CVUNotFound && !moreThanOneProduct() && !checkDolarPayment()" class="alertMsg" style="font-size: 14px;">El producto no tiene CVU asignado</p>
+            </div>
+    
+            <div class="label-input">
+    
+              <div style="display: grid;" fxHide.lt-md="true">
+                <div [ngClass]="{'CVU-container': showCVU && !CVUNotFound}">
+                  <b class="razon-propiedad"> {{property.emprendimiento}} - {{prodPayments.key.name}}</b>
+                  <div *ngIf="showCVU && !CVUNotFound && !checkDolarPayment()" class="CVU-value">
+                    <p>CVU - </p><div *ngIf="CVU">
+                      <span> {{CVU}} </span> 
+                      <button mat-icon-button class="copyCVY-icon" color="primary" (click)="copyCVU()" matTooltip="Copiar"><mat-icon>content_copy</mat-icon></button>          
+                    </div>
+                    <mat-spinner *ngIf="!CVU" [diameter]=20></mat-spinner>
+                  </div>
+                  <p *ngIf="showCVU && CVUNotFound && !moreThanOneProduct() && !checkDolarPayment()" class="alertMsg">El producto no tiene CVU asignado</p>
+                </div>
+              </div>
+    
+              <div style="margin-top: 5%;">
+        
+                <!-- CUOTAS -->
+                <div *ngFor="let pay of prodPayments.value; let i = index; let last = last;">
+                  <ng-container *ngIf="pay.pay" style="width: 90%">
+                    <div class="rawQuota">
+    
+                      <div class="rawQuotaKey">
+                        <mat-label> {{ pay.fechaPrimerVenc }} </mat-label>
+                      </div>
+    
+                      <div class="rawQuotaValue">
+                        <mat-input> {{ pay.importePrimerVenc | amountConvert:codigoMoneda:true }}</mat-input>
+                        <a *ngIf="pay.lastCheck" mat-button routerLink="." (click)="removePayment(i, prodPayments.key)"
+                          matTooltip="Eliminar" class="buttonDelete">
+                          <mat-icon aria-hidden="false" class="iconDelete">delete_outline</mat-icon>
+                        </a>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- TOTAL A PAGAR -->
+  <div class="tablet-container payments-labels" style="margin-top: 2em;">
+    <div class="label-input-totals" tourAnchor="stepTotal">
+      <div class="rawQuota" style="border-bottom: 0px;">
+        <div class="rawQuotaKey">
+          <mat-label class="totalLabel"> Total a pagar </mat-label>
+        </div>
+        <div class="rawQuotaValue" style="flex-direction: row-reverse; padding-right: 32px;">
+          <b *ngIf="isTourRunning" class="totalPagar">$ 1.111.111,11</b>
+          <b *ngIf="!isTourRunning" class="totalPagar">{{ total | amountConvert:codigoMoneda:true }}</b>
+        </div>
+      </div>
+    </div>
+    
+    <!-- BOTONES ACCIONES -->
+    <div class="tablet-container">
+      <div class="tablet-content desktop-content">
+        <mat-checkbox *ngIf="showDEBIN || isTourRunning" class="TYCcheck" ngClass.lt-md="TYCmobile" [ngModel]="checkedTerm" (click)="clickEvt($event)" tourAnchor="stepTyC">Acepto términos y condiciones</mat-checkbox>
+
+        <div class="bttnsContainer" tourAnchor="stepActions">
+          <button mat-flat-button class="buttonCancell" style="margin-left: 0px;" (click)="!isTourRunning ? cancelPay() : null" [disabled]="isTourRunning">{{alreadyInformed ? 'Volver' : 'Cancelar'}}</button>
+
+          <button *ngIf="isTourRunning" mat-flat-button class="payEnabled tourBtn"> Confirmar/Informar pago </button>
+
+          <!-- CONFIRMAR DEBIN -->
+          <button  *ngIf="showDEBIN && !isTourRunning" mat-flat-button [ngClass]="(disabledButtonPagar()) ? 'payDisable': 'payEnabled'"
+          [disabled]="disabledButtonPagar()" (click)="payment()"> Confirmar pago </button>
+
+          <!-- INFORMAR CVU/ECHEQ -->
+          <button  *ngIf="(showCVU || showECHEQ) && !alreadyInformed && !isTourRunning" mat-flat-button [ngClass]="disabledButtonInformar() ? 'payDisable': 'payEnabled'" 
+                  [disabled]="disabledButtonInformar()" [class.spinner]="sendingInformar" (click)="reportPayment()">
+            Informar pago
+          </button>
+
+          <!-- INFORME EXITOSO -->
+          <button  *ngIf="(showCVU || showECHEQ) && alreadyInformed && !isTourRunning" mat-flat-button [disableRipple]="true" class="payEnabled" style="background-color: green !important; cursor:default;">
+            Pago Informado
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>

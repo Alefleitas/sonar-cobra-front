@@ -1,0 +1,174 @@
+@import '../../../../themes//cobra-theme.scss';
+
+:host ::ng-deep .container span {
+    font-family: 'Graphik-Light';
+}
+
+.componentAltC{
+    margin-left: 7px;
+    box-shadow: -3px -3px 5px #99A;
+    margin-right: 7px;
+    margin-bottom: 7px;
+}
+
+.contentCo{
+    padding-top: 1px;
+    padding-left: 20px;
+}
+.label-input{
+    width: 500px;
+    height: 125px;
+    background:$color-white;
+}
+.label-inputCuit{
+    width: 500px;
+    height: 40px;
+    background:$color-white;
+}
+.line {
+    display:block;
+    width: 100%;
+    height: 3px;
+    background-color: $color-gray;
+}
+.labeput{
+    height: 40px;
+    width: 500px;
+    border-bottom: 2px solid $color-gray-light;
+}
+.divuno{
+    width: 25%;
+    border-right: 2px solid $color-gray-light;
+    height: 100%;
+    padding: 13px 0 2px 17px;
+    display: inline-block;
+
+    }
+
+.divdos{
+    width: 45%;
+    height: 100%;
+    display: inline-block;
+    padding: 13px 0 2px 17px;
+    }
+
+
+.button {
+    border-color: $color-button;
+    border-width: 0.80px;
+    background: transparent;
+    border-style: solid;
+    color:$color-drawer;
+    border-radius: 30px;
+    margin-right: 10px;
+    width: 10em;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+.buttonOk {
+    border-color: $color-button;
+    border-width: 0.80px;
+    background: #3080e3;
+    border-style: solid;
+    color:#fafafa;
+    border-radius: 30px;
+    margin-left: 10px;
+    margin-right: 30px;
+    width: 10em;
+    font-size: 12px;
+    margin: 0 auto;  
+  }
+.button:hover{
+    border-color: $color-drawer;
+}
+
+.divCuentaSeleBut{
+    margin-top: 40px;
+    margin-bottom: 26px;
+}
+.divcbu{
+    margin-top: -41px;
+}
+.payDidsable{
+    border-radius: 30px;
+    margin-left: 10px;
+    background-color: $color-button;
+    color: $color-white;
+    width: 10em;
+    font-size: 12px;
+  }
+  .payEnabled{
+    border-radius: 30px;
+    margin-left: 10px;
+    background-color: $color-button;
+    color: $color-white;
+    width: 10em;
+    font-size: 12px;
+  }
+  .payEnabled:hover{
+    background-color: $color-drawer;
+  }
+.mat-icon {
+    color: $color-button !important;
+}
+
+.select {
+    margin-left: 6px !important;
+}
+::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+    background-color:$color-button !important;
+
+  }
+
+
+  ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+    background-color:$color-drawer!important;
+}
+
+:host::ng-deep mat-checkbox label {
+    color: #002f55;
+}
+
+.fiels {
+    margin-left: 35px;
+    width: 250px;
+  }
+  .buttonSA{
+    border-color: $color-button;
+    border-style: solid;
+    color:$color-button;
+    border-radius: 5px;
+    margin-left: 10px;
+    border: dashed;
+    border-width: 1px;
+    margin-bottom: 15px;
+
+  }
+  .buttonSA:hover{
+    border-style: solid;
+    border-color: $color-drawer !important;
+    border: dashed;
+    border-width: 1px;
+  }
+  .lblTerms{
+      color: $color-button;
+      margin-left: 20px;
+      font-size: 14px;
+  }
+  .lblTerms:hover{
+    color: $color-drawer;
+  }
+  .classLabel{
+  font-size: 14px;
+
+  }
+  .classLabelHea{
+    font-size: 14px;
+    color: $color-gray-custom;
+    }
+    .classInptu{
+        font-size: 12px;
+    }
+
+
+

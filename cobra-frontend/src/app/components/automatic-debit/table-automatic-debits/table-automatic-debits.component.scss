@@ -1,0 +1,114 @@
+@import "../../../../themes/cobra-theme.scss";
+
+.no-padding {
+  padding: 20px;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+.ngx-table__column-resizer {
+  display: block;
+  height: 200px;
+  margin: 0;
+  position: absolute;
+  padding: 100px !important;
+  right: 100px !important;
+  top: 0;
+  width: 3px;
+}
+.cenText{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  margin: -7% 0 0 -25%;
+  color:$color-gray-custom;
+  font-size: 14px;
+}
+
+
+
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color:$color-drawer  !important;
+}
+.fielsInput {
+  margin-top: 19px;
+  margin-left: 9px;
+  padding: 5px;
+  z-index: 3;
+  height: 30px;
+  background: #ffffff;
+  box-shadow: inset 0px 1px 3px rgba(0,0,0,0.5);
+  border-radius: 5px 5px 5px 5px;
+}
+
+
+:host::ng-deep.ngx-container {
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+ :host::ng-deep.ngx-table {
+  text-align: center !important;
+  line-height: 9px !important;
+}
+
+:host::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-checkbox-background {
+  background-color: $color-button !important;
+}
+
+:host::ng-deep .mat-checkbox.mat-checkbox-frame{
+  border-color:$color-button;
+}
+
+:host::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element{
+  background-color:$color-drawer  !important;
+}
+/*
+::ng-deep.ngx-table[id="debit-table"] th {
+  color:#939393 !important;
+  font-size: 14px !important;
+  background-color: white;
+  border-left-width: 0;
+}
+*/
+
+:host ::ng-deep .ngx-table[id=debit-table] th {
+  color: white !important;
+  font-size: 14px !important;
+  border-bottom: 10px solid $color-gray-light !important;
+  background-color: $color-button !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+}
+
+:host ::ng-deep .ngx-table[id=debit-table] td {
+  border-bottom: 10px solid $color-gray-light !important;
+  border-right: 0px solid;
+}
+
+.btnBlue{
+  color:$color-button;
+}
+
+:host::ng-deep ul.ngx-pagination .current {
+  background-color: #3080e3;
+}
+
+:host::ng-deep .ngx-pagination-range {
+  position: absolute;
+  right: 105px;
+  top: 190px;
+  font-weight: bold;
+  font-family: 'Graphik-Light';
+}
+
+:host::ng-deep .ngx-pagination-span {
+  position: absolute;
+  right: 160px;
+  top: 195px;
+  font-family: 'Graphik-Light';
+}

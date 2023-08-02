@@ -1,0 +1,119 @@
+@import '../../../../themes/cobra-theme.scss';
+
+:host ::ng-deep  .ngx-table[id=details-table] th {
+    color:white !important;
+    font-size: 14px !important;
+    background-color: $color-gray-dark !important;
+    border-bottom: 10px solid $color-gray-light !important;
+  }
+  :host ::ng-deep  .ngx-table[id=details-table] td {
+    border-bottom: 10px solid $color-gray-light !important;
+    border-right: 0px solid;
+  }
+  .contNestedTable {
+    text-align: center;
+    padding: 0px !important;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+@media screen and (max-width: 959px){
+    
+    .tabla{
+        padding: 0px 15px 0px 15px;
+    }
+
+    .mat-spinner-center{
+        position: relative;
+        bottom: -6px;
+        margin: 0px;
+    }
+
+    .mobile-padding-bottom{
+        padding-bottom: 0px;
+        margin-right: 30px;
+    }
+
+    mat-icon {
+        color: $color-button;
+        cursor: pointer;
+    }
+
+    :host ::ng-deep table {
+        display: block;
+    }
+    :host ::ng-deep thead {
+        display: none;
+    }
+    :host ::ng-deep tbody {
+        display: table;
+        width: -webkit-fill-available;
+        background-color: transparent;
+    }
+
+    :host ::ng-deep .ngx-table {
+        color: $color-drawer !important;
+        background-color: #f3f3f3 !important;
+        text-align: center !important;
+    }
+    :host ::ng-deep .ngx-table tr {
+        display: table-row-group;
+        border-bottom: 20px solid #ffffff !important;
+    }
+    :host ::ng-deep tr:nth-child(odd) {
+        background-color: #f9f9f9; 
+    }
+    :host ::ng-deep td:before, td > span {
+        display: table-cell;
+        padding: 10px 13px;
+    }
+    :host ::ng-deep  td:before {
+        content: attr(class);
+        text-align: left;
+        padding-left: 25px;
+        color: #002f55;
+        font-size: 12px !important;
+        font-family: 'Graphik-Medium';
+        // .ng-star-inserted{
+        // font-weight: bold !important;
+        // }
+    }
+
+    :host ::ng-deep .ngx-table[id=details-table] td:last-child:before{
+    content: none;
+    }
+
+    :host ::ng-deep td{
+        border-right-width: 0px;
+        border-bottom: 2px solid $color-gray-light !important;
+    }
+    :host ::ng-deep tr:last-of-type{
+        border-bottom-width: 0px !important;
+    }
+    :host ::ng-deep .ngx-container--dark{
+        background-color: transparent;
+    }
+
+    :host ::ng-deep .ngx-table[id=details-table] td:nth-last-child(2) div{
+        padding-bottom: 1.2em;
+    }
+    :host ::ng-deep .ngx-table[id=details-table] tr:last-child > td:nth-last-child(2) div{
+        padding-bottom: 0em;
+    }
+
+
+    :host ::ng-deep .ngx-table[id=details-table] td {
+        display: table-row;
+        text-align: left;
+        font-weight: bold;
+        border-bottom: 2px solid white!important;
+        background-color: $color-gray-light;
+        span{
+            word-break: break-all;
+        }
+        mat-icon{
+        position: relative;
+        top: 7px;
+        }
+    }
+}
