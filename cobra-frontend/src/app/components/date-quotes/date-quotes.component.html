@@ -8,7 +8,7 @@
       <div class="form-container">
         <form [formGroup]="myForm" (ngSubmit)="onSearch()">
           <mat-form-field class="form-field">
-            <mat-label>Seleccione los tipos de cambio a pedir</mat-label>
+            <mat-label>Seleccione uno o varios tipos de cambio a pedir</mat-label>
             <mat-select [ngClass]="{ 'disabled': isLoading }" formControlName="sourceTypesList" multiple>
               <mat-option [ngClass]="{ 'disabled': isLoading }" *ngFor="let source of sourceTypesList"
                 [value]="source">{{ source }}</mat-option>
