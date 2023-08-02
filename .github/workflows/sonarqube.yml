@@ -62,14 +62,14 @@ jobs:
       - name: Bloquear PR on SonarQube Analysis Failure
         if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          GITHUB_TOKEN: "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"
         run: |
           echo "The SonarQube analysis failed. Blocking the PR..."
           pr_number="${{ github.event.pull_request.number }}"
           owner="${{ github.repository_owner }}"
           repo="${{ github.repository }}"
           response=$(curl -X POST -v \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/$owner/$repo/issues/$pr_number/lock" 2>&1)
           echo "$response"
