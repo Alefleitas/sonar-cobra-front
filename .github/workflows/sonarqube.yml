@@ -25,7 +25,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          curl -X GET -u "${SONAR_TOKEN}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=${{secrets.SONAR_PROJECT_KEY}}'
+          curl -X GET -u "${SONAR_TOKEN}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=Cobra.Front'
           echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
 
       - name: Get SonarQube Measures ( Detalle de archivos afectados )
