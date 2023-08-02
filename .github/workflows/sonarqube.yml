@@ -4,7 +4,7 @@ on:
     branches:
       - main
 
-name: Analisis de Sonarqube
+name: Main Workflow
 
 jobs:
   sonarqube:
@@ -14,52 +14,77 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Escaneo Sonarqube
+      - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Obtener SonarQube Quality Gate Status
+      - name: Get SonarQube Quality Gate Status
         id: sonarqube_status
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          curl -X GET -u "${{ secrets.SONAR_TOKEN }}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=Cobra.Front'
+          curl -X GET -u "${SONAR_TOKEN}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=${{secrets.SONAR_PROJECT_KEY}}'
           echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
 
-      - name: Get SonarQube Measures ( Detalle de archivos afectados )
+      - name: Get SonarQube Measures
         id: sonarqube_measures
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           curl -X GET -u "${SONAR_TOKEN}": -o sonarqube_measures.json '${{ secrets.SONAR_HOST_URL }}/api/measures/search?metricKeys=new_duplicated_lines_density,new_line_coverage,new_code_smells,new_bugs,new_vulnerabilities,new_security_hotspots_reviewed&projectKeys=${{secrets.SONAR_PROJECT_KEY}}'
-          cat sonarqube_measures.json
+          sonarqube_measures=$(cat sonarqube_measures.json)
+          echo "sonarqube_measures=${sonarqube_measures}" >> $GITHUB_ENV
 
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
+      - name: Comment PR with SonarQube Measures
+        uses: actions/github-script@v6
         with:
-          message: |
-            Estado del Análisis SonarQube: ${{ fromJson(env.status).projectStatus.status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
-            Métricas de condición:
-              - :dart: Nuevo Índice de Fiabilidad
-                Estado: ${{ fromJson(env.status).projectStatus.conditions[0].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
-                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[0].errorThreshold }} (Cuanto menor es mejor)
-                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[0].actualValue }}
-              - :shield: Nuevo Índice de Seguridad
-                Estado: ${{ fromJson(env.status).projectStatus.conditions[1].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
-                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[1].errorThreshold }} (Cuanto menor es mejor)
-                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[1].actualValue }}
-              - :hammer_and_wrench: Nuevo Índice de Mantenibilidad
-                Estado: ${{ fromJson(env.status).projectStatus.conditions[2].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
-                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[2].errorThreshold }} (Cuanto menor es mejor)
-                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[2].actualValue }}
-              - :page_facing_up: Nueva Densidad de Líneas Duplicadas
-                Estado: ${{ fromJson(env.status).projectStatus.conditions[3].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
-                Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[3].errorThreshold }} (Cuanto menor es mejor)
-                Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[3].actualValue }}
-         
-      - name: Bloquear PR on SonarQube Analysis Failure
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const data = ${{fromJson(env.sonarqube_measures)}};
+            if (!data || !data.components) {
+              console.log('No SonarQube measures found.');
+              return;
+            }
+
+            let comment = 'SonarQube Analysis Metrics:\n\n';
+
+            data.components.forEach(component => {
+              comment += `- File: ${component.name}\n`;
+              component.measures.forEach(measure => {
+                let icon = '';
+                switch (measure.metric) {
+                  case 'new_duplicated_lines_density':
+                    icon = '📊';
+                    break;
+                  case 'code_smells':
+                    icon = '💡';
+                    break;
+                  case 'new_bugs':
+                    icon = '🐞';
+                    break;
+                  case 'new_vulnerabilities':
+                    icon = '🛡️';
+                    break;
+                  // Add more cases for other metrics if needed
+                  default:
+                    icon = '';
+                }
+                comment += `  ${icon} ${measure.metric}: ${measure.period.value}\n`;
+              });
+              comment += '\n';
+            });
+
+            console.log(comment);
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment,
+            });
+
+      - name: Block PR on SonarQube Analysis Failure
         if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
