@@ -119,6 +119,17 @@ export class DateQuotesComponent implements OnInit {
       row.id = startIndex + index + 1;
     });
   }
+
+    updateTableData2() {
+    this.selectedMap.clear();
+    const startIndex = this.currentPage * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const pageItems = this.quotationsExternal.slice(startIndex, endIndex);
+    this.dataSource.data = pageItems;
+    this.dataSource.data.forEach((row, index) => {
+      row.id = startIndex + index + 1;
+    });
+  }
   
   onSelectionChange(row: QuotationExternal): void {
     if (this.selection.isSelected(row)) {
