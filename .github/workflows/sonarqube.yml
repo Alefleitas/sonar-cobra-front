@@ -4,7 +4,10 @@ on:
     branches:
       - main
 
-name: Sonaqube Test
+name: Analisis Sonarqube
+
+permissions:
+  pull-requests: write
 
 jobs:
   sonarqube:
@@ -14,13 +17,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: SonarQube Scan
+      - name: Escaneo Sonarqube
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Get SonarQube Quality Gate Status
+      - name: Obtener SonarQube Quality Gate Status
         id: sonarqube_status
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -28,20 +31,19 @@ jobs:
           curl -X GET -u "${SONAR_TOKEN}": -o quality-gate.json '${{ secrets.SONAR_HOST_URL }}/api/qualitygates/project_status?projectKey=${{secrets.SONAR_PROJECT_KEY}}'
           echo "status=$(cat quality-gate.json)" >> $GITHUB_ENV
 
-      - name: Get SonarQube Measures
+      - name: Get SonarQube Measures ( Detalle de archivos afectados )
         id: sonarqube_measures
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           curl -X GET -u "${SONAR_TOKEN}": -o sonarqube_measures.json '${{ secrets.SONAR_HOST_URL }}/api/measures/search?metricKeys=new_duplicated_lines_density,new_line_coverage,new_code_smells,new_bugs,new_vulnerabilities,new_security_hotspots_reviewed&projectKeys=${{secrets.SONAR_PROJECT_KEY}}'
-          sonarqube_measures=$(cat sonarqube_measures.json)
-          echo "sonarqube_measures=${sonarqube_measures}" >> $GITHUB_ENV
+          cat sonarqube_measures.json
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Estado del Análisis SonarQube: ${{ fromJson(env.status).projectStatus.status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
+            Estado del Análisis de SonarQube: ${{ fromJson(env.status).projectStatus.status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
             Métricas de condición:
               - :dart: Nuevo Índice de Fiabilidad
                 Estado: ${{ fromJson(env.status).projectStatus.conditions[0].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
@@ -59,3 +61,18 @@ jobs:
                 Estado: ${{ fromJson(env.status).projectStatus.conditions[3].status == 'OK' && '✅ Exitoso' || '❌ Fallido' }}
                 Umbral de Error: ${{ fromJson(env.status).projectStatus.conditions[3].errorThreshold }} (Cuanto menor es mejor)
                 Valor Actual: ${{ fromJson(env.status).projectStatus.conditions[3].actualValue }}
+         
+      - name: Bloquear PR on SonarQube Analysis Failure
+        if: env.status && fromJson(env.status).projectStatus.status == 'ERROR'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "The SonarQube analysis failed. Blocking the PR..."
+          pr_number="${{ github.event.pull_request.number }}"
+          owner="${{ github.repository_owner }}"
+          repo="${{ github.repository }}"
+          response=$(curl -X POST -v \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$owner/$repo/issues/$pr_number/lock" 2>&1)
+          echo "$response"
