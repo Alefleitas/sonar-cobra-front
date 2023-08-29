@@ -25,9 +25,5 @@ export class LoginService {
         this.utilityService.navigateToLoginSSO();
     }
 
-     logout2() {
-        this.authService.logout();
-        this.principalService.cleanAuthentication();
-        this.utilityService.navigateToLoginSSO();
-    }
+     
 }
