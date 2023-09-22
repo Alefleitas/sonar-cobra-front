@@ -24,4 +24,6 @@ export class LoginService {
         this.principalService.cleanAuthentication();
         this.utilityService.navigateToLoginSSO();
     }
+
+     
 }
